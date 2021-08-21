@@ -37,5 +37,6 @@ homer:
   username: demo
   password: demo
 scrutiny:
+  subdomain: scrutiny
   username: demo
   password: demo
