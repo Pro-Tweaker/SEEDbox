@@ -21,3 +21,6 @@ portainer:
 filebrowser:
   folder: /opt/filebrowser
   subdomain: filebrowser
+rutorrent:
+  folder: /opt/rutorrent
+  subdomain: rutorrent

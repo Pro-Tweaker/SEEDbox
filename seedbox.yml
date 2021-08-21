@@ -8,3 +8,4 @@
     - { role: traefik, tags: ["core", "traefik"] }
     - { role: portainer, tags: ["core", "portainer"] }
     - { role: filebrowser, tags: ["filebrowser"] }
+    - { role: rutorrent, tags: ["rutorrent"] }

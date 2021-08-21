@@ -1,0 +1,10 @@
+---
+- name: Create directories
+  file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
+  with_items:
+    - "{{ rutorrent.folder }}"
+    - "{{ rutorrent.folder }}/plugins"
+    - "{{ rutorrent.folder }}/themes"
+    - "{{ data_folder }}/rutorrent"
+    - "{{ data_folder }}/rutorrent/completed"
+    - "{{ data_folder }}/rutorrent/watched"
