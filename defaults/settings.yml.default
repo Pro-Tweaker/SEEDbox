@@ -1,6 +1,8 @@
 ---
 user: debian
+uid: 1000
 group: docker
+gid: 998
 domain: example.com
 data_folder: /mnt/storage
 cloudflare:
