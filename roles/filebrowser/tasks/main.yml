@@ -24,6 +24,7 @@
     volumes:
       - "{{ data_folder }}:/srv "
       - "{{ filebrowser.folder }}/filebrowser.db:/database.db"
+    user: '{{ uid }}:{{ gid }}'
     networks:
       - name: web
         aliases:
