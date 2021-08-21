@@ -22,7 +22,7 @@
     pull: yes
     recreate: true
     volumes:
-      - "{{ filebrowser.folder }}:/srv "
+      - "{{ data_folder }}:/srv "
       - "{{ filebrowser.folder }}/filebrowser.db:/database.db"
     networks:
       - name: web
