@@ -31,7 +31,6 @@
 
 - name: Settings | ruTorrent Static Settings Tasks
   include_tasks: "static.yml"
-  when: (not rtorrent_rc.stat.exists)
 
 ## ruTorrent Dynamic Settings Tasks
 
