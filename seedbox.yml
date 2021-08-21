@@ -9,3 +9,4 @@
     - { role: portainer, tags: ["core", "portainer"] }
     - { role: filebrowser, tags: ["filebrowser"] }
     - { role: rutorrent, tags: ["rutorrent"] }
+    - { role: nzbget, tags: ["nzbget"] }
