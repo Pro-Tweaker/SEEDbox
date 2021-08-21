@@ -5,3 +5,4 @@
   roles:
     - { role: docker, tags: ["core", "docker"] }
     - { role: cloudflare, tags: ["core", "cloudflare"] }
+    - { role: traefik, tags: ["core", "traefik"] }

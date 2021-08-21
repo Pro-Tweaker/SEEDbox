@@ -1,0 +1,50 @@
+---
+- name: Ensures traefik folder exists
+  file:
+    path: "{{ traefik.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+
+- name: Ensures acme.json file exists
+  file:
+    path: "{{ traefik.folder }}/acme.json"
+    state: touch
+    mode: 0600
+
+- name: Adding traefik.yml file
+  template:
+    src: traefik.yml.j2
+    dest: "{{ traefik.folder }}/traefik.yml"
+    mode: 0600
+
+- name: Create the web network
+  docker_network:
+    name: web
+
+- name: Create the traefik container
+  docker_container:
+    name: traefik
+    image: traefik:2.2
+    restart_policy: always
+    recreate: true
+    networks:
+      - name: web
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "{{ traefik.folder }}/traefik.yml:/etc/traefik/traefik.yml"
+      - "{{ traefik.folder }}/acme.json:/acme.json"
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.traefik.rule: "Host(`{{ traefik.api_url }}`)"
+      traefik.http.routers.traefik.entrypoints: "websecure"
+      traefik.http.routers.traefik.service: "api@internal"
+      traefik.http.routers.traefik.middlewares: "auth"
+      traefik.http.middlewares.auth.basicauth.users: "{{ traefik.api_user }}:{{ traefik.api_password | password_hash('blowfish','1234567890123456789012') }}"
+    env:
+      CF_API_KEY: "{{ cloudflare.api_key }}"
+      CF_API_EMAIL: "{{ cloudflare.api_email }}"
+

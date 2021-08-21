@@ -1,0 +1,44 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+log:
+  level: ERROR
+
+api:
+  dashboard: true
+
+entryPoints:
+  web:
+    address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+  websecure:
+    address: :443
+    http:
+      tls:
+        certResolver: le
+        domains:
+          - main: "{{ traefik.acme_domain }}"
+            sans:
+              - "*.{{ traefik.acme_domain }}"
+
+certificatesResolvers:
+  le:
+    acme:
+      email: "{{ traefik.acme_email }}"
+      storage: acme.json
+      dnsChallenge:
+        provider: "{{ traefik.acme_provider }}"
+        delayBeforeCheck: 5
+        resolvers:
+          - 1.1.1.1:53 # Cloudflare
+          - 8.8.8.8:53 # Google
+
+providers:
+  docker:
+    network: web
+    exposedByDefault: false

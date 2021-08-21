@@ -1,6 +1,16 @@
 ---
 user: debian
+group: docker
+domain: example.com
 cloudflare:
   api_key: 
   api_email: 
-	domain_zone_id: 
+  domain_zone_id: 
+traefik:
+  folder: /opt/traefik
+  api_url: "traefik.{{ domain }}"
+  api_user: demo
+  api_password: demo
+  acme_domain: "{{ domain }}"
+  acme_email: example@mail.com
+  acme_provider: cloudflare
