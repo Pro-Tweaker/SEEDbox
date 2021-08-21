@@ -10,7 +10,7 @@
 - name: Create empty database file
   file:
     path: "{{ filebrowser.folder }}/database.db"
-    state: file
+    state: touch
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: 0775
