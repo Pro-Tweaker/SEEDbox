@@ -17,3 +17,6 @@ traefik:
 portainer:
   folder: /opt/portainer
   subdomain: portainer
+filebrowser:
+  folder: /opt/filebrowser
+  subdomain: filebrowser

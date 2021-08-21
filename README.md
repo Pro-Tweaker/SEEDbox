@@ -8,3 +8,6 @@ Only tested with Debian 10 (Buster) (64bits)
 - [Traefik](https://traefik.io/)
 - [Portainer](https://www.portainer.io/)
 - [Cloudflare](https://www.cloudflare.com/)
+
+## Available Apps
+- [filebrowser](https://github.com/filebrowser/filebrowser)

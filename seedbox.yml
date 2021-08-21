@@ -7,3 +7,4 @@
     - { role: cloudflare, tags: ["core", "cloudflare"] }
     - { role: traefik, tags: ["core", "traefik"] }
     - { role: portainer, tags: ["core", "portainer"] }
+    - { role: filebrowser, tags: ["filebrowser"] }

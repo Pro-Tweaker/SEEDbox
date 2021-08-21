@@ -1,0 +1,39 @@
+---
+- name: Create directories
+  file:
+    path: "{{ filebrowser.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create empty database file
+  file:
+    path: "{{ filebrowser.folder }}/database.db"
+    state: file
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: filebrowser
+    image: "filebrowser/filebrowser"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ filebrowser.folder }}:/srv "
+      - "{{ filebrowser.folder }}/filebrowser.db:/database.db"
+    networks:
+      - name: web
+        aliases:
+          - filebrowser
+    purge_networks: yes
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.portainer.rule: "Host(`{{ filebrowser.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.portainer.entrypoints: "websecure"
+      traefik.http.services.portainer.loadbalancer.server.port: "80"
