@@ -1,0 +1,10 @@
+# SEEDbox
+
+☣️ WIP ☣️
+
+Only tested with Debian 10 (Buster) (64bits)
+## Minimal Stack
+- [Docker](https://www.docker.com/)
+- [Traefik](https://traefik.io/)
+- [Portainer](https://www.portainer.io/)
+- [Cloudflare](https://www.cloudflare.com/)
