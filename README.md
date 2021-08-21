@@ -12,3 +12,4 @@ Only tested with Debian 10 (Buster) (64bits)
 ## Available Apps
 - [filebrowser](https://github.com/filebrowser/filebrowser)
 - [ruTorrent](https://github.com/Novik/ruTorrent)
+- [NZBGet](https://github.com/nzbget/nzbget)

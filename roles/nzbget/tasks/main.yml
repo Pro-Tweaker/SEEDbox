@@ -1,0 +1,11 @@
+---
+- name: Stop and remove any existing container
+  docker_container:
+    name: nzbget
+    state: absent
+
+- name: Create directories
+  file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
+  with_items:
+    - "{{ nzbget.folder }}"
+    - "{{ data_folder }}/nzbget"
