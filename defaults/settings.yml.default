@@ -5,6 +5,7 @@ group: docker
 gid: 998
 domain: example.com
 data_folder: /mnt/storage
+tz: "Europe/Berlin"
 cloudflare:
   api_key: 
   api_email: 
