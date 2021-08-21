@@ -15,12 +15,12 @@
 - name: "Check if filebrowser config file exists"
   stat:
     path: "{{ filebrowser.folder }}/filebrowser.json"
-  register: filebrowser_env
+  register: filebrowser_config
 
 - name: "Check if filebrowser database file exists"
   stat:
     path: "{{ filebrowser.folder }}/filebrowser.db"
-  register: filebrowser_db
+  register: filebrowser_database
 
 - name: "Create filebrowser config file"
   template:
@@ -30,7 +30,7 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: 0775
-  when: not filebrowser_env.stat.exists
+  when: not filebrowser_config.stat.exists
 
 - name: "Create filebrowser database file"
   template:
@@ -40,7 +40,7 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: 0775
-  when: not filebrowser_db.stat.exists
+  when: not filebrowser_database.stat.exists
 
 - name: Create and start container
   docker_container:
@@ -52,7 +52,7 @@
       - "{{ data_folder }}:/srv"
       - "{{ filebrowser.folder }}/filebrowser.db:/database.db"
       - "{{ filebrowser.folder }}/filebrowser.json:/.filebrowser.json"
-    user: '{{ uid }}:{{ gid }}'
+    user: "{{ uid }}:{{ gid }}"
     networks:
       - name: web
         aliases:
