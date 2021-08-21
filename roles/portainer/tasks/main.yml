@@ -1,0 +1,32 @@
+---
+- name: Create directories
+  file:
+    path: "{{ portainer.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: portainer
+    image: "portainer/portainer-ce"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ portainer.folder }}:/data"
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - name: web
+        aliases:
+          - portainer
+    purge_networks: yes
+    restart_policy: always
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.portainer.rule: "Host(`{{ portainer.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.portainer.entrypoints: "websecure"
+      traefik.http.services.portainer.loadbalancer.server.port: "9000"
