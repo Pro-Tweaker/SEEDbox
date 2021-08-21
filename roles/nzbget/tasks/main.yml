@@ -9,3 +9,32 @@
   with_items:
     - "{{ nzbget.folder }}"
     - "{{ data_folder }}/nzbget"
+    - "{{ data_folder }}/nzbget/intermediate"
+
+- name: Create and start container
+  docker_container:
+    name: nzbget
+    image: "ghcr.io/linuxserver/nzbget"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ nzbget.folder }}:/config"
+      - "{{ data_folder }}/nzbget:/downloads"
+      - "{{ data_folder }}/nzbget/intermediate:/intermediate"
+    networks:
+      - name: web
+        aliases:
+          - nzbget
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.nzbget.rule: "Host(`{{ nzbget.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.nzbget.entrypoints: "websecure"
+      traefik.http.services.nzbget.loadbalancer.server.port: "6789"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid }}"
+      PGID: "{{ gid }}"
+      UMASK: 002
