@@ -34,3 +34,5 @@ nzbget:
   subdomain: nzbget
 homer:
   folder: /opt/homer
+  username: demo
+  password: demo
