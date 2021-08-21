@@ -99,14 +99,14 @@
   lineinfile:
     path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"
     regexp: '^directory\.default\.set\s*=.*'
-    line: 'directory.default.set = /downloads/torrents/rutorrent/completed'
+    line: 'directory.default.set = /downloads/completed'
     state: present
 
 - name: Settings | Static | Set watched directory
   lineinfile:
     path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"
     regexp: '^.*#.*schedule.*=.*watch_directory.*'
-    line: 'schedule = watch_directory,5,5,"load.start=/downloads/torrents/rutorrent/watched/*.torrent,d.delete_tied="'
+    line: 'schedule = watch_directory,5,5,"load.start=/downloads/watched/*.torrent,d.delete_tied="'
     state: present
 
 - name: Settings | Static | Set 'network.xmlrpc.size_limit.set' to 20M
