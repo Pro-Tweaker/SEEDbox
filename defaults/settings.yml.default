@@ -1,2 +1,6 @@
 ---
 user: debian
+cloudflare:
+  api_key: 
+  api_email: 
+	domain_zone_id: 

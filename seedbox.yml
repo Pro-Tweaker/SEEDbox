@@ -4,3 +4,4 @@
     - ["settings.yml", "defaults/settings.yml.default"]
   roles:
     - { role: docker, tags: ["core", "docker"] }
+    - { role: cloudflare, tags: ["core", "cloudflare"] }

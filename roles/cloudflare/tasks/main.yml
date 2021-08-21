@@ -1,0 +1,36 @@
+---
+- name: Create and start Cloudflare Dynamic DNS Updater
+  docker_container:
+    name: cf-ddns
+    image: oznu/cloudflare-ddns:latest
+    pull: yes
+    recreate: true
+    state: started
+    restart_policy: always
+    env:
+      API_KEY: "{{ cloudflare.api_key }}"
+      EMAIL: "{{ cloudflare.api_email }}"
+      ZONE: "{{ domain }}"
+      PROXIED: "false"
+      RRTYPE: "A"
+      DELETE_ON_STOP: "false"
+      DNS_SERVER: "1.1.1.1"
+
+- name: Create and start Traefik Cloudflare Companion
+  docker_container:
+    name: cf-companion
+    image: tiredofit/traefik-cloudflare-companion:latest
+    pull: yes
+    recreate: true
+    state: started
+    restart_policy: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    env:
+      TRAEFIK_VERSION: "2"
+      CF_TOKEN: "{{ cloudflare.api_key }}"
+      CF_EMAIL: "{{ cloudflare.api_email }}"
+      TARGET_DOMAIN: "{{ domain }}"
+      DOMAIN1: "{{ domain }}"
+      DOMAIN1_ZONE_ID: "{{ cloudflare.domain_zone_id }}"
+      DOMAIN1_PROXIED: "false"
