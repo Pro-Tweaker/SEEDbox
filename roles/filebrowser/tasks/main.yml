@@ -1,4 +1,9 @@
 ---
+- name: Stop and remove any existing container
+  docker_container:
+    name: filebrowser
+    state: absent
+
 - name: Create directories
   file:
     path: "{{ filebrowser.folder }}"
@@ -7,13 +12,35 @@
     group: "{{ group }}"
     mode: 0775
 
-- name: Create empty database file
-  file:
+- name: "Check if filebrowser config file exists"
+  stat:
+    path: "{{ filebrowser.folder }}/filebrowser.json"
+  register: filebrowser_env
+
+- name: "Check if filebrowser database file exists"
+  stat:
     path: "{{ filebrowser.folder }}/filebrowser.db"
-    state: touch
+  register: filebrowser_db
+
+- name: "Create filebrowser config file"
+  template:
+    src: filebrowser.json.j2
+    dest: "{{ filebrowser.folder }}/filebrowser.json"
+    force: yes
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: 0775
+  when: not filebrowser_env.stat.exists
+
+- name: "Create filebrowser database file"
+  template:
+    src: filebrowser.db
+    dest: "{{ filebrowser.folder }}/filebrowser.db"
+    force: yes
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+  when: not filebrowser_db.stat.exists
 
 - name: Create and start container
   docker_container:
@@ -22,8 +49,9 @@
     pull: yes
     recreate: true
     volumes:
-      - "{{ data_folder }}:/srv "
+      - "{{ data_folder }}:/srv"
       - "{{ filebrowser.folder }}/filebrowser.db:/database.db"
+      - "{{ filebrowser.folder }}/filebrowser.json:/.filebrowser.json"
     user: '{{ uid }}:{{ gid }}'
     networks:
       - name: web
@@ -38,3 +66,5 @@
       traefik.http.routers.filebrowser.rule: "Host(`{{ filebrowser.subdomain }}.{{ domain }}`)"
       traefik.http.routers.filebrowser.entrypoints: "websecure"
       traefik.http.services.filebrowser.loadbalancer.server.port: "80"
+    env:
+      TZ: "{{ tz }}"
