@@ -1,15 +1,24 @@
 ---
+- name: Create directories
+  file:
+    path: "{{ scrutiny.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
 - name: Create and start container
   docker_container:
     name: scrutiny
-    image: "analogj/scrutiny"
+    image: "ghcr.io/linuxserver/scrutiny"
     pull: yes
     recreate: true
     volumes:
+      - "{{ scrutiny.folder }}:/config"
       - "/run/udev:/run/udev:ro"
     devices:
-      - "/dev/sda:/dev/xvda:rwm"
-      - "/dev/sdb:/dev/xvdb:rwm"
+      - "/dev/sda:/dev/sda:rwm"
+      - "/dev/sdb:/dev/sdb:rwm"
     networks:
       - name: web
         aliases:
@@ -26,3 +35,10 @@
       traefik.http.services.scrutiny.loadbalancer.server.port: "8080"
       traefik.http.routers.scrutiny.middlewares: "auth-scrutiny"
       traefik.http.middlewares.auth-scrutiny.basicauth.users: "{{ scrutiny.username }}:{{ scrutiny.password | password_hash('blowfish','1234567890123456789012') }}"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid }}"
+      PGID: "{{ gid }}"
+      SCRUTINY_API_ENDPOINT: http://localhost:8080
+      SCRUTINY_WEB: true
+      SCRUTINY_COLLECTOR: true

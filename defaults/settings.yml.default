@@ -37,6 +37,7 @@ homer:
   username: demo
   password: demo
 scrutiny:
+  folder: /opt/scrutiny
   subdomain: scrutiny
   username: demo
   password: demo
