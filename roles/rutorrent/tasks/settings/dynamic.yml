@@ -1,0 +1,49 @@
+- name: Settings | Static | Import custom 'nginx.conf' with htpasswd support
+  copy:
+    src: nginx.conf
+    dest: "{{ rutorrent.folder }}/nginx/nginx.conf"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: 0775
+    force: yes
+
+## rtorrent.rc
+
+- name: Settings | Dynamic | Install 'dnsutils'
+  apt: "name=dnsutils state=present"
+
+- name: Settings | Dynamic | Get Public IP Address
+  shell: dig -4 TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'\"' '{ print $2}'
+  register: public_ip_lookup
+
+- name: Settings | Dynamic | Set 'public_ip' variable
+  set_fact:
+    public_ip: "{{ public_ip_lookup.stdout }}"
+
+- name: Settings | Dynamic | Set 'network.local_address.set'
+  lineinfile:
+    path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"
+    regexp: '^network\.local_address\.set\s*=.*'
+    line: 'network.local_address.set = {{ public_ip }}'
+    state: present
+
+- name: Settings | Dynamic | Add comment for 'network.local_address.set'
+  lineinfile:
+    path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"
+    insertbefore: '^network\.local_address\.set\s*=.*'
+    line: "# The ip address reported to the tracker"
+    state: present
+
+- name: Settings | Dynamic | Add line space
+  lineinfile:
+    path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"
+    insertbefore: '# The ip address reported to the tracker'
+    line: ""
+    state: present
+
+- name: Settings | Dynamic | Set 'execute'
+  lineinfile:
+    path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"
+    regexp: '^execute\s=.*'
+    line: 'execute = {sh,-c,/usr/bin/php7 /app/rutorrent/php/initplugins.php abc &}'
+    state: present

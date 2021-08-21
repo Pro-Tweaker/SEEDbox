@@ -1,4 +1,9 @@
 ---
+- name: Stop and remove any existing container
+  docker_container:
+    name: rutorrent
+    state: absent
+
 - name: Create directories
   file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
   with_items:
@@ -8,3 +13,47 @@
     - "{{ data_folder }}/rutorrent"
     - "{{ data_folder }}/rutorrent/completed"
     - "{{ data_folder }}/rutorrent/watched"
+
+- name: Remove 'config.php' if it exists
+  file:
+    path: "{{ rutorrent.folder }}/rutorrent/settings/config.php"
+    state: absent
+
+- name: Check if rtorrent.rc exists
+  stat:
+    path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"
+  register: rtorrent_rc
+
+- name: Create and start container
+  docker_container:
+    name: rutorrent
+    image: "horjulf/rutorrent-autodl"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ rutorrent.folder }}:/config"
+      - "{{ data_folder }}/rutorrent:/downloads"
+    networks:
+      - name: web
+        aliases:
+          - rutorrent
+    purge_networks: yes
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.rutorrent.rule: "Host(`{{ rutorrent.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.rutorrent.entrypoints: "websecure"
+      traefik.http.services.rutorrent.loadbalancer.server.port: "80"
+    published_ports:
+      - "51413:51413"
+      - "6881:6881/udp"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid }}"
+      PGID: "{{ gid }}"
+
+- name: ruTorrent Settings Tasks
+  include_tasks: "settings/main.yml"
+  when: (not continuous_integration)
