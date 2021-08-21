@@ -1,0 +1,33 @@
+---
+- name: Create directories
+  file:
+    path: "{{ homer.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: homer
+    image: "b4bz/homer"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ homer.folder }}:/www/assets"
+    networks:
+      - name: web
+        aliases:
+          - homer
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.homer.rule: "Host(`{{ domain }}`)"
+      traefik.http.routers.homer.entrypoints: "websecure"
+      traefik.http.services.homer.loadbalancer.server.port: "8080"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid }}"
+      PGID: "{{ gid }}"

@@ -32,3 +32,5 @@ rutorrent:
 nzbget:
   folder: /opt/nzbget
   subdomain: nzbget
+homer:
+  folder: /opt/homer
