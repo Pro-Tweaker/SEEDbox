@@ -36,3 +36,6 @@ homer:
   folder: /opt/homer
   username: demo
   password: demo
+scrutiny:
+  username: demo
+  password: demo

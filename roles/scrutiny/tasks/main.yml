@@ -1,0 +1,28 @@
+---
+- name: Create and start container
+  docker_container:
+    name: scrutiny
+    image: "analogj/scrutiny"
+    pull: yes
+    recreate: true
+    volumes:
+      - "/run/udev:/run/udev:ro"
+    devices:
+      - "/dev/sda:/dev/xvda:rwm"
+      - "/dev/sdb:/dev/xvdb:rwm"
+    networks:
+      - name: web
+        aliases:
+          - scrutiny
+    restart_policy: unless-stopped
+    state: started
+    capabilities:
+      - SYS_RAWIO
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.scrutiny.rule: "Host(`{{ scrutiny.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.scrutiny.entrypoints: "websecure"
+      traefik.http.services.scrutiny.loadbalancer.server.port: "8080"
+      traefik.http.routers.scrutiny.middlewares: "auth-scrutiny"
+      traefik.http.middlewares.auth-scrutiny.basicauth.users: "{{ scrutiny.username }}:{{ scrutiny.password | password_hash('blowfish','1234567890123456789012') }}"

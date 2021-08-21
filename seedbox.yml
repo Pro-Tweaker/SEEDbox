@@ -11,3 +11,4 @@
     - { role: rutorrent, tags: ["rutorrent"] }
     - { role: nzbget, tags: ["nzbget"] }
     - { role: homer, tags: ["homer"] }
+    - { role: scrutiny, tags: ["scrutiny"] }
