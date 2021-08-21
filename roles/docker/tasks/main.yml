@@ -1,0 +1,48 @@
+---
+- name: Install packages to allow apt to use a repository over HTTPS
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg-agent
+    - software-properties-common
+
+- name: Add Docker GPG APT key
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: Add Docker repository
+  lineinfile:
+    dest: "/etc/apt/sources.list.d/docker.list"
+    line: deb [arch=amd64] https://download.docker.com/linux/debian/ {{ ansible_distribution_release }} stable
+    state: present
+    create: yes
+
+- name: Update APT cache
+  apt:
+    update_cache: yes
+
+- name: Install Docker required packages
+  package:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - docker-compose
+      - containerd.io
+    state: present
+    install_recommends: yes
+  notify:
+    - start docker
+
+- name: Add the Python client for Docker
+  pip:
+    name: docker-py
+
+- name: Add the default user to the docker group
+  user:
+    name: "{{ user }}"
+    group: docker
