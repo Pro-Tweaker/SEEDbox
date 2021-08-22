@@ -5,12 +5,12 @@ bantime   = 1d
 
 [sshd]
 enabled   = true
-port      = ssh, {{ ssh_port }}
+port      = ssh,sftp,{{ ssh_port }}
 maxretry  = 3
 findtime  = 1d
 bantime   = 4w
 
 [sshd-ddos]
 enabled   = true
-port      = ssh, {{ ssh_port }}
+port      = ssh,sftp,{{ ssh_port }}
 filter    = sshd
