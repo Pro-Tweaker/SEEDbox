@@ -17,3 +17,4 @@ Only tested with:
 - [NZBGet](https://github.com/nzbget/nzbget)
 - [Homer](https://github.com/bastienwirtz/homer)
 - [scrutiny](https://github.com/AnalogJ/scrutiny)
+- [Jellyfin](https://github.com/jellyfin/jellyfin)
