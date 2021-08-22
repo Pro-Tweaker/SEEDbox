@@ -31,5 +31,5 @@
       traefik.http.middlewares.auth-homer.basicauth.users: "{{ homer.username }}:{{ homer.password | password_hash('blowfish','1234567890123456789012') }}"
     env:
       TZ: "{{ tz }}"
-      PUID: "{{ uid }}"
-      PGID: "{{ gid }}"
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"
