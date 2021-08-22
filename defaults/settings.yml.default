@@ -44,3 +44,8 @@ scrutiny:
 jellyfin:
   folder: /opt/jellyfin
   subdomain: jellyfin
+netdata:
+  folder: /opt/netdata
+  subdomain: netdata
+  username: demo
+  password: demo

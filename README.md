@@ -18,3 +18,4 @@ Only tested with:
 - [Homer](https://github.com/bastienwirtz/homer)
 - [scrutiny](https://github.com/AnalogJ/scrutiny)
 - [Jellyfin](https://github.com/jellyfin/jellyfin)
+- [Netdata](https://github.com/netdata/netdata)

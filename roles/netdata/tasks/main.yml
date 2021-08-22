@@ -1,0 +1,46 @@
+---
+- name: Create directories
+  file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
+  with_items:
+    - "{{ netdata.folder }}"
+    - "{{ netdata.folder }}/config"
+    - "{{ netdata.folder }}/lib"
+    - "{{ netdata.folder }}/cache"
+
+- name: Create and start container
+  docker_container:
+    name: netdata
+    image: "netdata/netdata"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ netdata.folder }}/config:/etc/netdata"
+      - "{{ netdata.folder }}/lib:/var/lib/netdata"
+      - "{{ netdata.folder }}/cache:/var/cache/netdata"
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+    networks:
+      - name: web
+        aliases:
+          - netdata
+    restart_policy: unless-stopped
+    state: started
+    capabilities:
+      - SYS_PTRACE
+    security_opts:
+      - apparmor:unconfined
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.netdata.rule: "Host(`{{ netdata.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.netdata.entrypoints: "websecure"
+      traefik.http.services.netdata.loadbalancer.server.port: "19999"
+      traefik.http.routers.netdata.middlewares: "auth-netdata"
+      traefik.http.middlewares.auth-netdata.basicauth.users: "{{ netdata.username }}:{{ netdata.password | password_hash('bcrypt') }}"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"
