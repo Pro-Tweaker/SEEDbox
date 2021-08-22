@@ -1,7 +1,9 @@
 # SEEDbox
 
 ## ☣️ WIP ☣️
-Only tested with Debian 10 (Buster) (64bits)
+Only tested with:
+- Debian 10 (Buster) (64bits)
+- Debian 11 (Bullseye) (64bits)
 
 ## Minimal Stack
 - [Docker](https://www.docker.com/)
