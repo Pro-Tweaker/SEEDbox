@@ -40,7 +40,7 @@
 
 - name: Add the Python client for Docker
   pip:
-    name: docker-py
+    name: docker
 
 - name: Add the default user to the docker group
   user:
