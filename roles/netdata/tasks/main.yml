@@ -23,6 +23,7 @@
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /etc/os-release:/host/etc/os-release:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - name: web
         aliases:
@@ -45,3 +46,4 @@
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
       PGID: "{{ gid | int }}"
+      CONTAINERS: 1 | int
