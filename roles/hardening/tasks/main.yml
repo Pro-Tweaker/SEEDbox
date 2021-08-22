@@ -1,0 +1,10 @@
+---
+- name: Update all packages
+  apt:
+    name: "*"
+    state: latest
+    force_apt_get: yes
+    update_cache: yes
+
+- name: Install Fail2Ban
+  include_tasks: "fail2ban/main.yml"

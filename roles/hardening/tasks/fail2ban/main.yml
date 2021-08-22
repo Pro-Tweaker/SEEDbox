@@ -1,0 +1,23 @@
+---
+- name: Install Fail2Ban package
+  package:
+    name:
+      - fail2ban
+    state: present
+    install_recommends: yes
+
+- name: Copy Fail2Ban configuration
+  template:
+    src: jail.conf.j2
+    dest: "/etc/fail2ban/jail.conf"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+    force: yes
+  register: fail2ban_config
+
+- name: Restart Fail2Ban service
+  service:
+    name: fail2ban
+    state: restarted
+  when: fail2ban_config.changed

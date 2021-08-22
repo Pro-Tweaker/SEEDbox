@@ -14,3 +14,4 @@
     - { role: scrutiny, tags: ["monitoring", "scrutiny"] }
     - { role: jellyfin, tags: ["jellyfin"] }
     - { role: netdata, tags: ["monitoring", "netdata"] }
+    - { role: hardening, tags: ["hardening"] }
