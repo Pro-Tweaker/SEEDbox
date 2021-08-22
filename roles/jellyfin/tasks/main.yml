@@ -1,0 +1,36 @@
+---
+- name: Create directories
+  file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
+  with_items:
+    - "{{ jellyfin.folder }}"
+    - "{{ data_folder }}/jellyfin"
+    - "{{ data_folder }}/jellyfin/tvshows"
+    - "{{ data_folder }}/jellyfin/movies"
+
+- name: Create and start container
+  docker_container:
+    name: jellyfin
+    image: "ghcr.io/linuxserver/jellyfin"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ jellyfin.folder }}:/config"
+      - "{{ data_folder }}/jellyfin/tvshows:/data/tvshows"
+      - "{{ data_folder }}/jellyfin/movies:/data/movies"
+    networks:
+      - name: web
+        aliases:
+          - jellyfin
+    purge_networks: yes
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.jellyfin.rule: "Host(`{{ jellyfin.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.jellyfin.entrypoints: "websecure"
+      traefik.http.services.jellyfin.loadbalancer.server.port: "8096"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"

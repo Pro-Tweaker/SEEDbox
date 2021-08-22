@@ -12,3 +12,4 @@
     - { role: nzbget, tags: ["nzbget"] }
     - { role: homer, tags: ["homer"] }
     - { role: scrutiny, tags: ["monitoring", "scrutiny"] }
+    - { role: jellyfin, tags: ["jellyfin"] }
