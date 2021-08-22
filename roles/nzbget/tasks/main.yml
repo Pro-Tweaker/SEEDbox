@@ -35,6 +35,5 @@
       traefik.http.services.nzbget.loadbalancer.server.port: "6789"
     env:
       TZ: "{{ tz }}"
-      PUID: "{{ uid }}"
-      PGID: "{{ gid }}"
-      UMASK: 002
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"

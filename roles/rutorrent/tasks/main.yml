@@ -51,8 +51,8 @@
       - "6881:6881/udp"
     env:
       TZ: "{{ tz }}"
-      PUID: "{{ uid }}"
-      PGID: "{{ gid }}"
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"
 
 - name: ruTorrent Settings Tasks
   include_tasks: "settings/main.yml"
