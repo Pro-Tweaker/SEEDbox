@@ -10,6 +10,7 @@
 - name: Create and start container
   docker_container:
     name: netdata
+    hostname: "{{ netdata.subdomain }}.{{ domain }}"
     image: "netdata/netdata"
     pull: yes
     recreate: true
