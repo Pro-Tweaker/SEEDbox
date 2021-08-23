@@ -1,0 +1,33 @@
+---
+- name: Create directories
+  file:
+    path: "{{ readarr.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: readarr
+    image: "ghcr.io/linuxserver/readarr"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ readarr.folder }}:/config"
+    networks:
+      - name: web
+        aliases:
+          - readarr
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.readarr.rule: "Host(`{{ readarr.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.readarr.entrypoints: "websecure"
+      traefik.http.services.readarr.loadbalancer.server.port: "8787"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"

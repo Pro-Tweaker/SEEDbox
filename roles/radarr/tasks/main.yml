@@ -1,0 +1,33 @@
+---
+- name: Create directories
+  file:
+    path: "{{ radarr.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: radarr
+    image: "ghcr.io/linuxserver/radarr"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ radarr.folder }}:/config"
+    networks:
+      - name: web
+        aliases:
+          - radarr
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.radarr.rule: "Host(`{{ radarr.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.radarr.entrypoints: "websecure"
+      traefik.http.services.radarr.loadbalancer.server.port: "7878"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"

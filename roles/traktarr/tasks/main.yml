@@ -1,0 +1,41 @@
+---
+- name: Create directories
+  file:
+    path: "{{ traktarr.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: traktarr
+    image: "eafxx/traktarr"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ traktarr.folder }}:/config"
+    networks:
+      - name: web
+        aliases:
+          - traktarr
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.traktarr.rule: "Host(`{{ traktarr.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.traktarr.entrypoints: "websecure"
+      traefik.http.services.traktarr.loadbalancer.server.port: "6767"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"
+      DELAY: 2.5
+      SORT: rating
+      NOSEARCH: "yes"
+      NOTIFICATIONS: "yes"
+      BLACKLIST: "yes"
+      RUNNOW: "no"
+      SKIPUPDATE: "no"
+      APP_BRANCH: master

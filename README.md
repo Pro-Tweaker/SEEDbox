@@ -21,3 +21,11 @@ Only tested with:
 - [Netdata](https://github.com/netdata/netdata)
 - [Navidrome](https://github.com/navidrome/navidrome)
 - [Watchtower](https://github.com/containrrr/watchtower)
+### Double R Apps
+- [Prowlarr](https://github.com/Prowlarr/Prowlarr)
+- [Sonarr](https://github.com/Sonarr/Sonarr)
+- [Radarr](https://github.com/Radarr/Radarr)
+- [Lidarr](https://github.com/lidarr/lidarr)
+- [Readarr](https://github.com/Readarr/Readarr)
+- [Bazarr](https://github.com/morpheus65535/bazarr)
+- [Traktarr](https://github.com/l3uddz/traktarr)

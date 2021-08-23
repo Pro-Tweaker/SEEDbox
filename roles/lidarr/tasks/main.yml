@@ -1,0 +1,33 @@
+---
+- name: Create directories
+  file:
+    path: "{{ lidarr.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: lidarr
+    image: "ghcr.io/linuxserver/lidarr"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ lidarr.folder }}:/config"
+    networks:
+      - name: web
+        aliases:
+          - lidarr
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.lidarr.rule: "Host(`{{ lidarr.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.lidarr.entrypoints: "websecure"
+      traefik.http.services.lidarr.loadbalancer.server.port: "8686"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"

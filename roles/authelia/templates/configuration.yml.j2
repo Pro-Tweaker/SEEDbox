@@ -60,6 +60,9 @@ storage:
 
 notifier:
   smtp:
+    disable_require_tls: true
+    subject: "[Authelia] {title}"
+    startup_check_address: {{ authelia.notification_email_to }}
     username: {{ authelia.notification_email_server_user }}
     password: {{ authelia.notification_email_server_password }}
     host: {{ authelia.notification_email_server }}

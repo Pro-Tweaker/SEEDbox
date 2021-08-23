@@ -1,0 +1,33 @@
+---
+- name: Create directories
+  file:
+    path: "{{ bazarr.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: bazarr
+    image: "ghcr.io/linuxserver/bazarr"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ bazarr.folder }}:/config"
+    networks:
+      - name: web
+        aliases:
+          - bazarr
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.bazarr.rule: "Host(`{{ bazarr.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.bazarr.entrypoints: "websecure"
+      traefik.http.services.bazarr.loadbalancer.server.port: "6767"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"

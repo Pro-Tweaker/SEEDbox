@@ -1,0 +1,33 @@
+---
+- name: Create directories
+  file:
+    path: "{{ sonarr.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: sonarr
+    image: "ghcr.io/linuxserver/sonarr"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ sonarr.folder }}:/config"
+    networks:
+      - name: web
+        aliases:
+          - sonarr
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.sonarr.rule: "Host(`{{ sonarr.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.sonarr.entrypoints: "websecure"
+      traefik.http.services.sonarr.loadbalancer.server.port: "8989"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"
