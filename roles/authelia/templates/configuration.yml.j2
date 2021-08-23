@@ -30,14 +30,16 @@ access_control:
   default_policy: deny
   rules:
     # Rules applied to everyone
-    - domain: public.{{ domain }}
-      policy: bypass
+    #- domain: public.{{ domain }}
+    #  policy: bypass
+    #- domain: secure.example.com
+    #  policy: two_factor
+    - domain: {{ domain }}
+      policy: one_factor
     - domain: traefik.{{ domain }}
       policy: one_factor
     - domain: whoami.{{ domain }}
       policy: one_factor
-    - domain: secure.example.com
-      policy: two_factor
 
 session:
   name: authelia_session
