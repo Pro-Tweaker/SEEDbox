@@ -14,7 +14,7 @@
 - name: Create and start container
   docker_container:
     name: prowlarr
-    image: "ghcr.io/linuxserver/prowlarr"
+    image: "ghcr.io/linuxserver/prowlarr:develop"
     pull: yes
     recreate: true
     volumes:
