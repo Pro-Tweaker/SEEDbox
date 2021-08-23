@@ -15,3 +15,4 @@
     - { role: jellyfin, tags: ["jellyfin"] }
     - { role: netdata, tags: ["monitoring", "netdata"] }
     - { role: hardening, tags: ["hardening"] }
+    - { role: navidrome, tags: ["navidrome"] }

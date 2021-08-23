@@ -1,0 +1,40 @@
+---
+- name: Stop and remove any existing container
+  docker_container:
+    name: navidrome
+    state: absent
+
+- name: Create directories
+  file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
+  with_items:
+    - "{{ navidrome.folder }}"
+    - "{{ navidrome.folder }}/data"
+    - "{{ data_folder }}/music"
+
+- name: Create and start container
+  docker_container:
+    name: navidrome
+    image: "deluan/navidrome:latest"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ navidrome.folder }}/data:/data"
+      - "{{ data_folder }}/music:/music:ro"
+    user: "{{ uid }}:{{ gid }}"
+    networks:
+      - name: web
+        aliases:
+          - nzbget
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.nzbget.rule: "Host(`{{ navidrome.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.nzbget.entrypoints: "websecure"
+      traefik.http.services.nzbget.loadbalancer.server.port: "4533"
+    env:
+      ND_SCANSCHEDULE: 1h
+      ND_LOGLEVEL: info  
+      ND_SESSIONTIMEOUT: 24h
+      ND_BASEURL: ""

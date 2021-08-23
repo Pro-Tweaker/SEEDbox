@@ -19,3 +19,4 @@ Only tested with:
 - [scrutiny](https://github.com/AnalogJ/scrutiny)
 - [Jellyfin](https://github.com/jellyfin/jellyfin)
 - [Netdata](https://github.com/netdata/netdata)
+- [Navidrome](https://github.com/navidrome/navidrome)

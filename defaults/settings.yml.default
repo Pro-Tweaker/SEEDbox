@@ -51,3 +51,6 @@ netdata:
   subdomain: netdata
   username: demo
   password: demo
+navidrome:
+  folder: /opt/navidrome
+  subdomain: navidrome
