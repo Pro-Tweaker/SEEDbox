@@ -27,11 +27,10 @@ authentication_backend:
   file:
     path: /config/users_database.yml
     password:
-      algorithm: argon2id
-      iterations: 1
-      salt_length: 16
-      parallelism: 8
-      memory: 64
+      algorithm: sha512
+      iterations: 50000
+      key_length: 32
+      salt_length: 32
 
 access_control:
   default_policy: deny
