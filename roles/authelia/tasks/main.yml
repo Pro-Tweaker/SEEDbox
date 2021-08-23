@@ -1,11 +1,9 @@
 ---
 - name: Create directories
-  file:
-    path: "{{ authelia.folder }}"
-    state: directory
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    mode: 0775
+  file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
+  with_items:
+    - "{{ jauthelia.folder }}"
+    - "{{ authelia.folder }}/redis"
 
 - name: "Check if authelia users database exists"
   stat:
@@ -31,7 +29,29 @@
     group: "{{ group }}"
     mode: 0775
 
-- name: Create and start container
+- name: Create the authelia network
+  docker_network:
+    name: authelia
+
+- name: Create and start authelia redis container
+  docker_container:
+    name: redis
+    image: "redis:alpine"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ authelia.folder }}/redis:/data"
+    networks:
+      - name: authelia
+        aliases:
+          - redis
+    purge_networks: yes
+    restart_policy: unless-stopped
+    state: started
+    env:
+      TZ: "{{ tz }}"
+
+- name: Create and start authelia container
   docker_container:
     name: authelia
     image: "authelia/authelia"
@@ -44,6 +64,9 @@
         aliases:
           - authelia
       - name: postfix
+        aliases:
+          - authelia
+      - name: authelia
         aliases:
           - authelia
     purge_networks: yes
