@@ -1,0 +1,40 @@
+---
+- name: Install logwatch packages
+  package:
+    name:
+      - sendmail
+      - logwatch
+    state: present
+    install_recommends: yes
+
+- name: Check that logwatch.conf exists
+  stat:
+    path: /etc/logwatch/conf/logwatch.conf
+  register: logwatch_state
+
+- name: Create Logwatch configuration
+  shell: cp /usr/share/logwatch/default.conf/logwatch.conf /etc/logwatch/conf/logwatch.conf
+  when: logwatch_state.stat.exists == False
+
+- name: Ensure Format is html
+  lineinfile:
+    path: /etc/logwatch/conf/logwatch.conf
+    regexp: '^Format ='
+    line: Format = html
+
+- name: Ensure MailTo is set
+  lineinfile:
+    path: /etc/logwatch/conf/logwatch.conf
+    regexp: '^MailTo ='
+    line: MailTo = {{ lookup('env','EMAIL_FOR_SECURITY') }}
+
+- name: Ensure Detail is Med
+  lineinfile:
+    path: /etc/logwatch/conf/logwatch.conf
+    regexp: '^Detail ='
+    line: Detail = Med
+
+- name: Ensure temporary folder for logwatch exist
+  file:
+    path: /var/cache/logwatch
+    state: directory

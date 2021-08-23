@@ -22,7 +22,7 @@
     env:
       TZ: "{{ tz }}"
       WATCHTOWER_CLEANUP: "true"
-      WATCHTOWER_NO_STARTUP_MESSAGE: "true"
+      WATCHTOWER_NO_STARTUP_MESSAGE: "false"
       # Update containers every day at 5:00 a.m.
       WATCHTOWER_SCHEDULE: "0 0 5 * * *"
       WATCHTOWER_NOTIFICATIONS: "email"

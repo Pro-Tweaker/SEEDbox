@@ -1,0 +1,31 @@
+---
+- name: Install rkhunter packages
+  package:
+    name:
+      - sendmail
+      - rkhunter
+    state: present
+    install_recommends: yes
+
+- name: Ensure REPORT_EMAIL is set
+  lineinfile:
+    path: /etc/default/rkhunter
+    regexp: '^REPORT_EMAIL='
+    line: REPORT_EMAIL="{{ notifications_email }}"
+
+- name: Ensure ALLOW_SSH_ROOT_USER yes
+  lineinfile:
+    path: /etc/rkhunter.conf
+    regexp: '^#ALLOW_SSH_ROOT_USER'
+    line: ALLOW_SSH_ROOT_USER=yes
+
+- name: Disable warning for false positive
+  blockinfile:
+    path: /etc/rkhunter.conf
+    block: |
+      SCRIPTWHITELIST=/usr/bin/egrep
+      SCRIPTWHITELIST=/usr/bin/fgrep
+      SCRIPTWHITELIST=/usr/bin/which
+
+- name: Update rkhunter database
+  shell: rkhunter --propupd
