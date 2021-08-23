@@ -27,9 +27,9 @@
       traefik.http.routers.homer.rule: "Host(`{{ domain }}`)"
       traefik.http.routers.homer.entrypoints: "websecure"
       traefik.http.services.homer.loadbalancer.server.port: "8080"
-      #traefik.http.routers.homer.middlewares: "auth-homer"
-      #traefik.http.middlewares.auth-homer.basicauth.users: "{{ homer.username }}:{{ homer.password | password_hash('bcrypt') }}"
-      traefik.http.routers.homer.middlewares: "authelia-basic@docker"
+      traefik.http.routers.homer.middlewares: "auth-homer"
+      traefik.http.middlewares.auth-homer.basicauth.users: "{{ homer.username }}:{{ homer.password | password_hash('bcrypt') }}"
+      #traefik.http.routers.homer.middlewares: "authelia-basic@docker"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
