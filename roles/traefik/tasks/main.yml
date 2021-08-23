@@ -44,7 +44,7 @@
       traefik.http.routers.traefik.service: "api@internal"
       #traefik.http.routers.traefik.middlewares: "auth"
       #traefik.http.middlewares.auth.basicauth.users: "{{ traefik.api_user }}:{{ traefik.api_password | password_hash('bcrypt') }}"
-      traefik.http.routers.whoami.middlewares: "authelia@docker"
+      traefik.http.routers.traefik.middlewares: "authelia@docker"
     env:
       CF_API_KEY: "{{ cloudflare.api_key }}"
       CF_API_EMAIL: "{{ cloudflare.api_email }}"
