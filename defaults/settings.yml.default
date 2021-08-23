@@ -64,3 +64,6 @@ watchtower:
   notification_email_server_user: ""
   notification_email_server_password: ""
   notification_email_delay: "2"
+prowlarr:
+  folder: /opt/prowlarr
+  subdomain: prowlarr

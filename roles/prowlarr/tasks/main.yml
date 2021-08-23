@@ -1,0 +1,37 @@
+---
+- name: Create the rr network
+  docker_network:
+    name: rr
+
+- name: Create directories
+  file:
+    path: "{{ prowlarr.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: prowlarr
+    image: "ghcr.io/linuxserver/prowlarr"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ prowlarr.folder }}:/config"
+    networks:
+      - name: rr
+        aliases:
+          - prowlarr
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "rr"
+      traefik.http.routers.prowlarr.rule: "Host(`{{ prowlarr.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.prowlarr.entrypoints: "websecure"
+      traefik.http.services.prowlarr.loadbalancer.server.port: "9696"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"
