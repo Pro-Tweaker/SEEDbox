@@ -43,6 +43,9 @@
       - name: web
         aliases:
           - authelia
+      - name: postfix
+        aliases:
+          - authelia
     purge_networks: yes
     restart_policy: unless-stopped
     state: started

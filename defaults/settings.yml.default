@@ -88,3 +88,9 @@ traktarr:
 authelia:
   folder: /opt/authelia
   subdomain: login
+  jwt_secret: a_very_important_secret
+  notification_email_from: "authelia@{{ domain }}"
+  notification_email_server: postfix
+  notification_email_server_port: "587"
+  notification_email_server_user: ""
+  notification_email_server_password: ""

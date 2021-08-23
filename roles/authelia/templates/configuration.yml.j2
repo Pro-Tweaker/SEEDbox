@@ -39,11 +39,10 @@ access_control:
 
 session:
   name: authelia_session
-  # This secret can also be set using the env variables AUTHELIA_SESSION_SECRET_FILE
   secret: unsecure_session_secret
   expiration: 3600  # 1 hour
   inactivity: 300  # 5 minutes
-  domain: example.com  # Should match whatever your root protected domain is
+  domain: {{ domain }}  # Should match whatever your root protected domain is
 
   redis:
     host: redis
@@ -62,9 +61,8 @@ storage:
 
 notifier:
   smtp:
-    username: test
-    # This secret can also be set using the env variables AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE
-    password: password
-    host: mail.example.com
-    port: 25
-    sender: admin@example.com
+    username: {{ authelia.notification_email_server_user }}
+    password: {{ authelia.notification_email_server_password }}
+    host: {{ authelia.notification_email_server }}
+    port: {{ authelia.notification_email_server_port }}
+    sender: {{ authelia.notification_email_from }}
