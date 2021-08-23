@@ -88,6 +88,10 @@ traktarr:
 authelia:
   folder: /opt/authelia
   subdomain: login
+  username: demo
+  password: demo
+  displayname: "Demo"
+	email: example@mail.com
   jwt_secret: a_very_important_secret
   notification_email_to: "{{ notifications_email }}"
   notification_email_from: "authelia@{{ domain }}"

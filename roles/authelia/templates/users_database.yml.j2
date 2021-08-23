@@ -5,11 +5,10 @@
 
 # List of users
 users:
-  authelia:
-    displayname: "Authelia User"
-    # Password is authelia
-    password: "{{ user | password_hash('sha512') }}"
-    email: authelia@authelia.com
+  {{ authelia.username }}:
+    displayname: "{{ authelia.displayname }}"
+    password: "{{ authelia.password | password_hash('sha512') }}"
+    email: "{{ authelia.email }}"
     groups:
       - admins
       - dev
