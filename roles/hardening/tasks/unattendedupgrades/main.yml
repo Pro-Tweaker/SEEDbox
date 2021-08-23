@@ -2,6 +2,7 @@
 - name: Install Unattended Upgrades package
   package:
     name:
+      - sendmail
       - unattended-upgrades
     state: present
     install_recommends: yes
