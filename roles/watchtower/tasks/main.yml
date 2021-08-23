@@ -1,0 +1,27 @@
+---
+- name: Stop and remove any existing container
+  docker_container:
+    name: watchtower
+    state: absent
+
+- name: Create and start container
+  docker_container:
+    name: watchtower
+    image: "containrrr/watchtower"
+    pull: yes
+    recreate: true
+    networks:
+      - name: web
+        aliases:
+          - watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/localtime:/etc/localtime:ro
+    restart_policy: unless-stopped
+    state: started
+    env:
+      TZ: "{{ tz }}"
+      WATCHTOWER_CLEANUP: true | bool
+      WATCHTOWER_NO_STARTUP_MESSAGE: true | bool
+      # Update containers every day at 5:00 a.m.
+      WATCHTOWER_SCHEDULE: "0 0 5 * * *"

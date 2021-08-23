@@ -20,3 +20,4 @@ Only tested with:
 - [Jellyfin](https://github.com/jellyfin/jellyfin)
 - [Netdata](https://github.com/netdata/netdata)
 - [Navidrome](https://github.com/navidrome/navidrome)
+- [Watchtower](https://github.com/containrrr/watchtower)
