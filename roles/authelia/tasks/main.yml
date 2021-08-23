@@ -7,6 +7,30 @@
     group: "{{ group }}"
     mode: 0775
 
+- name: "Check if authelia users database exists"
+  stat:
+    path: "{{ authelia.folder }}/users_database.yml"
+  register: authelia_users_database
+
+- name: "Create authelia users database file"
+  template:
+    src: users_database.yml.j2
+    dest: "{{ authelia.folder }}/users_database.yml"
+    force: yes
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+  when: not authelia_users_database.stat.exists
+
+- name: "Create authelia config file"
+  template:
+    src: configuration.yml.j2
+    dest: "{{ authelia.folder }}/configuration.yml"
+    force: yes
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
 - name: Create and start container
   docker_container:
     name: authelia

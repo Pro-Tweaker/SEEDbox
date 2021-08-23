@@ -19,10 +19,4 @@
     - { role: watchtower, tags: ["monitoring", "watchtower"] }
     - { role: postfix, tags: ["monitoring", "postfix"] }
     - { role: prowlarr, tags: ["rr", "prowlarr"] }
-    - { role: sonarr, tags: ["rr", "sonarr"] }
-    - { role: radarr, tags: ["rr", "radarr"] }
-    - { role: lidarr, tags: ["rr", "lidarr"] }
-    - { role: readarr, tags: ["rr", "readarr"] }
-    - { role: bazarr, tags: ["rr", "bazarr"] }
-    - { role: traktarr, tags: ["rr", "traktarr"] }
-    - { role: authelia, tags: ["rr", "authelia"] }
+    - { role: authelia, tags: ["authelia"] }
