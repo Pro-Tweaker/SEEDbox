@@ -24,15 +24,15 @@
     networks:
       - name: web
         aliases:
-          - nzbget
+          - navidrome
     restart_policy: unless-stopped
     state: started
     labels:
       traefik.enable: "true"
       traefik.docker.network: "web"
-      traefik.http.routers.nzbget.rule: "Host(`{{ navidrome.subdomain }}.{{ domain }}`)"
-      traefik.http.routers.nzbget.entrypoints: "websecure"
-      traefik.http.services.nzbget.loadbalancer.server.port: "4533"
+      traefik.http.routers.navidrome.rule: "Host(`{{ navidrome.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.navidrome.entrypoints: "websecure"
+      traefik.http.services.navidrome.loadbalancer.server.port: "4533"
     env:
       ND_SCANSCHEDULE: 1h
       ND_LOGLEVEL: info  
