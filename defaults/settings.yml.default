@@ -95,3 +95,5 @@ authelia:
   notification_email_server_port: "587"
   notification_email_server_user: ""
   notification_email_server_password: ""
+whoami:
+  subdomain: whoami

@@ -1,0 +1,18 @@
+- name: Create and start container
+  docker_container:
+    name: whoami
+    image: "traefik/whoami"
+    pull: yes
+    recreate: true
+    networks:
+      - name: web
+        aliases:
+          - whoami
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.whoami.rule: "Host(`{{ whoami.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.whoami.entrypoints: "websecure"
+      traefik.http.services.whoami.loadbalancer.server.port: "80"
