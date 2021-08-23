@@ -1,8 +1,4 @@
 ---
-- name: Create the rr network
-  docker_network:
-    name: rr
-
 - name: Create directories
   file:
     path: "{{ prowlarr.folder }}"
@@ -20,14 +16,14 @@
     volumes:
       - "{{ prowlarr.folder }}:/config"
     networks:
-      - name: rr
+      - name: web
         aliases:
           - prowlarr
     restart_policy: unless-stopped
     state: started
     labels:
       traefik.enable: "true"
-      traefik.docker.network: "rr"
+      traefik.docker.network: "web"
       traefik.http.routers.prowlarr.rule: "Host(`{{ prowlarr.subdomain }}.{{ domain }}`)"
       traefik.http.routers.prowlarr.entrypoints: "websecure"
       traefik.http.services.prowlarr.loadbalancer.server.port: "9696"
