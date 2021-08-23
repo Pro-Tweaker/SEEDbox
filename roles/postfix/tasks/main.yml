@@ -1,0 +1,21 @@
+---
+- name: Create the postfix network
+  docker_network:
+    name: postfix
+
+- name: Create and start container
+  docker_container:
+    name: postfix
+    image: boky/postfix
+    pull: yes
+    recreate: true
+    state: started
+    restart_policy: unless-stopped
+    networks:
+      - name: postfix
+        aliases:
+          - postfix
+    env:
+      TZ: "{{ tz }}"
+      POSTFIX_hostname: "{{ postfix.hostname }}"
+      ALLOWED_SENDER_DOMAINS: "{{ domain }}"

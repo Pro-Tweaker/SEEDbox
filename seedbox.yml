@@ -17,3 +17,4 @@
     - { role: hardening, tags: ["hardening"] }
     - { role: navidrome, tags: ["navidrome"] }
     - { role: watchtower, tags: ["monitoring", "watchtower"] }
+    - { role: postfix, tags: ["monitoring", "postfix"] }
