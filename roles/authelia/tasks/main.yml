@@ -2,7 +2,7 @@
 - name: Create directories
   file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
   with_items:
-    - "{{ jauthelia.folder }}"
+    - "{{ authelia.folder }}"
     - "{{ authelia.folder }}/redis"
 
 - name: "Check if authelia users database exists"
