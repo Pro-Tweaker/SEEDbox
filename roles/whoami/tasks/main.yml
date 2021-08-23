@@ -16,3 +16,4 @@
       traefik.http.routers.whoami.rule: "Host(`{{ whoami.subdomain }}.{{ domain }}`)"
       traefik.http.routers.whoami.entrypoints: "websecure"
       traefik.http.services.whoami.loadbalancer.server.port: "80"
+      traefik.http.routers.public.middlewares: "authelia@docker"
