@@ -25,7 +25,7 @@
 - name: Create the traefik container
   docker_container:
     name: traefik
-    image: traefik:2.2
+    image: traefik:2.4
     restart_policy: always
     recreate: true
     networks:
