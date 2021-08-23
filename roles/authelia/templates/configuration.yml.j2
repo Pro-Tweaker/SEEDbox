@@ -30,9 +30,11 @@ access_control:
   default_policy: deny
   rules:
     # Rules applied to everyone
-    - domain: public.example.com
+    - domain: public.{{ domain }}
       policy: bypass
-    - domain: traefik.example.com
+    - domain: traefik.{{ domain }}
+      policy: one_factor
+    - domain: whoami.{{ domain }}
       policy: one_factor
     - domain: secure.example.com
       policy: two_factor
