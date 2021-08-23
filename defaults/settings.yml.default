@@ -67,3 +67,24 @@ watchtower:
 prowlarr:
   folder: /opt/prowlarr
   subdomain: prowlarr
+sonarr:
+  folder: /opt/sonarr
+  subdomain: sonarr
+radarr:
+  folder: /opt/radarr
+  subdomain: radarr
+lidarr:
+  folder: /opt/lidarr
+  subdomain: lidarr
+readarr:
+  folder: /opt/readarr
+  subdomain: readarr
+bazarr:
+  folder: /opt/bazarr
+  subdomain: bazarr
+traktarr:
+  folder: /opt/traktarr
+  subdomain: traktarr
+authelia:
+  folder: /opt/authelia
+  subdomain: login
