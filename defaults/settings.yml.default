@@ -7,6 +7,7 @@ ssh_port: 22
 domain: example.com
 data_folder: /mnt/storage
 tz: "Europe/Berlin"
+notifications_email: example@mail.com
 cloudflare:
   api_key: 
   api_email: 
