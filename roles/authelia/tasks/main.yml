@@ -41,6 +41,7 @@
     recreate: true
     volumes:
       - "{{ authelia.folder }}/redis:/data"
+    user: "{{ uid }}:{{ gid }}"
     networks:
       - name: authelia
         aliases:
