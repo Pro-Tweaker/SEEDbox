@@ -8,8 +8,8 @@
   file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
   with_items:
     - "{{ nzbget.folder }}"
-    - "{{ data_folder }}/nzbget"
-    - "{{ data_folder }}/nzbget/intermediate"
+    - "{{ data_folder }}/data/nzbget"
+    - "{{ data_folder }}/data/nzbget/intermediate"
 
 - name: Create and start container
   docker_container:
@@ -19,8 +19,8 @@
     recreate: true
     volumes:
       - "{{ nzbget.folder }}:/config"
-      - "{{ data_folder }}/nzbget:/downloads"
-      - "{{ data_folder }}/nzbget/intermediate:/intermediate"
+      - "{{ data_folder }}/data/nzbget:/downloads"
+      - "{{ data_folder }}/data/nzbget/intermediate:/intermediate"
     networks:
       - name: web
         aliases:
