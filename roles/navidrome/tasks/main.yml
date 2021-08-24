@@ -9,7 +9,7 @@
   with_items:
     - "{{ navidrome.folder }}"
     - "{{ navidrome.folder }}/data"
-    - "{{ data_folder }}/music"
+    - "{{ data_folder }}/media/music"
 
 - name: Create and start container
   docker_container:
@@ -19,7 +19,7 @@
     recreate: true
     volumes:
       - "{{ navidrome.folder }}/data:/data"
-      - "{{ data_folder }}/music:/music:ro"
+      - "{{ data_folder }}/media/music:/music:ro"
     user: "{{ uid }}:{{ gid }}"
     networks:
       - name: web
