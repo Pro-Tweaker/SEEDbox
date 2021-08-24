@@ -26,6 +26,20 @@
     line: 'ControlPassword='
     state: present
 
+- name: Settings | Set 'RestrictedUsername'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^RestrictedUsername\s*=.*'
+    line: 'RestrictedUsername={{ nzbget.restricted_username }}'
+    state: present
+
+- name: Settings | Set 'RestrictedPassword'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^RestrictedPassword\s*=.*'
+    line: 'RestrictedPassword={{ nzbget.restricted_password }}'
+    state: present
+
 - name: Settings | Start container
   docker_container:
     name: nzbget
