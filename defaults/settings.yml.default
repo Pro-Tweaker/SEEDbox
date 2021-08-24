@@ -39,8 +39,6 @@ homer:
 scrutiny:
   folder: /opt/scrutiny
   subdomain: scrutiny
-  username: demo
-  password: demo
 jellyfin:
   folder: /opt/jellyfin
   subdomain: jellyfin
