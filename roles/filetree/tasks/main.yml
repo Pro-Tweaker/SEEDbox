@@ -6,6 +6,7 @@
     - "{{ data_folder }}/data"
     - "{{ data_folder }}/data/nzbget"
     - "{{ data_folder }}/data/rutorrent"
+    - "{{ data_folder }}/data/lidarr"
     # media data folders
     - "{{ data_folder }}/media"
     - "{{ data_folder }}/media/movies"
