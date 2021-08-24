@@ -60,6 +60,8 @@ access_control:
       policy: one_factor
     - domain: {{ radarr.subdomain }}.{{ domain }}
       policy: one_factor
+    - domain: {{ lidarr.subdomain }}.{{ domain }}
+      policy: one_factor
 
 session:
   name: authelia_session
