@@ -44,7 +44,7 @@ access_control:
       policy: one_factor
     - domain: {{ scrutiny.subdomain }}.{{ domain }}
       policy: one_factor
-    - domain: {{ traefik.subdomain }}.{{ domain }}
+    - domain: {{ traefik.api_url }}
       policy: one_factor
     - domain: {{ whoami.subdomain }}.{{ domain }}
       policy: one_factor
