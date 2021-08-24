@@ -10,9 +10,9 @@
     - "{{ rutorrent.folder }}"
     - "{{ rutorrent.folder }}/plugins"
     - "{{ rutorrent.folder }}/themes"
-    - "{{ data_folder }}/rutorrent"
-    - "{{ data_folder }}/rutorrent/completed"
-    - "{{ data_folder }}/rutorrent/watched"
+    - "{{ data_folder }}/data/rutorrent"
+    - "{{ data_folder }}/data/rutorrent/completed"
+    - "{{ data_folder }}/data/rutorrent/watched"
 
 - name: Remove 'config.php' if it exists
   file:
@@ -32,7 +32,7 @@
     recreate: true
     volumes:
       - "{{ rutorrent.folder }}:/config"
-      - "{{ data_folder }}/rutorrent:/downloads"
+      - "{{ data_folder }}/data/rutorrent:/downloads"
     networks:
       - name: web
         aliases:
