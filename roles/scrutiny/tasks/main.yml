@@ -33,8 +33,9 @@
       traefik.http.routers.scrutiny.rule: "Host(`{{ scrutiny.subdomain }}.{{ domain }}`)"
       traefik.http.routers.scrutiny.entrypoints: "websecure"
       traefik.http.services.scrutiny.loadbalancer.server.port: "8080"
-      traefik.http.routers.scrutiny.middlewares: "auth-scrutiny"
-      traefik.http.middlewares.auth-scrutiny.basicauth.users: "{{ scrutiny.username }}:{{ scrutiny.password | password_hash('bcrypt') }}"
+      #traefik.http.routers.scrutiny.middlewares: "auth-scrutiny"
+      #traefik.http.middlewares.auth-scrutiny.basicauth.users: "{{ scrutiny.username }}:{{ scrutiny.password | password_hash('bcrypt') }}"
+      traefik.http.routers.scrutiny.middlewares: "authelia@docker"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
