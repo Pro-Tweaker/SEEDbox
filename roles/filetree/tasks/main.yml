@@ -1,0 +1,14 @@
+---
+- name: Create main directory hierarchy
+  file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
+  with_items:
+    # apps data folders
+    - "{{ data_folder }}/data"
+    - "{{ data_folder }}/data/nzbget"
+    - "{{ data_folder }}/data/rutorrent"
+    # media data folders
+    - "{{ data_folder }}/media"
+    - "{{ data_folder }}/media/movies"
+    - "{{ data_folder }}/media/tvshows"
+    - "{{ data_folder }}/media/music"
+    - "{{ data_folder }}/media/books"
