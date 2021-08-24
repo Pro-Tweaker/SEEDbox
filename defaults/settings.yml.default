@@ -15,8 +15,6 @@ cloudflare:
 traefik:
   folder: /opt/traefik
   api_url: "traefik.{{ domain }}"
-  api_user: demo
-  api_password: demo
   acme_domain: "{{ domain }}"
   acme_email: example@mail.com
   acme_provider: cloudflare
