@@ -42,6 +42,8 @@ access_control:
     #  policy: two_factor
     - domain: {{ domain }}
       policy: one_factor
+    - domain: scrutiny.{{ domain }}
+      policy: one_factor
     - domain: traefik.{{ domain }}
       policy: one_factor
     - domain: whoami.{{ domain }}
