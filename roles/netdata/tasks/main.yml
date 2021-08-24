@@ -40,8 +40,7 @@
       traefik.http.routers.netdata.rule: "Host(`{{ netdata.subdomain }}.{{ domain }}`)"
       traefik.http.routers.netdata.entrypoints: "websecure"
       traefik.http.services.netdata.loadbalancer.server.port: "19999"
-      traefik.http.routers.netdata.middlewares: "auth-netdata"
-      traefik.http.middlewares.auth-netdata.basicauth.users: "{{ netdata.username }}:{{ netdata.password | password_hash('bcrypt') }}"
+      traefik.http.routers.netdata.middlewares: "authelia@docker"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
