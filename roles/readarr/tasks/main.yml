@@ -29,6 +29,7 @@
       traefik.http.routers.readarr.rule: "Host(`{{ readarr.subdomain }}.{{ domain }}`)"
       traefik.http.routers.readarr.entrypoints: "websecure"
       traefik.http.services.readarr.loadbalancer.server.port: "8787"
+      traefik.http.routers.readarr.middlewares: "authelia@docker"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
