@@ -50,6 +50,8 @@ access_control:
       policy: one_factor
     - domain: {{ rutorrent.subdomain }}.{{ domain }}
       policy: one_factor
+    - domain: {{ nzbget.subdomain }}.{{ domain }}
+      policy: one_factor
     - domain: {{ prowlarr.subdomain }}.{{ domain }}
       policy: one_factor
     - domain: {{ whoami.subdomain }}.{{ domain }}
