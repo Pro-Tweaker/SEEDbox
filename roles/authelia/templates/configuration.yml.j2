@@ -46,7 +46,7 @@ access_control:
       policy: one_factor
     - domain: {{ traefik.api_url }}
       policy: one_factor
-    - domain: {{ netdata.subdomain }}
+    - domain: {{ netdata.subdomain }}.{{ domain }}
       policy: one_factor
     - domain: {{ whoami.subdomain }}.{{ domain }}
       policy: one_factor
