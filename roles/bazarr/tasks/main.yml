@@ -29,6 +29,7 @@
       traefik.http.routers.bazarr.rule: "Host(`{{ bazarr.subdomain }}.{{ domain }}`)"
       traefik.http.routers.bazarr.entrypoints: "websecure"
       traefik.http.services.bazarr.loadbalancer.server.port: "6767"
+      traefik.http.routers.bazarr.middlewares: "authelia@docker"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
