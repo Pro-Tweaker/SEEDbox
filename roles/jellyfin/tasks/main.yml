@@ -3,9 +3,8 @@
   file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
   with_items:
     - "{{ jellyfin.folder }}"
-    - "{{ data_folder }}/jellyfin"
-    - "{{ data_folder }}/jellyfin/tvshows"
-    - "{{ data_folder }}/jellyfin/movies"
+    - "{{ data_folder }}/media/tvshows"
+    - "{{ data_folder }}/media/movies"
 
 - name: Create and start container
   docker_container:
@@ -15,8 +14,8 @@
     recreate: true
     volumes:
       - "{{ jellyfin.folder }}:/config"
-      - "{{ data_folder }}/jellyfin/tvshows:/data/tvshows"
-      - "{{ data_folder }}/jellyfin/movies:/data/movies"
+      - "{{ data_folder }}/media/tvshows:/data/tvshows"
+      - "{{ data_folder }}/media/movies:/data/movies"
     networks:
       - name: web
         aliases:
