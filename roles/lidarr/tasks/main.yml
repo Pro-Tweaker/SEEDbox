@@ -16,7 +16,7 @@
     volumes:
       - "{{ lidarr.folder }}:/config"
       - "{{ data_folder }}/media/music:/music"
-      - "{{ data_folder }}/data/lidarr:/downloads"
+      - "{{ data_folder }}/data/nzbget/completed:/downloads"
     networks:
       - name: web
         aliases:
