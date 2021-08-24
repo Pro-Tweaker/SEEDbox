@@ -38,7 +38,7 @@ access_control:
     # Rules applied to everyone
     #- domain: public.{{ domain }}
     #  policy: bypass
-    #- domain: secure.example.com
+    #- domain: secure.{{ domain }}
     #  policy: two_factor
     - domain: {{ domain }}
       policy: one_factor

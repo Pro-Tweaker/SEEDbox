@@ -32,8 +32,6 @@ nzbget:
   subdomain: nzbget
 homer:
   folder: /opt/homer
-  username: demo
-  password: demo
 scrutiny:
   folder: /opt/scrutiny
   subdomain: scrutiny
