@@ -27,6 +27,7 @@
       traefik.http.routers.prowlarr.rule: "Host(`{{ prowlarr.subdomain }}.{{ domain }}`)"
       traefik.http.routers.prowlarr.entrypoints: "websecure"
       traefik.http.services.prowlarr.loadbalancer.server.port: "9696"
+      traefik.http.routers.prowlarr.middlewares: "authelia@docker"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
