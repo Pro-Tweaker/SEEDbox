@@ -42,6 +42,8 @@ access_control:
     #  policy: two_factor
     - domain: {{ domain }}
       policy: one_factor
+    - domain: {{ whoami.subdomain }}.{{ domain }}
+      policy: one_factor
     - domain: {{ scrutiny.subdomain }}.{{ domain }}
       policy: one_factor
     - domain: {{ traefik.api_url }}
@@ -54,7 +56,7 @@ access_control:
       policy: one_factor
     - domain: {{ prowlarr.subdomain }}.{{ domain }}
       policy: one_factor
-    - domain: {{ whoami.subdomain }}.{{ domain }}
+    - domain: {{ sonarr.subdomain }}.{{ domain }}
       policy: one_factor
 
 session:
