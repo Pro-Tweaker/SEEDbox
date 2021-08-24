@@ -91,7 +91,7 @@ authelia:
   username: demo
   password: demo
   displayname: "Demo"
-	email: example@mail.com
+  email: example@mail.com
   jwt_secret: a_very_important_secret
   notification_email_to: "{{ notifications_email }}"
   notification_email_from: "authelia@{{ domain }}"
@@ -99,5 +99,8 @@ authelia:
   notification_email_server_port: "587"
   notification_email_server_user: ""
   notification_email_server_password: ""
+  redis:
+    hostname: authelia-redis
+    folder: /opt/authelia-redis
 whoami:
   subdomain: whoami

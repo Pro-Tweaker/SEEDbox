@@ -42,11 +42,11 @@ access_control:
     #  policy: two_factor
     - domain: {{ domain }}
       policy: one_factor
-    - domain: scrutiny.{{ domain }}
+    - domain: {{ scrutiny.subdomain }}.{{ domain }}
       policy: one_factor
-    - domain: traefik.{{ domain }}
+    - domain: {{ traefik.subdomain }}.{{ domain }}
       policy: one_factor
-    - domain: whoami.{{ domain }}
+    - domain: {{ whoami.subdomain }}.{{ domain }}
       policy: one_factor
 
 session:
@@ -57,7 +57,7 @@ session:
   domain: {{ domain }}  # Should match whatever your root protected domain is
 
   redis:
-    host: redis
+    host: {{ authelia.redis.hostname }}
     port: 6379
     # password: authelia
 

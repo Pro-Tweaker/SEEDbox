@@ -3,7 +3,7 @@
   file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
   with_items:
     - "{{ authelia.folder }}"
-    - "{{ authelia.folder }}/redis"
+    - "{{ authelia.redis.folder }}"
 
 - name: "Check if authelia users database exists"
   stat:
@@ -35,17 +35,17 @@
 
 - name: Create and start authelia redis container
   docker_container:
-    name: redis
+    name: authelia-redis
     image: "redis:alpine"
     pull: yes
     recreate: true
     volumes:
-      - "{{ authelia.folder }}/redis:/data"
+      - "{{ authelia.redis.folder }}:/data"
     user: "{{ uid }}:{{ gid }}"
     networks:
       - name: authelia
         aliases:
-          - redis
+          - "{{ authelia.redis.hostname }}"
     purge_networks: yes
     restart_policy: unless-stopped
     state: started
@@ -79,7 +79,7 @@
       traefik.http.routers.authelia.rule: "Host(`{{ authelia.subdomain }}.{{ domain }}`)"
       traefik.http.routers.authelia.entrypoints: "websecure"
       traefik.http.services.authelia.loadbalancer.server.port: "9091"
-
+      # Authelia Middlewares Config
       traefik.http.middlewares.authelia.forwardauth.address: "http://authelia:9091/api/verify?rd=https://{{ authelia.subdomain }}.{{ domain }}/"
       traefik.http.middlewares.authelia.forwardauth.trustForwardHeader: "true"
       traefik.http.middlewares.authelia.forwardauth.authResponseHeaders: "Remote-User, Remote-Groups, Remote-Name, Remote-Email"
