@@ -124,7 +124,6 @@
     state: present
 
 ## php-local.ini
-
 - name: Settings | Static | Set 'upload_max_filesize' to 20M
   lineinfile:
     path: "{{ rutorrent.folder }}/php/php-local.ini"
@@ -132,19 +131,7 @@
     line: 'upload_max_filesize = 20M'
     state: present
 
-## .htpasswd
-
-- name: Settings | Static | Create '.htpasswd'
-  htpasswd:
-    path: "{{ rutorrent.folder }}/nginx/.htpasswd"
-    name: "{{ rutorrent.username }}"
-    password: "{{ rutorrent.password }}"
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    mode: 0775
-
 ## plugins.ini
-
 - name: Settings | Static | Import custom 'plugins.ini'
   copy:
     src: plugins.ini

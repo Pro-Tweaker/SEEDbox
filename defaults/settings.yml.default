@@ -27,8 +27,6 @@ filebrowser:
 rutorrent:
   folder: /opt/rutorrent
   subdomain: rutorrent
-  username: demo
-  password: demo
 nzbget:
   folder: /opt/nzbget
   subdomain: nzbget

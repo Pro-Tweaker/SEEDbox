@@ -1,14 +1,3 @@
-- name: Settings | Static | Import custom 'nginx.conf' with htpasswd support
-  copy:
-    src: nginx.conf
-    dest: "{{ rutorrent.folder }}/nginx/nginx.conf"
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    mode: 0775
-    force: yes
-
-## rtorrent.rc
-
 - name: Settings | Dynamic | Install 'dnsutils'
   apt: "name=dnsutils state=present"
 

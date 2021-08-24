@@ -46,6 +46,7 @@
       traefik.http.routers.rutorrent.rule: "Host(`{{ rutorrent.subdomain }}.{{ domain }}`)"
       traefik.http.routers.rutorrent.entrypoints: "websecure"
       traefik.http.services.rutorrent.loadbalancer.server.port: "80"
+      traefik.http.routers.rutorrent.middlewares: "authelia@docker"
     published_ports:
       - "51413:51413"
       - "6881:6881/udp"
