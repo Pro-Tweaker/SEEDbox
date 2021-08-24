@@ -30,6 +30,8 @@ rutorrent:
 nzbget:
   folder: /opt/nzbget
   subdomain: nzbget
+  restricted_username: demo
+  restricted_password: demo
 homer:
   folder: /opt/homer
 scrutiny:

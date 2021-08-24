@@ -33,7 +33,11 @@
       traefik.http.routers.nzbget.rule: "Host(`{{ nzbget.subdomain }}.{{ domain }}`)"
       traefik.http.routers.nzbget.entrypoints: "websecure"
       traefik.http.services.nzbget.loadbalancer.server.port: "6789"
+      traefik.http.routers.nzbget.middlewares: "authelia@docker"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
       PGID: "{{ gid | int }}"
+
+- name: NZBGet Settings Tasks
+  include_tasks: "settings/main.yml"
