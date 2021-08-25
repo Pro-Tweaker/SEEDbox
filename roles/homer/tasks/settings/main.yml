@@ -15,7 +15,7 @@
 - name: Settings | Check if homer-icons folder exists
   stat:
     path: "{{ homer.folder }}/homer-icons"
-    register: homer_icons_folder
+  register: homer_icons_folder
 
 - name: Settings | GIT Clone Icons Repository
   git:
