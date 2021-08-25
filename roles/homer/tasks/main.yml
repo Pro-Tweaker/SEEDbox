@@ -32,3 +32,6 @@
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
       PGID: "{{ gid | int }}"
+
+- name: Homer Settings Tasks
+  include_tasks: "settings/main.yml"

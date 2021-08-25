@@ -1,0 +1,32 @@
+- name: Settings | Wait for 'config.yml' to be created
+  wait_for:
+    path: "{{ homer.folder }}/config.yml.conf"
+    state: present
+
+- name: Settings | Wait for 10 seconds before stopping homer container
+  wait_for:
+    timeout: 10
+
+- name: Settings | Stop container
+  docker_container:
+    name: homer
+    state: stopped
+
+- name: Settings | GIT Clone Icons Repository
+  git:
+    repo: https://github.com/NX211/homer-icons.git
+    dest: "{{ homer.folder }}"
+
+- name: Settings | Import custom 'config.yml'
+  template:
+    src: config.yml.j2
+    dest: "{{ homer.folder }}/config.yml"
+    force: yes
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Settings | Start container
+  docker_container:
+    name: homer
+    state: started

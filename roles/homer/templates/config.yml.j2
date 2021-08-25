@@ -1,0 +1,141 @@
+---
+title: "SEEDbox Dashboard"
+subtitle: "{{ domain }}"
+logo: "logo.png"
+
+header: true
+footer: false
+connectivityCheck: false
+
+theme: default
+colors:
+  light:
+    highlight-primary: "#3367d6"
+    highlight-secondary: "#4285f4"
+    highlight-hover: "#5a95f5"
+    background: "#f5f5f5"
+    card-background: "#ffffff"
+    text: "#363636"
+    text-header: "#ffffff"
+    text-title: "#303030"
+    text-subtitle: "#424242"
+    card-shadow: rgba(0, 0, 0, 0.1)
+    link-hover: "#363636"
+  dark:
+    highlight-primary: "#3367d6"
+    highlight-secondary: "#4285f4"
+    highlight-hover: "#5a95f5"
+    background: "#131313"
+    card-background: "#2b2b2b"
+    text: "#eaeaea"
+    text-header: "#ffffff"
+    text-title: "#fafafa"
+    text-subtitle: "#f5f5f5"
+    card-shadow: rgba(0, 0, 0, 0.4)
+    link-hover: "#ffdd57"
+
+links:
+  - name: "Cloudflare Dashboard"
+    icon: "fab fa-cloudflare"
+    url: "https://dash.cloudflare.com/"
+    target: "_blank"
+  - name: "SEEDbox"
+    icon: "fab fa-github"
+    url: "https://github.com/Pro-Tweaker/SEEDbox"
+    target: "_blank"
+  - name: "r/selfhosted"
+    icon: "fab fa-reddit"
+    url: "https://www.reddit.com/r/selfhosted/"
+    target: "_blank"
+
+services:
+  - name: "Applications"
+    icon: "fas fa-cloud"
+    items:
+      - name: "ruTorrent"
+        subtitle: "rTorrent client with a webui"
+        url: "https://{{ rutorrent.subdomain }}.{{ domain }}"
+        logo: "assets/homer-icons/png/rutorrent.png"
+        target: "_blank"
+      - name: "NZBGet"
+        subtitle: "Efficient Usenet downloader"
+        url: "https://{{ nzbget.subdomain }}.{{ domain }}"
+        logo: "assets/homer-icons/png/nzbget.png"
+        target: "_blank"
+      - name: "Jellyfin"
+        subtitle: "Stream to any device from your own server"
+        url: "https://{{ jellyfin.subdomain }}.{{ domain }}"
+        logo: "assets/homer-icons/png/jellyfin.png"
+        target: "_blank"
+      - name: "Navidrome"
+        subtitle: "Enjoy your music collection from anywhere"
+        url: "https://{{ navidrome.subdomain }}.{{ domain }}"
+        logo: "assets/homer-icons/png/navidrome.png"
+        target: "_blank"
+  - name: PVR
+    icon: "fas fa-tv"
+    items:
+      - name: Sonarr
+        subtitle: "PVR for Usenet and BitTorrent users"
+        url: "https://{{ sonarr.subdomain }}.{{ domain }}"
+        logo: "assets/homer-icons/svg/sonarr.svg"
+        target: "_blank"
+      - name: Radarr
+        subtitle: "Movie collection manager for Usenet and BitTorrent users"
+        url: "https://{{ radarr.subdomain }}.{{ domain }}"
+        logo: "assets/homer-icons/png/radarr.png"
+        target: "_blank"
+      - name: Lidarr
+        subtitle: "Music collection manager for Usenet and BitTorrent users"
+        url: "https://{{ lidarr.subdomain }}.{{ domain }}"
+        logo: "assets/homer-icons/png/lidarr.png"
+        target: "_blank"
+      - name: Readarr
+        subtitle: "Ebook & Audiobook collection manager for Usenet and BitTorrent users"
+        url: "https://{{ readarr.subdomain }}.{{ domain }}"
+        logo: "assets/homer-icons/png/readarr.png"
+        target: "_blank"
+  - name: Tools
+    icon: "fas fa-tools"
+    items:
+      - name: Filebrowser
+        subtitle: "File managing interface"
+        url: "https://{{ filebrowser.subdomain }}.{{ domain }}"
+        logo: "assets/homer-icons/svg/filebrowser.svg "
+        target: "_blank"
+      - name: Prowlarr
+        subtitle: "Indexer manager/proxy"
+        url: "https://{{ prowlarr.subdomain }}.{{ domain }}"
+        logo: "assets/homer-icons/svg/prowlarr.svg"
+        target: "_blank"
+      - name: Bazarr
+        subtitle: "Manage and download subtitles"
+        url: "https://{{ bazarr.subdomain }}.{{ domain }}"
+        logo: "assets/homer-icons/svg/bazarr.svg "
+        target: "_blank"
+  - name: Monitoring
+    icon: "far fa-eye"
+    items:
+      - name: Netdata
+        subtitle: "Monitor everything in real time"
+        url: "https://{{ netdata.subdomain }}.{{ domain }}"
+        logo: "assets/homer-icons/png/netdata.png"
+        target: "_blank"
+      - name: Scrutiny
+        subtitle: "Hard Drive S.M.A.R.T Monitoring"
+        url: "https://{{ scrutiny.subdomain }}.{{ domain }}"
+        logo: "assets/homer-icons/png/scrutiny.png"
+        target: "_blank"
+  - name: Manage
+    icon: "fas fa-user-shield"
+    items:
+      - name: Portainer
+        subtitle: "Advanced Docker GUI"
+        url: "https://{{ portainer.subdomain }}.{{ domain }}"
+        logo: "assets/homer-icons/png/portainer.png"
+        target: "_blank"
+      - name: Traefik
+        subtitle: "Dashboard of the Traefik proxy"
+        url: "https://{{ traefik.subdomain }}.{{ domain }}"
+        logo: "assets/homer-icons/png/traefik.png"
+        target: "_blank"
