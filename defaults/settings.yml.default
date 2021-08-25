@@ -96,3 +96,6 @@ authelia:
     folder: /opt/authelia-redis
 whoami:
   subdomain: whoami
+librespeed:
+  folder: /opt/librespeed
+  subdomain: librespeed

@@ -1,0 +1,37 @@
+---
+- name: Create directories
+  file:
+    path: "{{ librespeed.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: librespeed
+    image: "ghcr.io/linuxserver/librespeed"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ librespeed.folder }}:/config"
+    devices:
+      - "/dev/sda:/dev/sda:rwm"
+      - "/dev/sdb:/dev/sdb:rwm"
+    networks:
+      - name: web
+        aliases:
+          - librespeed
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.librespeed.rule: "Host(`{{ librespeed.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.librespeed.entrypoints: "websecure"
+      traefik.http.services.librespeed.loadbalancer.server.port: "80"
+      traefik.http.routers.librespeed.middlewares: "authelia@docker"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"
