@@ -1,4 +1,5 @@
 # SEEDbox
+Ansible-based Docker containerized cloud media server  
 ## ☣️ WIP ☣️
 Only tested with:
 - Debian 10 (Buster) (64bits)
