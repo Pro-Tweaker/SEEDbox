@@ -12,10 +12,16 @@
     name: homer
     state: stopped
 
+- name: Settings | Check if homer-icons folder exists
+  stat:
+    path: "{{ homer.folder }}/homer-icons"
+    register: homer_icons_folder
+
 - name: Settings | GIT Clone Icons Repository
   git:
     repo: https://github.com/NX211/homer-icons.git
-    dest: "{{ homer.folder }}"
+    dest: "{{ homer.folder }}/homer-icons"
+  when: homer_icons_folder.stat.exists == False
 
 - name: Settings | Import custom 'config.yml'
   template:
