@@ -14,7 +14,7 @@
     recreate: true
     volumes:
       - "{{ jellyfin.folder }}:/config"
-      - "{{ data_folder }}/media/tvshows:/data/tvshows"
+      - "{{ data_folder }}/media/tv:/data/tvshows"
       - "{{ data_folder }}/media/movies:/data/movies"
     networks:
       - name: web
