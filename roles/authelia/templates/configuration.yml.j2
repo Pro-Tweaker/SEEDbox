@@ -14,7 +14,7 @@ log:
   level: debug
 
 totp:
-  issuer: authelia.com
+  issuer: {{ domain }}
 
 # duo_api:
 #  hostname: api-123456789.example.com
@@ -70,16 +70,15 @@ access_control:
       policy: one_factor
 
 session:
-  name: authelia_session
-  secret: unsecure_session_secret
+  name: {{ authelia.session_name }}
+  secret: {{ authelia.unsecure_session_secret }}
   expiration: 3600  # 1 hour
   inactivity: 300  # 5 minutes
-  domain: {{ domain }}  # Should match whatever your root protected domain is
+  domain: {{ domain }}
 
   redis:
     host: {{ authelia.redis.hostname }}
     port: 6379
-    # password: authelia
 
 regulation:
   max_retries: 3
@@ -93,7 +92,7 @@ storage:
 notifier:
   smtp:
     disable_require_tls: true
-    subject: "[Authelia] {title}"
+    subject: "[{{ domain }}] {title}"
     startup_check_address: {{ authelia.notification_email_to }}
     username: {{ authelia.notification_email_server_user }}
     password: {{ authelia.notification_email_server_password }}

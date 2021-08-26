@@ -85,6 +85,8 @@ authelia:
   displayname: "Demo"
   email: example@mail.com
   jwt_secret: a_very_important_secret
+  session_name: demo
+  unsecure_session_secret: demo
   notification_email_to: "{{ notifications_email }}"
   notification_email_from: "authelia@{{ domain }}"
   notification_email_server: postfix
