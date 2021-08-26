@@ -2,13 +2,20 @@
 - name: Create main directory hierarchy
   file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
   with_items:
-    # apps data folders
-    - "{{ data_folder }}/data"
-    - "{{ data_folder }}/data/nzbget"
-    - "{{ data_folder }}/data/rutorrent"
-    # media data folders
+    - "{{ data_folder }}/torrents"
+    - "{{ data_folder }}/torrents/books"
+    - "{{ data_folder }}/torrents/movies"
+    - "{{ data_folder }}/torrents/music"
+    - "{{ data_folder }}/torrents/tv"
+
+    - "{{ data_folder }}/usenet"
+    - "{{ data_folder }}/usenet/books"
+    - "{{ data_folder }}/usenet/movies"
+    - "{{ data_folder }}/usenet/music"
+    - "{{ data_folder }}/usenet/tv"
+
     - "{{ data_folder }}/media"
-    - "{{ data_folder }}/media/movies"
-    - "{{ data_folder }}/media/tvshows"
-    - "{{ data_folder }}/media/music"
     - "{{ data_folder }}/media/books"
+    - "{{ data_folder }}/media/movies"
+    - "{{ data_folder }}/media/music"
+    - "{{ data_folder }}/media/tv"
