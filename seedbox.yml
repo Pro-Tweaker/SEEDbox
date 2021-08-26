@@ -12,19 +12,20 @@
     - { role: filetree, tags: ["core", "filetree"] }
     - { role: hardening, tags: ["core", "hardening"] }
     # Available Apps
+    - { role: homer, tags: ["homer"] }
     - { role: filebrowser, tags: ["filebrowser"] }
     - { role: rutorrent, tags: ["rutorrent"] }
     - { role: nzbget, tags: ["nzbget"] }
-    - { role: homer, tags: ["homer"] }
     - { role: jellyfin, tags: ["jellyfin"] }
     - { role: navidrome, tags: ["navidrome"] }
-    - { role: whoami, tags: ["whoami"] }
-    - { role: librespeed, tags: ["librespeed"] }
-    # Available Apps, Monitoring
+    # Monitoring
     - { role: scrutiny, tags: ["monitoring", "scrutiny"] }
     - { role: netdata, tags: ["monitoring", "netdata"] }
     - { role: watchtower, tags: ["monitoring", "watchtower"] }
     - { role: postfix, tags: ["monitoring", "postfix"] }
+    # Tools
+    - { role: whoami, tags: ["whoami"] }
+    - { role: librespeed, tags: ["librespeed"] }
     # Double R Apps
     - { role: prowlarr, tags: ["rr", "prowlarr"] }
     - { role: sonarr, tags: ["rr", "sonarr"] }
