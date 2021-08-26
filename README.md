@@ -21,7 +21,7 @@ Only tested with:
 - [scrutiny](https://github.com/AnalogJ/scrutiny)
 - [Netdata](https://github.com/netdata/netdata)
 - [Watchtower](https://github.com/containrrr/watchtower)
-### Double R Apps
+### *arr Apps
 - [Prowlarr](https://github.com/Prowlarr/Prowlarr)
 - [Sonarr](https://github.com/Sonarr/Sonarr)
 - [Radarr](https://github.com/Radarr/Radarr)
