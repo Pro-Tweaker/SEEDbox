@@ -1,0 +1,89 @@
+#books
+- name: Settings | Set 'Category1.Name'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^Category1.Name\s*=.*'
+    line: 'Category1.Name=books'
+    state: present
+
+- name: Settings | Set 'Category1.DestDir'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^Category1.DestDir\s*=.*'
+    line: 'Category1.DestDir=${DestDir}/books'
+    state: present
+
+#games
+- name: Settings | Set 'Category2.Name'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^Category2.Name\s*=.*'
+    line: 'Category2.Name=games'
+    state: present
+
+- name: Settings | Set 'Category2.DestDir'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^Category2.DestDir\s*=.*'
+    line: 'Category2.DestDir=${DestDir}/games'
+    state: present
+
+#movies
+- name: Settings | Set 'Category3.Name'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^Category3.Name\s*=.*'
+    line: 'Category3.Name=movies'
+    state: present
+
+- name: Settings | Set 'Category3.DestDir'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^Category3.DestDir\s*=.*'
+    line: 'Category3.DestDir=${DestDir}/movies'
+    state: present
+
+#music
+- name: Settings | Set 'Category4.Name'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^Category4.Name\s*=.*'
+    line: 'Category4.Name=music'
+    state: present
+
+- name: Settings | Set 'Category4.DestDir'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^Category4.DestDir\s*=.*'
+    line: 'Category4.DestDir=${DestDir}/music'
+    state: present
+
+#software
+- name: Settings | Set 'Category5.Name'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^Category5.Name\s*=.*'
+    line: 'Category5.Name=software'
+    state: present
+
+- name: Settings | Set 'Category5.DestDir'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^Category5.DestDir\s*=.*'
+    line: 'Category5.DestDir=${DestDir}/software'
+    state: present
+
+#tv
+- name: Settings | Set 'Category6.Name'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^Category6.Name\s*=.*'
+    line: 'Category6.Name=tv'
+    state: present
+
+- name: Settings | Set 'Category6.DestDir'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^Category6.DestDir\s*=.*'
+    line: 'Category6.DestDir=${DestDir}/tv'
+    state: present
