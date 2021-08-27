@@ -15,7 +15,7 @@
     recreate: true
     volumes:
       - "{{ bazarr.folder }}:/config"
-      - "{{ data_folder }}/media/tvshows:/tv"
+      - "{{ data_folder }}/media/tv:/tv"
       - "{{ data_folder }}/media/movies:/movies"
     networks:
       - name: web
