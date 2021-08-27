@@ -92,13 +92,13 @@
 - name: Settings | Set 'Category7.Name'
   lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^Category6.Name\s*=.*'
-    line: 'Category6.Name=Miscellaneous'
+    regexp: '^Category7.Name\s*=.*'
+    line: 'Category7.Name=Miscellaneous'
     state: present
 
 - name: Settings | Set 'Category7.DestDir'
   lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^Category6.DestDir\s*=.*'
-    line: 'Category6.DestDir=${DestDir}/misc'
+    regexp: '^Category7.DestDir\s*=.*'
+    line: 'Category7.DestDir=${DestDir}/misc'
     state: present
