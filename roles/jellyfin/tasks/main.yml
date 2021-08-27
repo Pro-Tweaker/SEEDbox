@@ -3,7 +3,7 @@
   file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
   with_items:
     - "{{ jellyfin.folder }}"
-    - "{{ data_folder }}/media/tvshows"
+    - "{{ data_folder }}/media/tv"
     - "{{ data_folder }}/media/movies"
 
 - name: Create and start container
