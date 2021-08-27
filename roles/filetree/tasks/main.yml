@@ -4,6 +4,7 @@
   with_items:
     - "{{ data_folder }}/torrents"
     - "{{ data_folder }}/torrents/books"
+    - "{{ data_folder }}/torrents/games"
     - "{{ data_folder }}/torrents/misc"
     - "{{ data_folder }}/torrents/movies"
     - "{{ data_folder }}/torrents/music"
@@ -13,6 +14,7 @@
     - "{{ data_folder }}/usenet"
     - "{{ data_folder }}/usenet/nzbget" # to store app related files
     - "{{ data_folder }}/usenet/books"
+    - "{{ data_folder }}/usenet/games"
     - "{{ data_folder }}/usenet/misc"
     - "{{ data_folder }}/usenet/movies"
     - "{{ data_folder }}/usenet/music"
@@ -21,6 +23,7 @@
 
     - "{{ data_folder }}/media"
     - "{{ data_folder }}/media/books"
+    - "{{ data_folder }}/media/games"
     - "{{ data_folder }}/media/misc"
     - "{{ data_folder }}/media/movies"
     - "{{ data_folder }}/media/music"
