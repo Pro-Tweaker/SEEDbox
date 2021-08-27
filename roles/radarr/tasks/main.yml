@@ -16,7 +16,6 @@
     volumes:
       - "{{ radarr.folder }}:/config"
       - "{{ data_folder }}:/data"
-      - /etc/localtime:/etc/localtime:ro
     networks:
       - name: web
         aliases:
