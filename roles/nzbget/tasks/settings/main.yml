@@ -39,8 +39,3 @@
     regexp: '^RestrictedPassword\s*=.*'
     line: 'RestrictedPassword={{ nzbget.restricted_password }}'
     state: present
-
-- name: Settings | Start container
-  docker_container:
-    name: nzbget
-    state: started

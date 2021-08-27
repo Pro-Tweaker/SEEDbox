@@ -41,3 +41,8 @@
 
 - name: NZBGet Categories Tasks
   include_tasks: "settings/categories.yml"
+
+- name: Settings | Start container
+  docker_container:
+    name: nzbget
+    state: started

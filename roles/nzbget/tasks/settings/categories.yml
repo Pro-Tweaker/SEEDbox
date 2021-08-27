@@ -3,7 +3,7 @@
   lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
     regexp: '^Category1.Name\s*=.*'
-    line: 'Category1.Name=books'
+    line: 'Category1.Name=Books'
     state: present
 
 - name: Settings | Set 'Category1.DestDir'
@@ -18,7 +18,7 @@
   lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
     regexp: '^Category2.Name\s*=.*'
-    line: 'Category2.Name=games'
+    line: 'Category2.Name=Games'
     state: present
 
 - name: Settings | Set 'Category2.DestDir'
@@ -33,7 +33,7 @@
   lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
     regexp: '^Category3.Name\s*=.*'
-    line: 'Category3.Name=movies'
+    line: 'Category3.Name=Movies'
     state: present
 
 - name: Settings | Set 'Category3.DestDir'
@@ -48,7 +48,7 @@
   lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
     regexp: '^Category4.Name\s*=.*'
-    line: 'Category4.Name=music'
+    line: 'Category4.Name=Music'
     state: present
 
 - name: Settings | Set 'Category4.DestDir'
@@ -63,7 +63,7 @@
   lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
     regexp: '^Category5.Name\s*=.*'
-    line: 'Category5.Name=software'
+    line: 'Category5.Name=Software'
     state: present
 
 - name: Settings | Set 'Category5.DestDir'
@@ -78,7 +78,7 @@
   lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
     regexp: '^Category6.Name\s*=.*'
-    line: 'Category6.Name=tv'
+    line: 'Category6.Name=Tv'
     state: present
 
 - name: Settings | Set 'Category6.DestDir'
