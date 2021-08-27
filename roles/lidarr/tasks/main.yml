@@ -15,8 +15,7 @@
     recreate: true
     volumes:
       - "{{ lidarr.folder }}:/config"
-      - "{{ data_folder }}/media/music:/music"
-      - "{{ data_folder }}/data/nzbget/completed:/downloads"
+      - "{{ data_folder }}:/data"
     networks:
       - name: web
         aliases:
