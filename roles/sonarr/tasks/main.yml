@@ -15,8 +15,7 @@
     recreate: true
     volumes:
       - "{{ sonarr.folder }}:/config"
-      - "{{ data_folder }}/media/tvshows:/tv"
-      - "{{ data_folder }}/data/nzbget/completed:/downloads"
+      - "{{ data_folder }}:/data"
     networks:
       - name: web
         aliases:
