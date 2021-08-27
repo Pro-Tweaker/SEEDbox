@@ -50,6 +50,14 @@
     name: nzbget
     state: stopped
 
+- name: Clear leftover folders from first start
+  file: "path={{ item }} state=absent"
+  with_items:
+    - "{{ data_folder }}/usenet/nzb"
+    - "{{ data_folder }}/usenet/queue"
+    - "{{ data_folder }}/usenet/tmp"
+    - "{{ data_folder }}/usenet/nzbget.log"
+
 - name: NZBGet Main Settings Tasks
   include_tasks: "settings/main.yml"
 

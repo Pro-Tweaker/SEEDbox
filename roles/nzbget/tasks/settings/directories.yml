@@ -37,7 +37,7 @@
   lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
     regexp: '^TempDir\s*=.*'
-    line: 'TempDir=${MainDir}/tmp'
+    line: 'TempDir=${MainDir}/nzbget/tmp'
     state: present
 
 - name: Settings | Set 'ScriptDir'
