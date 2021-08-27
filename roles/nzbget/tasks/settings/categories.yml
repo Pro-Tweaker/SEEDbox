@@ -87,3 +87,18 @@
     regexp: '^Category6.DestDir\s*=.*'
     line: 'Category6.DestDir=${DestDir}/tv'
     state: present
+
+#misc
+- name: Settings | Set 'Category7.Name'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^Category6.Name\s*=.*'
+    line: 'Category6.Name=Miscellaneous'
+    state: present
+
+- name: Settings | Set 'Category7.DestDir'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^Category6.DestDir\s*=.*'
+    line: 'Category6.DestDir=${DestDir}/misc'
+    state: present

@@ -1,17 +1,3 @@
-- name: Settings | Wait for 'nzbget.conf' to be created
-  wait_for:
-    path: "{{ nzbget.folder }}/nzbget.conf"
-    state: present
-
-- name: Settings | Wait for 10 seconds before stopping nzbget container
-  wait_for:
-    timeout: 10
-
-- name: Settings | Stop container
-  docker_container:
-    name: nzbget
-    state: stopped
-
 - name: Settings | Clear 'ControlUsername'
   lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"

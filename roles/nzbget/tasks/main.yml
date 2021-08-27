@@ -17,7 +17,7 @@
     recreate: true
     volumes:
       - "{{ nzbget.folder }}:/config"
-      - "{{ data_folder }}/usenet:/downloads"
+      - "{{ data_folder }}/usenet:/data/usenet:rw"
     networks:
       - name: web
         aliases:
@@ -36,13 +36,30 @@
       PUID: "{{ uid | int }}"
       PGID: "{{ gid | int }}"
 
-- name: NZBGet Settings Tasks
+- name: Settings | Wait for 'nzbget.conf' to be created
+  wait_for:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    state: present
+
+- name: Settings | Wait for 10 seconds before stopping nzbget container
+  wait_for:
+    timeout: 10
+
+- name: Settings | Stop container
+  docker_container:
+    name: nzbget
+    state: stopped
+
+- name: NZBGet Main Settings Tasks
   include_tasks: "settings/main.yml"
 
-- name: NZBGet Categories Tasks
+- name: NZBGet Directories Settings Tasks
+  include_tasks: "settings/directories.yml"
+
+- name: NZBGet Categories Settings Tasks
   include_tasks: "settings/categories.yml"
 
-- name: Settings | Start container
+- name: Re-Start NZBGet container
   docker_container:
     name: nzbget
     state: started

@@ -1,0 +1,62 @@
+- name: Settings | Set 'MainDir'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^MainDir\s*=.*'
+    line: 'MainDir=/data/usenet'
+    state: present
+
+- name: Settings | Set 'DestDir'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^DestDir\s*=.*'
+    line: 'DestDir=${MainDir}' # DestDir=${MainDir}/completed
+    state: present
+
+- name: Settings | Set 'InterDir'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^InterDir\s*=.*'
+    line: 'InterDir=${MainDir}/nzbget/intermediate'
+    state: present
+
+- name: Settings | Set 'NzbDir'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^NzbDir\s*=.*'
+    line: 'NzbDir=${MainDir}/nzbget/nzb'
+    state: present
+
+- name: Settings | Set 'QueueDir'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^QueueDir\s*=.*'
+    line: 'QueueDir=${MainDir}/nzbget/queue'
+    state: present
+
+- name: Settings | Set 'TempDir'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^TempDir\s*=.*'
+    line: 'TempDir=${MainDir}/tmp'
+    state: present
+
+- name: Settings | Set 'ScriptDir'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^ScriptDir\s*=.*'
+    line: 'ScriptDir=${MainDir}/nzbget/scripts'
+    state: present
+
+- name: Settings | Set 'LockFile'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^LockFile\s*=.*'
+    line: 'LockFile=${MainDir}/nzbget/nzbget.lock'
+    state: present
+
+- name: Settings | Set 'LogFile'
+  lineinfile:
+    path: "{{ nzbget.folder }}/nzbget.conf"
+    regexp: '^LogFile\s*=.*'
+    line: 'LogFile=${MainDir}/nzbget/nzbget.log'
+    state: present
