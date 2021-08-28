@@ -49,6 +49,7 @@ navidrome:
 postfix:
   hostname: postfix
 watchtower:
+  monitor_only: false
   notification_email_to: "{{ notifications_email }}"
   notification_email_from: "watchtower@{{ domain }}"
   notification_email_server: postfix

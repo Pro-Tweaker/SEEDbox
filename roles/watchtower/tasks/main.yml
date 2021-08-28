@@ -21,6 +21,7 @@
     state: started
     env:
       TZ: "{{ tz }}"
+      WATCHTOWER_MONITOR_ONLY: "{{ watchtower.monitor_only }}"
       WATCHTOWER_CLEANUP: "true"
       WATCHTOWER_NO_STARTUP_MESSAGE: "false"
       # Update containers every day at 5:00 a.m.
