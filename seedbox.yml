@@ -15,7 +15,7 @@
     - { role: homer, tags: ["homer"] }
     - { role: filebrowser, tags: ["filebrowser"] }
     - { role: rutorrent, tags: ["rutorrent"] }
-    - { role: nzbget, tags: [usenet, "nzbget"] }
+    - { role: nzbget, tags: ["usenet", "nzbget"] }
     - { role: jellyfin, tags: ["jellyfin"] }
     - { role: navidrome, tags: ["navidrome"] }
     # Monitoring
@@ -27,10 +27,10 @@
     - { role: whoami, tags: ["tools", "whoami"] }
     - { role: librespeed, tags: ["tools", "librespeed"] }
     # *arr Apps
-    - { role: prowlarr, tags: [usenet, "rr", "prowlarr"] }
-    - { role: sonarr, tags: [usenet, "rr", "sonarr"] }
-    - { role: radarr, tags: [usenet, "rr", "radarr"] }
-    - { role: lidarr, tags: [usenet, "rr", "lidarr"] }
-    - { role: readarr, tags: [usenet, "rr", "readarr"] }
-    - { role: bazarr, tags: [usenet, "rr", "bazarr"] }
+    - { role: prowlarr, tags: ["usenet"", "rr", "prowlarr"] }
+    - { role: sonarr, tags: ["usenet", "rr", "sonarr"] }
+    - { role: radarr, tags: ["usenet", "rr", "radarr"] }
+    - { role: lidarr, tags: ["usenet", "rr", "lidarr"] }
+    - { role: readarr, tags: ["usenet", "rr", "readarr"] }
+    - { role: bazarr, tags: ["usenet", "rr", "bazarr"] }
     #- { role: traktarr, tags: [usenet, "rr", "traktarr"] }
