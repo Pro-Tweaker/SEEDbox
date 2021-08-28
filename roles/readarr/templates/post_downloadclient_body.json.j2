@@ -1,0 +1,52 @@
+{
+  "enable": true,
+  "protocol": "usenet",
+  "priority": 1,
+  "name": "NZBGet",
+  "fields": [
+    {
+      "name": "host",
+      "value": "nzbget"
+    },
+    {
+      "name": "port",
+      "value": 6789
+    },
+    {
+      "name": "useSsl",
+      "value": false
+    },
+    {
+      "name": "urlBase"
+    },
+    {
+      "name": "username",
+      "value": "{{ nzbget.restricted_username }}"
+    },
+    {
+      "name": "password",
+      "value": "{{ nzbget.restricted_password }}"
+    },
+    {
+      "name": "musicCategory",
+      "value": "Books"
+    },
+    {
+      "name": "recentTvPriority",
+      "value": 0
+    },
+    {
+      "name": "olderTvPriority",
+      "value": 0
+    },
+    {
+      "name": "addPaused",
+      "value": false
+    }
+  ],
+  "implementationName": "NZBGet",
+  "implementation": "Nzbget",
+  "configContract": "NzbgetSettings",
+  "infoLink": "https://wiki.servarr.com/readarr/supported#nzbget",
+  "tags": []
+}

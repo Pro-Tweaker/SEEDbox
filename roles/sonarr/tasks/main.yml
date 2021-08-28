@@ -36,7 +36,7 @@
 
 - name: Wait for 'config.xml' to be created
   wait_for:
-    path: "{{ lidarr.folder }}/config.xml"
+    path: "{{ sonarr.folder }}/config.xml"
     state: present
 
 - name: Wait for 10 seconds
