@@ -1,0 +1,54 @@
+{
+  "enable": true,
+  "protocol": "usenet",
+  "priority": 1,
+  "removeCompletedDownloads": true,
+  "removeFailedDownloads": true,
+  "name": "NZBGet",
+  "fields": [
+    {
+      "name": "host",
+      "value": "nzbget"
+    },
+    {
+      "name": "port",
+      "value": 6789
+    },
+    {
+      "name": "useSsl",
+      "value": false
+    },
+    {
+      "name": "urlBase"
+    },
+    {
+      "name": "username",
+      "value": "{{ nzbget.restricted_username }}"
+    },
+    {
+      "name": "password",
+      "value": "{{ nzbget.restricted_password }}"
+    },
+    {
+      "name": "tvCategory",
+      "value": "Tv"
+    },
+    {
+      "name": "recentTvPriority",
+      "value": 0
+    },
+    {
+      "name": "olderTvPriority",
+      "value": 0
+    },
+    {
+      "name": "addPaused",
+      "value": false
+    }
+  ],
+  "implementationName": "NZBGet",
+  "implementation": "Nzbget",
+  "configContract": "NzbgetSettings",
+  "infoLink": "https://wiki.servarr.com/Sonarr_Supported_DownloadClients",
+  "tags": []
+}

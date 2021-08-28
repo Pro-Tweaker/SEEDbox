@@ -33,3 +33,15 @@
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
       PGID: "{{ gid | int }}"
+
+- name: Wait for 'config.xml' to be created
+  wait_for:
+    path: "{{ lidarr.folder }}/config.xml"
+    state: present
+
+- name: Wait for 10 seconds
+  wait_for:
+    timeout: 10
+
+- name: Settings Tasks
+  include_tasks: "settings/main.yml"

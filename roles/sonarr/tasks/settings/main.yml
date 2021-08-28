@@ -1,0 +1,45 @@
+- name: Read Sonarr API Key Value
+  xml:
+    path: "{{ sonarr.folder }}/config.xml"
+    xpath: /Config/ApiKey
+    content: text
+  register: api_info
+
+- name: Get infos on Sonarr container
+  community.docker.docker_container_info:
+    name: sonarr
+  register: container_info
+
+- name: "Wait for Sonarr API to come up and returns a status 200"
+  uri:
+    url: "http://{{ container_info.container.NetworkSettings.Networks.web.IPAddress }}:8989/api/v3/system/status"
+    headers:
+      X-Api-Key: "{{ api_info.matches[0].ApiKey }}"
+  register: api_result
+  until: api_result.status == 200
+  retries: 30
+  delay: 1
+
+- name: "Add Root Folder"
+  uri:
+    url: "http://{{ container_info.container.NetworkSettings.Networks.web.IPAddress }}:8989/api/v3/rootFolder"
+    method: POST
+    status_code:
+      - 201
+      - 400
+    body: "{{ lookup('template', 'post_rootfolder_body.json.j2') }}"
+    body_format: json
+    headers:
+      X-Api-Key: "{{ api_info.matches[0].ApiKey }}"
+
+- name: "Add Download Client"
+  uri:
+    url: "http://{{ container_info.container.NetworkSettings.Networks.web.IPAddress }}:8989/api/v3/downloadclient"
+    method: POST
+    status_code:
+      - 201
+      - 400
+    body: "{{ lookup('template', 'post_downloadclient_body.json.j2') }}"
+    body_format: json
+    headers:
+      X-Api-Key: "{{ api_info.matches[0].ApiKey }}"
