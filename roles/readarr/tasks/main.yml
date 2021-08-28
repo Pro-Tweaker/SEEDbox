@@ -7,41 +7,41 @@
     group: "{{ group }}"
     mode: 0775
 
-#- name: Create and start container
-#  docker_container:
-#    name: readarr
-#    image: "ghcr.io/linuxserver/readarr:nightly"
-#    pull: yes
-#    recreate: true
-#    volumes:
-#      - "{{ readarr.folder }}:/config"
-#      - "{{ data_folder }}:/data"
-#    networks:
-#      - name: web
-#        aliases:
-#          - readarr
-#    restart_policy: unless-stopped
-#    state: started
-#    labels:
-#      traefik.enable: "true"
-#      traefik.docker.network: "web"
-#      traefik.http.routers.readarr.rule: "Host(`{{ readarr.subdomain }}.{{ domain }}`)"
-#      traefik.http.routers.readarr.entrypoints: "websecure"
-#      traefik.http.services.readarr.loadbalancer.server.port: "8787"
-#      traefik.http.routers.readarr.middlewares: "authelia@docker"
-#    env:
-#      TZ: "{{ tz }}"
-#      PUID: "{{ uid | int }}"
-#      PGID: "{{ gid | int }}"
+- name: Create and start container
+  docker_container:
+    name: readarr
+    image: "ghcr.io/linuxserver/readarr:nightly"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ readarr.folder }}:/config"
+      - "{{ data_folder }}:/data"
+    networks:
+      - name: web
+        aliases:
+          - readarr
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.readarr.rule: "Host(`{{ readarr.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.readarr.entrypoints: "websecure"
+      traefik.http.services.readarr.loadbalancer.server.port: "8787"
+      traefik.http.routers.readarr.middlewares: "authelia@docker"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"
 
 - name: Wait for 'config.xml' to be created
   wait_for:
     path: "{{ lidarr.folder }}/config.xml"
     state: present
 
-#- name: Wait for 10 seconds
-#  wait_for:
-#    timeout: 10
+- name: Wait for 10 seconds
+  wait_for:
+    timeout: 10
 
 - name: Settings Tasks
   include_tasks: "settings/main.yml"
