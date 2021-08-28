@@ -1,1 +1,4 @@
 settings.yml
+get-pip.py
+requirements.txt
+seedbox.retry
