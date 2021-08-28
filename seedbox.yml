@@ -15,22 +15,22 @@
     - { role: homer, tags: ["homer"] }
     - { role: filebrowser, tags: ["filebrowser"] }
     - { role: rutorrent, tags: ["rutorrent"] }
-    - { role: nzbget, tags: ["nzbget"] }
+    - { role: nzbget, tags: [usenet, "nzbget"] }
     - { role: jellyfin, tags: ["jellyfin"] }
     - { role: navidrome, tags: ["navidrome"] }
     # Monitoring
     - { role: scrutiny, tags: ["monitoring", "scrutiny"] }
     - { role: netdata, tags: ["monitoring", "netdata"] }
     - { role: watchtower, tags: ["monitoring", "watchtower"] }
-    - { role: postfix, tags: ["monitoring", "postfix"] }
+    - { role: postfix, tags: ["monitoring", "watchtower", "postfix"] }
     # Tools
-    - { role: whoami, tags: ["whoami"] }
-    - { role: librespeed, tags: ["librespeed"] }
-    # Double R Apps
-    - { role: prowlarr, tags: ["rr", "prowlarr"] }
-    - { role: sonarr, tags: ["rr", "sonarr"] }
-    - { role: radarr, tags: ["rr", "radarr"] }
-    - { role: lidarr, tags: ["rr", "lidarr"] }
-    - { role: readarr, tags: ["rr", "readarr"] }
-    - { role: bazarr, tags: ["rr", "bazarr"] }
-    - { role: traktarr, tags: ["rr", "traktarr"] }
+    - { role: whoami, tags: ["tools", "whoami"] }
+    - { role: librespeed, tags: ["tools", "librespeed"] }
+    # *arr Apps
+    - { role: prowlarr, tags: [usenet, "rr", "prowlarr"] }
+    - { role: sonarr, tags: [usenet, "rr", "sonarr"] }
+    - { role: radarr, tags: [usenet, "rr", "radarr"] }
+    - { role: lidarr, tags: [usenet, "rr", "lidarr"] }
+    - { role: readarr, tags: [usenet, "rr", "readarr"] }
+    - { role: bazarr, tags: [usenet, "rr", "bazarr"] }
+    #- { role: traktarr, tags: [usenet, "rr", "traktarr"] }
