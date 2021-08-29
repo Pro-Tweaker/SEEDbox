@@ -27,7 +27,7 @@
     - { role: whoami, tags: ["tools", "whoami"] }
     - { role: librespeed, tags: ["tools", "librespeed"] }
     # *arr Apps
-    - { role: prowlarr, tags: ["usenet"", "rr", "prowlarr"] }
+    - { role: prowlarr, tags: ["usenet", "rr", "prowlarr"] }
     - { role: sonarr, tags: ["usenet", "rr", "sonarr"] }
     - { role: radarr, tags: ["usenet", "rr", "radarr"] }
     - { role: lidarr, tags: ["usenet", "rr", "lidarr"] }
