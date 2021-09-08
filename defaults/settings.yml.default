@@ -34,6 +34,8 @@ nzbget:
   restricted_password: demo
 homer:
   folder: /opt/homer
+  title: "SEEDbox Dashboard"
+  subtitle: "{{ domain }}"
 scrutiny:
   folder: /opt/scrutiny
   subdomain: scrutiny
@@ -102,3 +104,9 @@ whoami:
 librespeed:
   folder: /opt/librespeed
   subdomain: librespeed
+qbittorrent:
+  folder: /opt/qbittorrent
+  subdomain: qbittorrent
+flood:
+  folder: /opt/flood
+  subdomain: flood

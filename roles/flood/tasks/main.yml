@@ -1,0 +1,35 @@
+---
+- name: Create directories
+  file:
+    path: "{{ flood.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: flood
+    image: jesec/flood
+    pull: yes
+    recreate: true
+    command: --port 3001 --allowedpath /data
+    volumes:
+      - "{{ flood.folder }}:/config"
+      - "{{ data_folder }}/torrents:/data"
+    user: "{{ uid }}:{{ gid }}"
+    networks:
+      - name: web
+        aliases:
+          - flood
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.flood.rule: "Host(`{{ flood.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.flood.entrypoints: "websecure"
+      traefik.http.services.flood.loadbalancer.server.port: "3001"
+      traefik.http.routers.flood.middlewares: "authelia@docker"
+    env:
+      HOME: /config
