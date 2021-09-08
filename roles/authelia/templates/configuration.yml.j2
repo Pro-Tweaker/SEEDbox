@@ -68,6 +68,10 @@ access_control:
       policy: one_factor
     - domain: {{ librespeed.subdomain }}.{{ domain }}
       policy: one_factor
+    - domain: {{ qbittorrent.subdomain }}.{{ domain }}
+      policy: one_factor
+    - domain: {{ flood.subdomain }}.{{ domain }}
+      policy: one_factor
 
 session:
   name: {{ authelia.session_name }}

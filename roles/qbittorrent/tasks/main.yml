@@ -1,0 +1,42 @@
+---
+- name: Create directories
+  file:
+    path: "{{ qbittorrent.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: qbittorrent
+    image: ghcr.io/linuxserver/qbittorrent
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ qbittorrent.folder }}:/config"
+      - "{{ data_folder }}/torrents:/downloads"
+    networks:
+      - name: web
+        aliases:
+          - qbittorrent
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.qbittorrent.rule: "Host(`{{ qbittorrent.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.qbittorrent.entrypoints: "websecure"
+      traefik.http.services.qbittorrent.loadbalancer.server.port: "8080"
+      
+      #traefik.http.middlewares.referer.headers.customresponseheaders.Referer: "{{ qbittorrent.subdomain }}.{{ domain }}"
+      traefik.http.routers.qbittorrent.middlewares: "authelia@docker"
+    published_ports:
+      - "51413:51413"
+      - "6881:6881"
+      - "6881:6881/udp"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"
+      WEBUI_PORT: 8080
