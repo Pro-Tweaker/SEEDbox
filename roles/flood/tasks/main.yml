@@ -13,10 +13,10 @@
     image: jesec/flood
     pull: yes
     recreate: true
-    command: --port 3001 --allowedpath /data
+    command: --port 3001 --allowedpath /downloads
     volumes:
       - "{{ flood.folder }}:/config"
-      - "{{ data_folder }}/torrents:/data"
+      - "{{ data_folder }}/torrents:/downloads"
     user: "{{ uid }}:{{ gid }}"
     networks:
       - name: web
