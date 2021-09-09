@@ -39,4 +39,4 @@
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
       PGID: "{{ gid | int }}"
-      WEBUI_PORT: 8080
+      WEBUI_PORT: "8080"
