@@ -30,6 +30,7 @@
     state: started
     capabilities:
       - SYS_RAWIO
+      - SYS_ADMIN
     labels:
       traefik.enable: "true"
       traefik.docker.network: "web"
