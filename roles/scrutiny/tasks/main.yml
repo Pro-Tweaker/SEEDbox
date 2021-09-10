@@ -7,6 +7,11 @@
     group: "{{ group }}"
     mode: 0775
 
+- name: Get disks
+  shell: for line in $(lsblk --noheadings --list --scsi --output name); do echo "/dev/${line}:/dev/${line}"; done
+  register: lsblk_disks
+  changed_when: false
+
 - name: Create and start container
   docker_container:
     name: scrutiny
@@ -16,9 +21,7 @@
     volumes:
       - "{{ scrutiny.folder }}:/config"
       - "/run/udev:/run/udev:ro"
-    devices:
-      - "/dev/sda:/dev/sda:rwm"
-      - "/dev/sdb:/dev/sdb:rwm"
+    devices: "{{ lsblk_disks.stdout_lines }}"
     networks:
       - name: web
         aliases:
