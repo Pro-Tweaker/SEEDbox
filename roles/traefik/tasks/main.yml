@@ -38,11 +38,21 @@
       - "{{ traefik.folder }}/acme.json:/acme.json"
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
+      # Traefik
       traefik.enable: "true"
       traefik.http.routers.traefik.rule: "Host(`{{ traefik.api_url }}`)"
       traefik.http.routers.traefik.entrypoints: "websecure"
       traefik.http.routers.traefik.service: "api@internal"
       traefik.http.routers.traefik.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Traefik"
+      homer.service: "Management"
+      homer.priority: "2"
+      homer.subtitle: "Dashboard of the Traefik proxy"
+      homer.url: "https://{{ traefik.api_url }}"
+      homer.logo: "assets/homer-icons/png/traefik.png"
+      homer.target: "_blank"
     env:
       CF_API_KEY: "{{ cloudflare.api_key }}"
       CF_API_EMAIL: "{{ cloudflare.api_email }}"
