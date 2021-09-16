@@ -25,8 +25,18 @@
     restart_policy: always
     state: started
     labels:
+      # Traefik
       traefik.enable: "true"
       traefik.docker.network: "web"
       traefik.http.routers.portainer.rule: "Host(`{{ portainer.subdomain }}.{{ domain }}`)"
       traefik.http.routers.portainer.entrypoints: "websecure"
       traefik.http.services.portainer.loadbalancer.server.port: "9000"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Portainer"
+      homer.service: "Management"
+      homer.priority: "1"
+      homer.subtitle: "Advanced Docker GUI"
+      homer.url: "https://{{ portainer.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/portainer.png"
+      homer.target: "_blank"

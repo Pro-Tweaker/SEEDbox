@@ -35,14 +35,25 @@
     security_opts:
       - apparmor:unconfined
     labels:
+      # Trafik
       traefik.enable: "true"
       traefik.docker.network: "web"
       traefik.http.routers.netdata.rule: "Host(`{{ netdata.subdomain }}.{{ domain }}`)"
       traefik.http.routers.netdata.entrypoints: "websecure"
       traefik.http.services.netdata.loadbalancer.server.port: "19999"
       traefik.http.routers.netdata.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Netdata"
+      homer.service: "Monitoring"
+      homer.priority: "1"
+      homer.subtitle: "Monitor everything in real time"
+      homer.url: "https://{{ netdata.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/netdata.png"
+      homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
       PGID: "{{ gid | int }}"
-      CONTAINERS: 1 | int
+      DO_NOT_TRACK: 1
+      CONTAINERS: 1
