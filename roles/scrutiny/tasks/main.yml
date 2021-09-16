@@ -32,12 +32,22 @@
       - SYS_RAWIO
       - SYS_ADMIN
     labels:
+      # Traefik
       traefik.enable: "true"
       traefik.docker.network: "web"
       traefik.http.routers.scrutiny.rule: "Host(`{{ scrutiny.subdomain }}.{{ domain }}`)"
       traefik.http.routers.scrutiny.entrypoints: "websecure"
       traefik.http.services.scrutiny.loadbalancer.server.port: "8080"
       traefik.http.routers.scrutiny.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Scrutiny"
+      homer.service: "Monitoring"
+      homer.priority: "2"
+      homer.subtitle: "Hard Drive S.M.A.R.T Monitoring"
+      homer.url: "https://{{ scrutiny.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/scrutiny.png"
+      homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
