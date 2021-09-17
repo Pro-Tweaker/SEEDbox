@@ -24,11 +24,21 @@
     restart_policy: unless-stopped
     state: started
     labels:
+      # Traefik
       traefik.enable: "true"
       traefik.docker.network: "web"
       traefik.http.routers.jellyfin.rule: "Host(`{{ jellyfin.subdomain }}.{{ domain }}`)"
       traefik.http.routers.jellyfin.entrypoints: "websecure"
       traefik.http.services.jellyfin.loadbalancer.server.port: "8096"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Jellyfin"
+      homer.service: "Applications"
+      homer.priority: "3"
+      homer.subtitle: "Stream to any device from your own server"
+      homer.url: "https://{{ jellyfin.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/jellyfin.png"
+      homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
