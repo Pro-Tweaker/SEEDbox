@@ -61,10 +61,20 @@
     restart_policy: unless-stopped
     state: started
     labels:
+      # Treafik
       traefik.enable: "true"
       traefik.docker.network: "web"
       traefik.http.routers.filebrowser.rule: "Host(`{{ filebrowser.subdomain }}.{{ domain }}`)"
       traefik.http.routers.filebrowser.entrypoints: "websecure"
       traefik.http.services.filebrowser.loadbalancer.server.port: "80"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Filebrowser"
+      homer.service: "Tools"
+      homer.priority: "1"
+      homer.subtitle: "File managing interface"
+      homer.url: "https://{{ filebrowser.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/filebrowser.png"
+      homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
