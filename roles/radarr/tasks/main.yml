@@ -23,12 +23,22 @@
     restart_policy: unless-stopped
     state: started
     labels:
+      # Traefik
       traefik.enable: "true"
       traefik.docker.network: "web"
       traefik.http.routers.radarr.rule: "Host(`{{ radarr.subdomain }}.{{ domain }}`)"
       traefik.http.routers.radarr.entrypoints: "websecure"
       traefik.http.services.radarr.loadbalancer.server.port: "7878"
       traefik.http.routers.radarr.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Radarr"
+      homer.service: "PVR"
+      homer.priority: "2"
+      homer.subtitle: "Movie collection manager for Usenet and BitTorrent users"
+      homer.url: "https://{{ radarr.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/radarr.png"
+      homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
