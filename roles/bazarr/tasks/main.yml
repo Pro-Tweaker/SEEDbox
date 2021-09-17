@@ -23,12 +23,22 @@
     restart_policy: unless-stopped
     state: started
     labels:
+      # Traefik
       traefik.enable: "true"
       traefik.docker.network: "web"
       traefik.http.routers.bazarr.rule: "Host(`{{ bazarr.subdomain }}.{{ domain }}`)"
       traefik.http.routers.bazarr.entrypoints: "websecure"
       traefik.http.services.bazarr.loadbalancer.server.port: "6767"
       traefik.http.routers.bazarr.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Bazarr"
+      homer.service: "Tools"
+      homer.priority: "3"
+      homer.subtitle: "Manage and download subtitles"
+      homer.url: "https://{{ bazarr.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/svg/bazarr.svg"
+      homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
