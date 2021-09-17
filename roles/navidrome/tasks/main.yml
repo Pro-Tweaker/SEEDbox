@@ -28,11 +28,21 @@
     restart_policy: unless-stopped
     state: started
     labels:
+      # Traefik
       traefik.enable: "true"
       traefik.docker.network: "web"
       traefik.http.routers.navidrome.rule: "Host(`{{ navidrome.subdomain }}.{{ domain }}`)"
       traefik.http.routers.navidrome.entrypoints: "websecure"
       traefik.http.services.navidrome.loadbalancer.server.port: "4533"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Navidrome"
+      homer.service: "Applications"
+      homer.priority: "4"
+      homer.subtitle: "Enjoy your music collection from anywhere"
+      homer.url: "https://{{ navidrome.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/navidrome.png"
+      homer.target: "_blank"
     env:
       ND_SCANSCHEDULE: 1h
       ND_LOGLEVEL: info  
