@@ -23,12 +23,22 @@
     restart_policy: unless-stopped
     state: started
     labels:
+      # Traefik
       traefik.enable: "true"
       traefik.docker.network: "web"
       traefik.http.routers.lidarr.rule: "Host(`{{ lidarr.subdomain }}.{{ domain }}`)"
       traefik.http.routers.lidarr.entrypoints: "websecure"
       traefik.http.services.lidarr.loadbalancer.server.port: "8686"
       traefik.http.routers.lidarr.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Lidarr"
+      homer.service: "PVR"
+      homer.priority: "3"
+      homer.subtitle: "Music collection manager for Usenet and BitTorrent users"
+      homer.url: "https://{{ lidarr.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/lidarr.png"
+      homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
