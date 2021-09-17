@@ -22,12 +22,22 @@
     restart_policy: unless-stopped
     state: started
     labels:
+      # Traefik
       traefik.enable: "true"
       traefik.docker.network: "web"
       traefik.http.routers.prowlarr.rule: "Host(`{{ prowlarr.subdomain }}.{{ domain }}`)"
       traefik.http.routers.prowlarr.entrypoints: "websecure"
       traefik.http.services.prowlarr.loadbalancer.server.port: "9696"
       traefik.http.routers.prowlarr.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Prowlarr"
+      homer.service: "Tools"
+      homer.priority: "2"
+      homer.subtitle: "Indexer manager/proxy"
+      homer.url: "https://{{ prowlarr.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/svg/prowlarr.svg"
+      homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
