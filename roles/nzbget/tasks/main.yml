@@ -25,12 +25,22 @@
     restart_policy: unless-stopped
     state: started
     labels:
+      # Traefik
       traefik.enable: "true"
       traefik.docker.network: "web"
       traefik.http.routers.nzbget.rule: "Host(`{{ nzbget.subdomain }}.{{ domain }}`)"
       traefik.http.routers.nzbget.entrypoints: "websecure"
       traefik.http.services.nzbget.loadbalancer.server.port: "6789"
       traefik.http.routers.nzbget.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "NZBGet"
+      homer.service: "Applications"
+      homer.priority: "2"
+      homer.subtitle: "Efficient Usenet downloader"
+      homer.url: "https://{{ nzbget.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/nzbget.png"
+      homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
