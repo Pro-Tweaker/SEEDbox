@@ -23,12 +23,22 @@
     restart_policy: unless-stopped
     state: started
     labels:
+      # Traefik
       traefik.enable: "true"
       traefik.docker.network: "web"
       traefik.http.routers.sonarr.rule: "Host(`{{ sonarr.subdomain }}.{{ domain }}`)"
       traefik.http.routers.sonarr.entrypoints: "websecure"
       traefik.http.services.sonarr.loadbalancer.server.port: "8989"
       traefik.http.routers.sonarr.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Sonarr"
+      homer.service: "PVR"
+      homer.priority: "1"
+      homer.subtitle: "PVR for Usenet and BitTorrent users"
+      homer.url: "https://{{ sonarr.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/svg/sonarr.svg"
+      homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
