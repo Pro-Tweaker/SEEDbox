@@ -23,12 +23,22 @@
     restart_policy: unless-stopped
     state: started
     labels:
+      # Traefik
       traefik.enable: "true"
       traefik.docker.network: "web"
       traefik.http.routers.readarr.rule: "Host(`{{ readarr.subdomain }}.{{ domain }}`)"
       traefik.http.routers.readarr.entrypoints: "websecure"
       traefik.http.services.readarr.loadbalancer.server.port: "8787"
       traefik.http.routers.readarr.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Readarr"
+      homer.service: "PVR"
+      homer.priority: "4"
+      homer.subtitle: "Ebook & Audiobook collection manager for Usenet and BitTorrent users"
+      homer.url: "https://{{ readarr.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/readarr.png"
+      homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
