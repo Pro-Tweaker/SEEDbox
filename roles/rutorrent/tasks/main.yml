@@ -41,12 +41,22 @@
     restart_policy: unless-stopped
     state: started
     labels:
+      # Traefik
       traefik.enable: "true"
       traefik.docker.network: "web"
       traefik.http.routers.rutorrent.rule: "Host(`{{ rutorrent.subdomain }}.{{ domain }}`)"
       traefik.http.routers.rutorrent.entrypoints: "websecure"
       traefik.http.services.rutorrent.loadbalancer.server.port: "80"
       traefik.http.routers.rutorrent.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "ruTorrent"
+      homer.service: "Applications"
+      homer.priority: "1"
+      homer.subtitle: "rTorrent client with a webui"
+      homer.url: "https://{{ rutorrent.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/rutorrent.png"
+      homer.target: "_blank"
     published_ports:
       - "51413:51413"
       - "6881:6881/udp"
