@@ -74,7 +74,7 @@
       homer.priority: "1"
       homer.subtitle: "File managing interface"
       homer.url: "https://{{ filebrowser.subdomain }}.{{ domain }}"
-      homer.logo: "assets/homer-icons/png/filebrowser.png"
+      homer.logo: "assets/homer-icons/svg/filebrowser.svg"
       homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
