@@ -43,7 +43,7 @@
       homer.enable: "true"
       homer.name: "Scrutiny"
       homer.service: "Monitoring"
-      homer.priority: "2"
+      homer.priority: "100"
       homer.subtitle: "Hard Drive S.M.A.R.T Monitoring"
       homer.url: "https://{{ scrutiny.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/png/scrutiny.png"
