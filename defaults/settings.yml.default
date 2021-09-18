@@ -37,10 +37,12 @@ homer:
   title: "SEEDbox Dashboard"
   subtitle: "{{ domain }}"
   services:
-    - name: "Applications"
-      icon: "fas fa-cloud"
+    - name: Download
+      icon: "fas fa-cloud-download-alt"
     - name: PVR
       icon: "fas fa-tv"
+    - name: Media
+      icon: "fas fa-compact-disc"
     - name: Tools
       icon: "fas fa-tools"
     - name: Monitoring
@@ -124,3 +126,5 @@ flood:
 kavita:
   folder: /opt/kavita
   subdomain: kavita
+archivebox:
+  subdomain: archivebox
