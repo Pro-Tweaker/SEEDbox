@@ -25,11 +25,21 @@
     restart_policy: unless-stopped
     state: started
     labels:
+      # Traefik
       traefik.enable: "true"
       traefik.docker.network: "web"
       traefik.http.routers.flood.rule: "Host(`{{ flood.subdomain }}.{{ domain }}`)"
       traefik.http.routers.flood.entrypoints: "websecure"
       traefik.http.services.flood.loadbalancer.server.port: "3001"
       traefik.http.routers.flood.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Flood"
+      homer.service: "Download"
+      homer.priority: "500"
+      homer.subtitle: "Modern web UI for various torrent clients"
+      homer.url: "https://{{ flood.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/flood.png"
+      homer.target: "_blank"
     env:
       HOME: /config
