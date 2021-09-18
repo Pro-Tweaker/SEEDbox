@@ -1,13 +1,11 @@
 ---
 - name: Create directories
-  file:
-    path: "{{ homer.folder }}"
-    state: directory
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    mode: 0775
+  file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
+  with_items:
+    - "{{ homer.folder }}"
+    - "{{ homer.folder }}/discovery"
 
-- name: Create and start container
+- name: Create and start Homer container
   docker_container:
     name: homer
     image: "b4bz/homer"
@@ -35,3 +33,28 @@
 
 - name: Homer Settings Tasks
   include_tasks: "settings/main.yml"
+
+- name: Create the management network
+  docker_network:
+    name: management
+
+- name: Create and start Homer Service Discovery container
+  docker_container:
+    name: homer-discovery
+    image: "ghcr.io/calvinbui/homer-service-discovery:latest"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ homer.folder }}/config.yml:/config.yml"
+      - "{{ homer.folder }}/discovery/base.yml:/base.yml"
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - name: management
+        aliases:
+          - homer-discovery
+    restart_policy: unless-stopped
+    state: started
+    env:
+      LOG_LEVEL: Debug
+      HOMER_CONFIG: /config.yml
+      HOMER_BASE_CONFIG: /base.yml

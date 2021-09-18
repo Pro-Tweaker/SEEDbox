@@ -3,9 +3,9 @@
     path: "{{ homer.folder }}/config.yml"
     state: present
 
-- name: Settings | Wait for 10 seconds before stopping homer container
-  wait_for:
-    timeout: 10
+#- name: Settings | Wait for 10 seconds before stopping homer container
+#  wait_for:
+#    timeout: 10
 
 - name: Settings | Stop container
   docker_container:
@@ -23,10 +23,10 @@
     dest: "{{ homer.folder }}/homer-icons"
   when: homer_icons_folder.stat.exists == False
 
-- name: Settings | Import custom 'config.yml'
+- name: Settings | Import custom 'base.yml'
   template:
     src: config.yml.j2
-    dest: "{{ homer.folder }}/config.yml"
+    dest: "{{ homer.folder }}/discovery/base.yml"
     force: yes
     owner: "{{ user }}"
     group: "{{ group }}"

@@ -36,6 +36,17 @@ homer:
   folder: /opt/homer
   title: "SEEDbox Dashboard"
   subtitle: "{{ domain }}"
+  services:
+    - name: "Applications"
+      icon: "fas fa-cloud"
+    - name: PVR
+      icon: "fas fa-tv"
+    - name: Tools
+      icon: "fas fa-tools"
+    - name: Monitoring
+      icon: "far fa-eye"
+    - name: Management
+      icon: "fas fa-user-shield"
 scrutiny:
   folder: /opt/scrutiny
   subdomain: scrutiny
@@ -110,3 +121,6 @@ qbittorrent:
 flood:
   folder: /opt/flood
   subdomain: flood
+kavita:
+  folder: /opt/kavita
+  subdomain: kavita
