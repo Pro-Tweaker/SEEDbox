@@ -48,7 +48,7 @@
       homer.enable: "true"
       homer.name: "Traefik"
       homer.service: "Management"
-      homer.priority: "2"
+      homer.priority: "400"
       homer.subtitle: "Dashboard of the Traefik proxy"
       homer.url: "https://{{ traefik.api_url }}"
       homer.logo: "assets/homer-icons/png/traefik.png"
