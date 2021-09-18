@@ -33,8 +33,8 @@
       # Homer
       homer.enable: "true"
       homer.name: "Jellyfin"
-      homer.service: "Applications"
-      homer.priority: "3"
+      homer.service: "Media"
+      homer.priority: "300"
       homer.subtitle: "Stream to any device from your own server"
       homer.url: "https://{{ jellyfin.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/png/jellyfin.png"
