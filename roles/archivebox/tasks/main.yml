@@ -1,0 +1,51 @@
+---
+- name: Create directories
+  file:
+    path: "{{ data_folder }}/archivebox"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: archivebox
+    image: archivebox/archivebox
+    pull: yes
+    recreate: true
+    command: server --quick-init 0.0.0.0:8000
+    volumes:
+      - "{{ data_folder }}/archivebox:/data"
+    networks:
+      - name: web
+        aliases:
+          - archivebox
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      # Traefik
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.archivebox.rule: "Host(`{{ archivebox.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.archivebox.entrypoints: "websecure"
+      traefik.http.services.archivebox.loadbalancer.server.port: "8000"
+      traefik.http.routers.archivebox.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "ArchiveBox"
+      homer.service: "Tools"
+      homer.priority: "1"
+      homer.subtitle: "Open-source self-hosted web archiving"
+      homer.url: "https://{{ archivebox.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/archivebox.png"
+      homer.target: "_blank"
+    env:
+      TIMEOUT: "120"
+      CHECK_SSL_VALIDITY: "true"
+      SAVE_ARCHIVE_DOT_ORG: "false"
+      MEDIA_MAX_SIZE: "1500m"
+      PUBLIC_INDEX: "true"
+      PUBLIC_SNAPSHOTS: "true"
+      PUBLIC_ADD_VIEW: "true"
+      ALLOWED_HOSTS: "*"
+

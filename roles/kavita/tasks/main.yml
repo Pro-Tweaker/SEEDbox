@@ -1,0 +1,42 @@
+---
+- name: Create directories
+  file:
+    path: "{{ kavita.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: kavita
+    image: kizaing/kavita:latest
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ kavita.folder }}:/kavita/data"
+      - "{{ data_folder }}/media/books:/kavita/book"
+      - "{{ data_folder }}/media/comics:/kavita/comics"
+      - "{{ data_folder }}/media/mangas:/kavita/mangas"
+    networks:
+      - name: web
+        aliases:
+          - kavita
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      # Traefik
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.kavita.rule: "Host(`{{ kavita.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.kavita.entrypoints: "websecure"
+      traefik.http.services.kavita.loadbalancer.server.port: "5000"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Kavita"
+      homer.service: "Media"
+      homer.priority: "100"
+      homer.subtitle: "Fast, feature-rich, cross-platform reading server"
+      homer.url: "https://{{ kavita.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/svg/kavita.svg"
+      homer.target: "_blank"
