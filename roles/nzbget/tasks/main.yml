@@ -35,8 +35,8 @@
       # Homer
       homer.enable: "true"
       homer.name: "NZBGet"
-      homer.service: "Applications"
-      homer.priority: "2"
+      homer.service: "Download"
+      homer.priority: "200"
       homer.subtitle: "Efficient Usenet downloader"
       homer.url: "https://{{ nzbget.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/png/nzbget.png"
