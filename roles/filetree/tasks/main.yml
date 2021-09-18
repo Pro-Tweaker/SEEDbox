@@ -23,6 +23,8 @@
 
     - "{{ data_folder }}/media"
     - "{{ data_folder }}/media/books"
+    - "{{ data_folder }}/media/comics"
+    - "{{ data_folder }}/media/mangas"
     - "{{ data_folder }}/media/games"
     - "{{ data_folder }}/media/misc"
     - "{{ data_folder }}/media/movies"
