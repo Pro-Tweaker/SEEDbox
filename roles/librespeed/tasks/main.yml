@@ -15,9 +15,6 @@
     recreate: true
     volumes:
       - "{{ librespeed.folder }}:/config"
-    devices:
-      - "/dev/sda:/dev/sda:rwm"
-      - "/dev/sdb:/dev/sdb:rwm"
     networks:
       - name: web
         aliases:
@@ -25,12 +22,22 @@
     restart_policy: unless-stopped
     state: started
     labels:
+      # Traefik
       traefik.enable: "true"
       traefik.docker.network: "web"
       traefik.http.routers.librespeed.rule: "Host(`{{ librespeed.subdomain }}.{{ domain }}`)"
       traefik.http.routers.librespeed.entrypoints: "websecure"
       traefik.http.services.librespeed.loadbalancer.server.port: "80"
       traefik.http.routers.librespeed.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "LibreSpeed"
+      homer.service: "Monitoring"
+      homer.priority: "200"
+      homer.subtitle: "FOOS Speedtest. No Bullshit."
+      homer.url: "https://{{ librespeed.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/librespeed.png"
+      homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
