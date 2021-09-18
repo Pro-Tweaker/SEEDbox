@@ -51,8 +51,8 @@
       # Homer
       homer.enable: "true"
       homer.name: "ruTorrent"
-      homer.service: "Applications"
-      homer.priority: "1"
+      homer.service: "Download"
+      homer.priority: "300"
       homer.subtitle: "rTorrent client with a webui"
       homer.url: "https://{{ rutorrent.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/png/rutorrent.png"
