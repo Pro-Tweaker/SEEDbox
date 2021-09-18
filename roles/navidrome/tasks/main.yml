@@ -37,8 +37,8 @@
       # Homer
       homer.enable: "true"
       homer.name: "Navidrome"
-      homer.service: "Applications"
-      homer.priority: "4"
+      homer.service: "Media"
+      homer.priority: "200"
       homer.subtitle: "Enjoy your music collection from anywhere"
       homer.url: "https://{{ navidrome.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/png/navidrome.png"
