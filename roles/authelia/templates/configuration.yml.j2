@@ -42,35 +42,7 @@ access_control:
     #  policy: two_factor
     - domain: {{ domain }}
       policy: one_factor
-    - domain: {{ whoami.subdomain }}.{{ domain }}
-      policy: one_factor
-    - domain: {{ scrutiny.subdomain }}.{{ domain }}
-      policy: one_factor
-    - domain: {{ traefik.api_url }}
-      policy: one_factor
-    - domain: {{ netdata.subdomain }}.{{ domain }}
-      policy: one_factor
-    - domain: {{ rutorrent.subdomain }}.{{ domain }}
-      policy: one_factor
-    - domain: {{ nzbget.subdomain }}.{{ domain }}
-      policy: one_factor
-    - domain: {{ prowlarr.subdomain }}.{{ domain }}
-      policy: one_factor
-    - domain: {{ sonarr.subdomain }}.{{ domain }}
-      policy: one_factor
-    - domain: {{ radarr.subdomain }}.{{ domain }}
-      policy: one_factor
-    - domain: {{ lidarr.subdomain }}.{{ domain }}
-      policy: one_factor
-    - domain: {{ readarr.subdomain }}.{{ domain }}
-      policy: one_factor
-    - domain: {{ bazarr.subdomain }}.{{ domain }}
-      policy: one_factor
-    - domain: {{ librespeed.subdomain }}.{{ domain }}
-      policy: one_factor
-    - domain: {{ qbittorrent.subdomain }}.{{ domain }}
-      policy: one_factor
-    - domain: {{ flood.subdomain }}.{{ domain }}
+    - domain: "*.{{ domain }}"
       policy: one_factor
 
 session:
