@@ -1,11 +1,9 @@
 ---
 - name: Create directories
-  file:
-    path: "{{ data_folder }}/archivebox"
-    state: directory
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    mode: 0775
+  file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
+  with_items:
+    - "{{ archivebox.folder }}"
+    - "{{ data_folder }}/archives"
 
 - name: Create and start container
   docker_container:
@@ -15,7 +13,8 @@
     recreate: true
     command: server --quick-init 0.0.0.0:8000
     volumes:
-      - "{{ data_folder }}/archivebox:/data"
+      - "{{ archivebox.folder }}:/data"
+      - "{{ data_folder }}/archives:/data/archive"
     networks:
       - name: web
         aliases:
