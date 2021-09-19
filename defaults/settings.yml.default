@@ -127,7 +127,14 @@ kavita:
   folder: /opt/kavita
   subdomain: kavita
 archivebox:
+  folder: /opt/archivebox
   subdomain: archivebox
 sabnzbd:
   folder: /opt/sabnzbd
   subdomain: sabnzbd
+syncthing:
+  folder: /opt/syncthing
+  subdomain: syncthing
+speedtesttracker:
+  folder: /opt/speedtesttracker
+  subdomain: speedtesttracker
