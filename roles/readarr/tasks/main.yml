@@ -34,7 +34,7 @@
       homer.enable: "true"
       homer.name: "Readarr"
       homer.service: "PVR"
-      homer.priority: "4"
+      homer.priority: "100"
       homer.subtitle: "Ebook & Audiobook collection manager for Usenet and BitTorrent users"
       homer.url: "https://{{ readarr.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/png/readarr.png"

@@ -34,7 +34,7 @@
       homer.enable: "true"
       homer.name: "Lidarr"
       homer.service: "PVR"
-      homer.priority: "3"
+      homer.priority: "200"
       homer.subtitle: "Music collection manager for Usenet and BitTorrent users"
       homer.url: "https://{{ lidarr.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/png/lidarr.png"

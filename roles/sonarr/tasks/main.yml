@@ -34,7 +34,7 @@
       homer.enable: "true"
       homer.name: "Sonarr"
       homer.service: "PVR"
-      homer.priority: "1"
+      homer.priority: "400"
       homer.subtitle: "PVR for Usenet and BitTorrent users"
       homer.url: "https://{{ sonarr.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/svg/sonarr.svg"
