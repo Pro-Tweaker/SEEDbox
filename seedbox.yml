@@ -10,35 +10,39 @@
     - { role: authelia, tags: ["core", "authelia"] }
     - { role: filetree, tags: ["core", "filetree"] }
     - { role: hardening, tags: ["core", "hardening"] }
+    - { role: homer, tags: ["core", "homer"] }
+    - { role: watchtower, tags: ["core", "watchtower"] }
+    - { role: postfix, tags: ["core", "watchtower", "postfix"] }
 
-    - { role: homer, tags: ["homer"] }
     # Download
-    - { role: flood, tags: ["torrent", "flood"] }
-    - { role: qbittorrent, tags: ["torrent", "qbittorrent"] }
+    - { role: flood, tags: ["download", "torrent", "flood"] }
+    - { role: qbittorrent, tags: ["download", "torrent", "qbittorrent"] }
     - { role: rutorrent, tags: ["rutorrent"] }
     - { role: nzbget, tags: ["usenet", "nzbget"] }
     - { role: sabnzbd, tags: ["sabnzbd"] }
+
     # Media
     - { role: jellyfin, tags: ["jellyfin"] }
     - { role: navidrome, tags: ["navidrome"] }
     - { role: kavita, tags: ["kavita"] }
-    # Monitoring
-    - { role: scrutiny, tags: ["monitoring", "scrutiny"] }
-    - { role: netdata, tags: ["monitoring", "netdata"] }
-    - { role: watchtower, tags: ["monitoring", "watchtower"] }
-    - { role: postfix, tags: ["monitoring", "watchtower", "postfix"] }
-    # Tools
-    - { role: filebrowser, tags: ["filebrowser"] }
 
-    - { role: whoami, tags: ["tools", "whoami"] }
-    - { role: librespeed, tags: ["tools", "librespeed"] }
-    - { role: archivebox, tags: ["tools", "archivebox"] }
-    #- { role: speedtesttracker, tags: ["tools", "speedtesttracker"] }
-    # *arr Apps
-    - { role: prowlarr, tags: ["usenet", "rr", "prowlarr"] }
-    - { role: sonarr, tags: ["usenet", "rr", "sonarr"] }
-    - { role: radarr, tags: ["usenet", "rr", "radarr"] }
-    - { role: lidarr, tags: ["usenet", "rr", "lidarr"] }
-    - { role: readarr, tags: ["usenet", "rr", "readarr"] }
-    - { role: bazarr, tags: ["usenet", "rr", "bazarr"] }
+    # PVR
+    - { role: prowlarr, tags: ["pvr", "usenet", "prowlarr"] }
+    - { role: sonarr, tags: ["pvr", "usenet", "sonarr"] }
+    - { role: radarr, tags: ["pvr", "usenet", "radarr"] }
+    - { role: lidarr, tags: ["pvr", "usenet", "lidarr"] }
+    - { role: readarr, tags: ["pvr", "usenet", "readarr"] }
+    - { role: bazarr, tags: ["pvr", "bazarr"] }
     #- { role: traktarr, tags: [usenet, "rr", "traktarr"] }
+
+    # Tools
+    - { role: filebrowser, tags: ["tools", "filebrowser"] }
+    - { role: syncthing, tags: ["tools", "syncthing"] }
+    - { role: archivebox, tags: ["tools", "archivebox"] }
+    - { role: whoami, tags: ["whoami"] }
+
+    # Monitoring
+    - { role: netdata, tags: ["monitoring", "netdata"] }
+    - { role: speedtesttracker, tags: ["speedtesttracker"] }
+    - { role: librespeed, tags: ["monitoring", "librespeed"] }
+    - { role: scrutiny, tags: ["monitoring", "scrutiny"] }
