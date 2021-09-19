@@ -128,3 +128,6 @@ kavita:
   subdomain: kavita
 archivebox:
   subdomain: archivebox
+sabnzbd:
+  folder: /opt/sabnzbd
+  subdomain: sabnzbd

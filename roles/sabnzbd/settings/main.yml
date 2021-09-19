@@ -1,0 +1,6 @@
+- name: Settings | Set 'host_whitelist'
+  lineinfile:
+    path: "{{ sabnzbd.folder }}/sabnzbd.ini"
+    regexp: '^host_whitelist\s*=.*'
+    line: 'host_whitelist = {{ sabnzbd.subdomain }}.{{ domain }}'
+    state: present

@@ -10,13 +10,15 @@
     - { role: authelia, tags: ["core", "authelia"] }
     - { role: filetree, tags: ["core", "filetree"] }
     - { role: hardening, tags: ["core", "hardening"] }
-    # Available Apps
+
     - { role: homer, tags: ["homer"] }
-    - { role: filebrowser, tags: ["filebrowser"] }
+    # Download
+    - { role: flood, tags: ["torrent", "flood"] }
+    - { role: qbittorrent, tags: ["torrent", "qbittorrent"] }
     - { role: rutorrent, tags: ["rutorrent"] }
-    - { role: qbittorrent, tags: ["qbittorrent"] }
-    - { role: flood, tags: ["flood"] }
     - { role: nzbget, tags: ["usenet", "nzbget"] }
+    - { role: sabnzbd, tags: ["sabnzbd"] }
+    # Media
     - { role: jellyfin, tags: ["jellyfin"] }
     - { role: navidrome, tags: ["navidrome"] }
     - { role: kavita, tags: ["kavita"] }
@@ -26,6 +28,8 @@
     - { role: watchtower, tags: ["monitoring", "watchtower"] }
     - { role: postfix, tags: ["monitoring", "watchtower", "postfix"] }
     # Tools
+    - { role: filebrowser, tags: ["filebrowser"] }
+
     - { role: whoami, tags: ["tools", "whoami"] }
     - { role: librespeed, tags: ["tools", "librespeed"] }
     - { role: archivebox, tags: ["tools", "archivebox"] }

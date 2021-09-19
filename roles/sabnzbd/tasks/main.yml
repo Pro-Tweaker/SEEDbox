@@ -1,0 +1,63 @@
+---
+- name: Create directories
+  file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
+  with_items:
+    - "{{ sabnzbd.folder }}"
+
+- name: Create and start container
+  docker_container:
+    name: sabnzbd
+    image: "ghcr.io/linuxserver/sabnzbd"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ sabnzbd.folder }}:/config"
+    networks:
+      - name: web
+        aliases:
+          - sabnzbd
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      # Traefik
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.sabnzbd.rule: "Host(`{{ sabnzbd.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.sabnzbd.entrypoints: "websecure"
+      traefik.http.services.sabnzbd.loadbalancer.server.port: "8080"
+      traefik.http.routers.sabnzbd.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "SABnzbd"
+      homer.service: "Download"
+      homer.priority: "100"
+      homer.subtitle: "Automated Usenet download tool"
+      homer.url: "https://{{ sabnzbd.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/sabnzbd.png"
+      homer.target: "_blank"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"
+
+- name: Settings | Wait for 'sabnzbd.ini' to be created
+  wait_for:
+    path: "{{ sabnzbd.folder }}/sabnzbd.ini"
+    state: present
+
+- name: Settings | Wait for 10 seconds before stopping sabnzbd container
+  wait_for:
+    timeout: 10
+
+- name: Settings | Stop container
+  docker_container:
+    name: sabnzbd
+    state: stopped
+
+- name: SABnzbd Main Settings Tasks
+  include_tasks: "settings/main.yml"
+
+- name: Re-Start SABnzbd container
+  docker_container:
+    name: sabnzbd
+    state: started
