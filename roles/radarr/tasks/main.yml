@@ -34,7 +34,7 @@
       homer.enable: "true"
       homer.name: "Radarr"
       homer.service: "PVR"
-      homer.priority: "2"
+      homer.priority: "300"
       homer.subtitle: "Movie collection manager for Usenet and BitTorrent users"
       homer.url: "https://{{ radarr.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/png/radarr.png"
