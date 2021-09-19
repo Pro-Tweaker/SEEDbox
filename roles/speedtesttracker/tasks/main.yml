@@ -1,0 +1,45 @@
+---
+- name: Create directories
+  file:
+    path: "{{ speedtesttracker.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: speedtesttracker
+    image: "henrywhitaker3/speedtest-tracker"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ speedtesttracker.folder }}:/config"
+    networks:
+      - name: web
+        aliases:
+          - speedtesttracker
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      # Traefik
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.speedtesttracker.rule: "Host(`{{ speedtesttracker.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.speedtesttracker.entrypoints: "websecure"
+      traefik.http.services.speedtesttracker.loadbalancer.server.port: "80"
+      traefik.http.routers.speedtesttracker.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Speedtest Tracker"
+      homer.service: "Monitoring"
+      homer.priority: "300"
+      homer.subtitle: "Continuously track your internet speed"
+      homer.url: "https://{{ speedtesttracker.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/speedtest-tracker.png"
+      homer.target: "_blank"
+    env:
+      TZ: "{{ tz }}"
+      PGID: "{{ gid | int }}"
+      PUID: "{{ uid | int }}"
+      OOKLA_EULA_GDPR: "true"
