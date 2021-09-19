@@ -1,0 +1,46 @@
+---
+- name: Create directories
+  file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
+  with_items:
+    - "{{ syncthing.folder }}"
+    - "{{ data_folder }}/sync"
+
+- name: Create and start container
+  docker_container:
+    name: syncthing
+    hostname: "{{ syncthing.subdomain }}.{{ domain }}"
+    image: "syncthing/syncthing"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ data_folder }}/sync:/var/syncthing/Sync"
+      - "{{ syncthing.folder }}:/var/syncthing/config"
+    networks:
+      - name: web
+        aliases:
+          - syncthing
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      # Trafik
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.syncthing.rule: "Host(`{{ syncthing.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.syncthing.entrypoints: "websecure"
+      traefik.http.services.syncthing.loadbalancer.server.port: "8384"
+      traefik.http.routers.syncthing.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Syncthing"
+      homer.service: "Tools"
+      homer.priority: "200"
+      homer.subtitle: "Open Source Continuous File Synchronization"
+      homer.url: "https://{{ syncthing.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/syncthing.png"
+      homer.target: "_blank"
+    published_ports:
+      - "22000:22000/tcp"
+      - "22000:22000/udp"
+    env:
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"
