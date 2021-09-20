@@ -3,7 +3,7 @@ Ansible-based Docker containerized cloud media server
 
 ☣️ WIP ☣️
 ## Screenshot
-![dashboard](https://user-images.githubusercontent.com/89345101/133980281-9d19dd8b-5545-41e9-a849-55a0a7d8a630.png)
+![dashboard](https://user-images.githubusercontent.com/89345101/134022283-160d5070-68c2-4cdc-afed-482a92fcf339.png)
 ## Operating systems supported
 Only tested with:
 - Debian 10 (Buster) (64bits)
