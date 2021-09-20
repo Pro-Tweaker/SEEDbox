@@ -55,5 +55,5 @@
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
       PGID: "{{ gid | int }}"
-      DO_NOT_TRACK: 1
-      CONTAINERS: 1
+      DO_NOT_TRACK: "1"
+      CONTAINERS: "1"
