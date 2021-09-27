@@ -17,6 +17,7 @@ Only tested with:
 - [filetree](https://github.com/Pro-Tweaker/SEEDbox/blob/main/roles/filetree/tasks/main.yml)
 - [hardening](https://github.com/Pro-Tweaker/SEEDbox/blob/main/roles/hardening/tasks/main.yml)
 - [Homer](https://github.com/bastienwirtz/homer)
+- [Homer Service Discovery](https://github.com/calvinbui/homer-service-discovery)
 - [Watchtower](https://github.com/containrrr/watchtower)
 - [postfix](https://github.com/bokysan/docker-postfix)
 ## Download
