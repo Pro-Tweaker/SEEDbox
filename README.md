@@ -6,8 +6,8 @@ Ansible-based Docker containerized cloud media server
 ![dashboard](https://user-images.githubusercontent.com/89345101/134022283-160d5070-68c2-4cdc-afed-482a92fcf339.png)
 ## Operating systems supported
 Only tested with:
-- Debian 10 (Buster) (64bits)
-- Debian 11 (Bullseye) (64bits)
+- Debian 10 (Buster) (64-bit)
+- Debian 11 (Bullseye) (64-bit)
 ## Minimal Stack
 - [Docker](https://www.docker.com/)
 - [Cloudflare](https://www.cloudflare.com/)
