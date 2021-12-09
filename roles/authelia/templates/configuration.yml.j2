@@ -67,6 +67,7 @@ storage:
   encryption_key: {{ authelia.storage_encryption_key }}
 
 notifier:
+  disable_startup_check: true
   smtp:
     disable_require_tls: true
     subject: "[{{ domain }}] {title}"

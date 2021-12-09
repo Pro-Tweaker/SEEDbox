@@ -46,3 +46,6 @@
   user:
     name: "{{ user }}"
     group: docker
+
+- name: Activate docker group changes
+  command: newgrp docker
