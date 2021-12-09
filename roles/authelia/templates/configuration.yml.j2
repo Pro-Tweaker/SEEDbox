@@ -64,6 +64,7 @@ regulation:
 storage:
   local:
     path: /config/db.sqlite3
+  encryption_key: {{ authelia.storage_encryption_key }}
 
 notifier:
   smtp:

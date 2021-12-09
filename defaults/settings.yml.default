@@ -112,6 +112,7 @@ authelia:
   redis:
     hostname: authelia-redis
     folder: /opt/authelia-redis
+  storage_encryption_key: a_string_at_least_64_characters_long
 whoami:
   subdomain: whoami
 librespeed:
