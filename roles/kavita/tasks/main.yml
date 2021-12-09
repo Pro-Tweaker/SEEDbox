@@ -14,7 +14,7 @@
     pull: yes
     recreate: true
     volumes:
-      - "{{ kavita.folder }}:/kavita/data"
+      - "{{ kavita.folder }}:/kavita/config"
       - "{{ data_folder }}/media/books:/kavita/book"
       - "{{ data_folder }}/media/comics:/kavita/comics"
       - "{{ data_folder }}/media/mangas:/kavita/mangas"
