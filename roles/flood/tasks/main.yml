@@ -13,7 +13,7 @@
     image: jesec/flood
     pull: yes
     recreate: true
-    command: --port 3001 --allowedpath /downloads
+    command: --port 3001 --allowedpath /downloads --auth=none --qburl=http://qbittorrent:8080 --qbuser={{ qbittorrent.web_user }} --qbpass={{ qbittorrent.web_password }}
     volumes:
       - "{{ flood.folder }}:/config"
       - "{{ data_folder }}/torrents:/downloads"

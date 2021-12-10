@@ -49,3 +49,25 @@
       PUID: "{{ uid | int }}"
       PGID: "{{ gid | int }}"
       WEBUI_PORT: "8080"
+
+- name: Settings | Wait for 'qBittorrent.conf' to be created
+  wait_for:
+    path: "{{ qbittorrent.folder }}/qBittorrent/qBittorrent.conf"
+    state: present
+
+- name: Settings | Wait for 10 seconds before stopping qbittorrent container
+  wait_for:
+    timeout: 10
+
+- name: Settings | Stop container
+  docker_container:
+    name: qbittorrent
+    state: stopped
+
+- name: qBittorrent Main Settings Tasks
+  include_tasks: "settings/main.yml"
+
+- name: Re-Start qBittorrent container
+  docker_container:
+    name: qbittorrent
+    state: started

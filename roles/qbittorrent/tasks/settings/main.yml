@@ -1,0 +1,43 @@
+- name: Settings | Ensure legal notice is accepted
+  lineinfile:
+    path: "{{qbittorrent.folder }}/qBittorrent/qBittorrent.conf"
+    regexp: "{{ item.re }}"
+    line: "{{ item.line }}"
+    insertafter: "{{ item.after | default(omit) }}"
+  with_items:
+    - { re: '^\[LegalNotice\]$', line: "[LegalNotice]" }
+    - { re: "^Accepted=true$", line: "Accepted=true", after: '^\[LegalNotice\]$' }
+
+- name: Settings | Set 'WebUI ClickjackingProtection'
+  lineinfile:
+    path: "{{ qbittorrent.folder }}/qBittorrent/qBittorrent.conf"
+    regexp: '^WebUI\\ClickjackingProtection\s*=.*'
+    line: 'WebUI\ClickjackingProtection=false'
+    state: present
+
+- name: Settings | Set 'WebUI CSRFProtection'
+  lineinfile:
+    path: "{{ qbittorrent.folder }}/qBittorrent/qBittorrent.conf"
+    regexp: '^WebUI\\CSRFProtection\s*=.*'
+    line: 'WebUI\CSRFProtection=false'
+    state: present
+
+- name: Settings | Set 'WebUI Username'
+  lineinfile:
+    path: "{{ qbittorrent.folder }}/qBittorrent/qBittorrent.conf"
+    regexp: '^WebUI\\Username\s*=.*'
+    line: 'WebUI\Username={{ qbittorrent.web_user }}'
+    state: present
+
+- name: Settings | Generate 'WebUI Password_PBKDF2'
+  script: "generate.py {{ qbittorrent.web_password_salt }} {{ qbittorrent.web_password }}"
+  args:
+    executable: /usr/bin/python3
+  register: python_result
+
+- name: Settings | Set 'WebUI Password_PBKDF2'
+  lineinfile:
+    path: "{{ qbittorrent.folder }}/qBittorrent/qBittorrent.conf"
+    regexp: '^WebUI\\Password_PBKDF2\s*=.*'
+    line: 'WebUI\Password_PBKDF2="@ByteArray({{ qbittorrent.web_password_salt | b64encode }}:{{ python_result.stdout }})"'
+    state: present

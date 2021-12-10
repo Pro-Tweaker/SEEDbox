@@ -121,6 +121,9 @@ librespeed:
 qbittorrent:
   folder: /opt/qbittorrent
   subdomain: qbittorrent
+  web_user: admin_qbit
+  web_password: admin_qbit_password
+  web_password_salt: admin_qbit_password_salt
 flood:
   folder: /opt/flood
   subdomain: flood
