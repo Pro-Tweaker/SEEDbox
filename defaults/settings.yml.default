@@ -9,9 +9,9 @@ data_folder: /mnt/storage
 tz: "Europe/Berlin"
 notifications_email: example@mail.com
 cloudflare:
-  api_key: 
-  api_email: 
-  domain_zone_id: 
+  api_key:
+  api_email:
+  domain_zone_id:
 traefik:
   tag: "2.5.6"
   folder: /opt/traefik
@@ -127,6 +127,7 @@ qbittorrent:
   web_user: admin_qbit
   web_password: admin_qbit_password
   web_password_salt: admin_qbit_password_salt
+  bittorrent_port: 6881
 flood:
   folder: /opt/flood
   subdomain: flood
@@ -145,3 +146,6 @@ syncthing:
 speedtesttracker:
   folder: /opt/speedtesttracker
   subdomain: speedtesttracker
+crowdsec:
+  folder: /opt/crowdsec
+  subdomain: crowdsec

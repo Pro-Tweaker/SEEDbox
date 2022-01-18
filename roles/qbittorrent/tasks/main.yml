@@ -42,8 +42,8 @@
       homer.target: "_blank"
     published_ports:
       - "51413:51413"
-      - "6881:6881"
-      - "6881:6881/udp"
+      - "{{ qbittorrent.bittorrent_port }}:{{ qbittorrent.bittorrent_port }}"
+      - "{{ qbittorrent.bittorrent_port }}:{{ qbittorrent.bittorrent_port }}/udp"
     env:
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"

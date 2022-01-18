@@ -22,12 +22,25 @@
     line: 'WebUI\CSRFProtection=false'
     state: present
 
+- name: Settings | Set 'Session Port'
+  lineinfile:
+    path: "{{ qbittorrent.folder }}/qBittorrent/qBittorrent.conf"
+    regexp: '^Session\\Port\s*=.*'
+    line: 'Session\Port={{ qbittorrent.bittorrent_port }}'
+    state: present
+
+- name: Settings | Set 'Connection PortRangeMin'
+  lineinfile:
+    path: "{{ qbittorrent.folder }}/qBittorrent/qBittorrent.conf"
+    regexp: '^Connection\\PortRangeMin\s*=.*'
+    line: 'Connection\PortRangeMin={{ qbittorrent.bittorrent_port }}'
+    state: present
+
 - name: Settings | Set 'WebUI Username'
   lineinfile:
     path: "{{ qbittorrent.folder }}/qBittorrent/qBittorrent.conf"
     regexp: '^WebUI\\Username\s*=.*'
     line: 'WebUI\Username={{ qbittorrent.web_user }}'
-    state: present
 
 - name: Settings | Generate 'WebUI Password_PBKDF2'
   script: "generate.py {{ qbittorrent.web_password_salt }} {{ qbittorrent.web_password }}"
