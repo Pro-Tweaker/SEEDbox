@@ -20,6 +20,7 @@ traefik:
   acme_email: example@mail.com
   acme_provider: cloudflare
 portainer:
+  tag: latest
   folder: /opt/portainer
   subdomain: portainer
 filebrowser:

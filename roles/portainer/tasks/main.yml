@@ -10,7 +10,7 @@
 - name: Create and start container
   docker_container:
     name: portainer
-    image: "portainer/portainer-ce"
+    image: "portainer/portainer-ce:{{ portainer.tag }}"
     pull: yes
     recreate: true
     volumes:
