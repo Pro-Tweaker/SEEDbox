@@ -10,7 +10,7 @@
 - name: Create and start container
   docker_container:
     name: qbittorrent
-    image: ghcr.io/linuxserver/qbittorrent
+    image: "ghcr.io/linuxserver/qbittorrent:{{ qbittorrent.tag }}"
     pull: yes
     recreate: true
     volumes:

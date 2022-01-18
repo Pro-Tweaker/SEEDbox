@@ -121,6 +121,7 @@ librespeed:
   folder: /opt/librespeed
   subdomain: librespeed
 qbittorrent:
+  tag: latest
   folder: /opt/qbittorrent
   subdomain: qbittorrent
   web_user: admin_qbit
