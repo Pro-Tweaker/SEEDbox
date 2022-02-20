@@ -46,3 +46,6 @@
     - { role: speedtesttracker, tags: ["speedtesttracker"] }
     - { role: librespeed, tags: ["monitoring", "librespeed"] }
     - { role: scrutiny, tags: ["monitoring", "scrutiny"] }
+
+    # Etras
+    - { role: tinymotd, tags: ["tinymotd"] }

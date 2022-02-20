@@ -149,3 +149,5 @@ speedtesttracker:
 crowdsec:
   folder: /opt/crowdsec
   subdomain: crowdsec
+tinymotd:
+  folder: /opt/tinymotd

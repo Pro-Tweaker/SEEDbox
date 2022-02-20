@@ -1,0 +1,22 @@
+- name: Settings | Headers | Import Custom Header
+  copy:
+    src: header.txt
+    dest: "{{ tinymotd.folder }}/headers/header.txt"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+    force: yes
+
+- name: Settings | Config | Replace lxc by docker
+  lineinfile:
+    path: "{{ tinymotd.folder }}/config"
+    regexp: '^lxc\s*'
+    line: 'docker'
+    state: present
+
+- name: Settings | Widgets | Partitions
+  lineinfile:
+    path: "{{ tinymotd.folder }}/widgets/partitions"
+    regexp: '^filter\s*=.*'
+    line: "filter='docker'"
+    state: present

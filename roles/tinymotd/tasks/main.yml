@@ -1,0 +1,37 @@
+---
+- name: Install dependencies
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  loop:
+    - lxc
+
+- name: Create directories
+  file:
+    path: "{{ tinymotd.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: GIT Clone/Pull Repository
+  git:
+    repo: https://github.com/bderenzo/tinymotd.git
+    dest: "{{ tinymotd.folder }}"
+    update: yes
+    force: yes
+
+- name: Check if script has already been installed
+  stat:
+    path: /etc/cron.hourly/tinymotd
+  register: check_file
+
+- name: Run install script
+  shell:
+    cmd: "{{ tinymotd.folder }}/install -u {{ user }}"
+    chdir: "{{ tinymotd.folder }}"
+    creates: '/etc/cron.hourly/tinymotd'
+  when: not check_file.stat.exists
+
+- name: Settings Tasks
+  include_tasks: "settings/main.yml"
