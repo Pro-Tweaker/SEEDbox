@@ -28,8 +28,7 @@
       traefik.http.routers.homer.middlewares: "authelia-basic@docker"
     env:
       TZ: "{{ tz }}"
-      PUID: "{{ uid | int }}"
-      PGID: "{{ gid | int }}"
+    user: "{{ uid | int }}:{{ gid | int }}"
 
 - name: Homer Settings Tasks
   include_tasks: "settings/main.yml"
