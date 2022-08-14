@@ -34,7 +34,7 @@
       homer.name: "LibreSpeed"
       homer.service: "Monitoring"
       homer.priority: "200"
-      homer.subtitle: "FOOS Speedtest. No Bullshit."
+      homer.subtitle: "FOSS Speedtest. No Bullshit."
       homer.url: "https://{{ librespeed.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/png/librespeed.png"
       homer.target: "_blank"
