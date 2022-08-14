@@ -15,11 +15,12 @@
 - name: Create and start container
   docker_container:
     name: scrutiny
-    image: "ghcr.io/linuxserver/scrutiny"
+    image: "ghcr.io/analogj/scrutiny:master-omnibus"
     pull: yes
     recreate: true
     volumes:
-      - "{{ scrutiny.folder }}:/config"
+      - "{{ scrutiny.folder }}:/opt/scrutiny/config"
+      - "{{ scrutiny.folder }}/influxdb2:/opt/scrutiny/influxdb"
       - "/run/udev:/run/udev:ro"
     devices: "{{ lsblk_disks.stdout_lines }}"
     networks:
@@ -48,10 +49,3 @@
       homer.url: "https://{{ scrutiny.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/png/scrutiny.png"
       homer.target: "_blank"
-    env:
-      TZ: "{{ tz }}"
-      PUID: "{{ uid | int }}"
-      PGID: "{{ gid | int }}"
-      SCRUTINY_API_ENDPOINT: http://localhost:8080
-      SCRUTINY_WEB: true | bool
-      SCRUTINY_COLLECTOR: true | bool
