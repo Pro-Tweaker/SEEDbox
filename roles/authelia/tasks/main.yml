@@ -1,14 +1,15 @@
 ---
 - name: Create directories
-  file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
-  with_items:
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+    recurse: yes
+  loop:
     - "{{ authelia.folder }}"
     - "{{ authelia.redis.folder }}"
-
-- name: "Check if authelia users database exists"
-  stat:
-    path: "{{ authelia.folder }}/users_database.yml"
-  register: authelia_users_database
 
 - name: "Create authelia users database file"
   template:
@@ -18,7 +19,7 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: 0775
-  when: not authelia_users_database.stat.exists
+
 
 - name: "Create authelia config file"
   template:
@@ -39,9 +40,11 @@
     image: "redis:alpine"
     pull: yes
     recreate: true
+    container_default_behavior: compatibility
     volumes:
       - "{{ authelia.redis.folder }}:/data"
     user: "{{ uid }}:{{ gid }}"
+    network_mode: default
     networks:
       - name: authelia
         aliases:
@@ -58,8 +61,10 @@
     image: "authelia/authelia"
     pull: yes
     recreate: true
+    container_default_behavior: compatibility
     volumes:
       - "{{ authelia.folder }}:/config"
+    network_mode: default
     networks:
       - name: web
         aliases:

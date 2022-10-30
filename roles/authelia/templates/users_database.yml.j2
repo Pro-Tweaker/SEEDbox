@@ -7,7 +7,7 @@
 users:
   {{ authelia.username }}:
     displayname: "{{ authelia.displayname }}"
-    password: "{{ authelia.password | password_hash('sha512') }}"
+    password: "{{ authelia.password | password_hash('sha512_crypt', rounds=50000) }}"
     email: "{{ authelia.email }}"
     groups:
       - admins

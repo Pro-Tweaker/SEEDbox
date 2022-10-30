@@ -47,5 +47,5 @@
     - { role: librespeed, tags: ["monitoring", "librespeed"] }
     - { role: scrutiny, tags: ["monitoring", "scrutiny"] }
 
-    # Etras
+    # Extras
     - { role: tinymotd, tags: ["tinymotd"] }
