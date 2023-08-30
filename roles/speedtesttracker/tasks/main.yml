@@ -1,20 +1,26 @@
 ---
 - name: Create directories
   file:
-    path: "{{ speedtesttracker.folder }}"
+    path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: 0775
+    recurse: yes
+  loop:
+    - "{{ speedtesttracker.folder }}"
+    - "{{ speedtesttracker.folder }}/web"
 
 - name: Create and start container
   docker_container:
     name: speedtesttracker
-    image: "henrywhitaker3/speedtest-tracker:{{ speedtesttracker.tag }}"
+    image: "ghcr.io/alexjustesen/speedtest-tracker:{{ speedtesttracker.tag }}"
     pull: yes
     recreate: true
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - "{{ speedtesttracker.folder }}:/config"
+      - "{{ speedtesttracker.folder }}/web:/etc/ssl/web"
     networks:
       - name: web
         aliases:
@@ -42,4 +48,3 @@
       TZ: "{{ tz }}"
       PGID: "{{ gid | int }}"
       PUID: "{{ uid | int }}"
-      OOKLA_EULA_GDPR: "true"
