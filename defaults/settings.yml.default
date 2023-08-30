@@ -150,7 +150,7 @@ qbittorrent:
   web_password_salt: admin_qbit_password_salt
   bittorrent_port: 6881
 flood:
-  tag: latest
+  tag: master
   folder: /opt/flood
   subdomain: flood
 kavita:
