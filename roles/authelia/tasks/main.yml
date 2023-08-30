@@ -49,7 +49,6 @@
       - name: authelia
         aliases:
           - "{{ authelia.redis.hostname }}"
-    purge_networks: yes
     restart_policy: unless-stopped
     state: started
     env:

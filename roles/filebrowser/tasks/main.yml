@@ -57,7 +57,6 @@
       - name: web
         aliases:
           - filebrowser
-    purge_networks: yes
     restart_policy: unless-stopped
     state: started
     labels:
