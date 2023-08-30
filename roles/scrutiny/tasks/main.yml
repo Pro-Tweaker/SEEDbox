@@ -15,7 +15,7 @@
 - name: Create and start container
   docker_container:
     name: scrutiny
-    image: "ghcr.io/analogj/scrutiny:master-omnibus"
+    image: "ghcr.io/analogj/scrutiny:{{ scrutiny.tag }}"
     pull: yes
     recreate: true
     volumes:

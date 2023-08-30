@@ -10,7 +10,7 @@
 - name: Create and start container
   docker_container:
     name: librespeed
-    image: "ghcr.io/linuxserver/librespeed"
+    image: "ghcr.io/linuxserver/librespeed:{{ librespeed.tag }}"
     pull: yes
     recreate: true
     volumes:

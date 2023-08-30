@@ -13,7 +13,7 @@
 - name: Create and start container
   docker_container:
     name: sabnzbd
-    image: "ghcr.io/linuxserver/sabnzbd"
+    image: "ghcr.io/linuxserver/sabnzbd:{{ sabnzbd.tag }}"
     pull: yes
     recreate: true
     volumes:

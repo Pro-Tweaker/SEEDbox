@@ -18,7 +18,7 @@
 - name: Create and start container
   docker_container:
     name: nzbget
-    image: "ghcr.io/linuxserver/nzbget"
+    image: "ghcr.io/linuxserver/nzbget:{{ nzbget.tag }}"
     pull: yes
     recreate: true
     volumes:

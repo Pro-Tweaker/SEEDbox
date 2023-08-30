@@ -15,7 +15,7 @@
 - name: Create and start container
   docker_container:
     name: jellyfin
-    image: "ghcr.io/linuxserver/jellyfin"
+    image: "ghcr.io/linuxserver/jellyfin:{{ jellyfin.tag }}"
     pull: yes
     recreate: true
     volumes:

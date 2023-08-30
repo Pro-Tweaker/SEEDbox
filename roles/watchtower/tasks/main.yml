@@ -7,7 +7,7 @@
 - name: Create and start container
   docker_container:
     name: watchtower
-    image: "containrrr/watchtower"
+    image: "containrrr/watchtower:{{ watchtower.tag }}"
     pull: yes
     recreate: true
     networks:

@@ -10,7 +10,7 @@
 - name: Create and start container
   docker_container:
     name: sonarr
-    image: "ghcr.io/linuxserver/sonarr"
+    image: "ghcr.io/linuxserver/sonarr:{{ sonarr.tag }}"
     pull: yes
     recreate: true
     volumes:

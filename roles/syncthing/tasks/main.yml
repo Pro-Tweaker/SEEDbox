@@ -15,7 +15,7 @@
   docker_container:
     name: syncthing
     hostname: "{{ syncthing.subdomain }}.{{ domain }}"
-    image: "syncthing/syncthing"
+    image: "syncthing/syncthing:{{ syncthing.tag }}"
     pull: yes
     recreate: true
     volumes:

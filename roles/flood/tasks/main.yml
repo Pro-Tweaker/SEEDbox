@@ -10,7 +10,7 @@
 - name: Create and start container
   docker_container:
     name: flood
-    image: jesec/flood
+    image: "jesec/flood:{{ flood.tag }}"
     pull: yes
     recreate: true
     command: --port 3001 --allowedpath /downloads --auth=none --qburl=http://qbittorrent:8080 --qbuser={{ qbittorrent.web_user }} --qbpass={{ qbittorrent.web_password }}

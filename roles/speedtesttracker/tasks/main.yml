@@ -10,7 +10,7 @@
 - name: Create and start container
   docker_container:
     name: speedtesttracker
-    image: "henrywhitaker3/speedtest-tracker"
+    image: "henrywhitaker3/speedtest-tracker:{{ speedtesttracker.tag }}"
     pull: yes
     recreate: true
     volumes:

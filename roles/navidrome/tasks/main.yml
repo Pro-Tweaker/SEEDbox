@@ -20,7 +20,7 @@
 - name: Create and start container
   docker_container:
     name: navidrome
-    image: "deluan/navidrome:latest"
+    image: "deluan/navidrome:{{ navidrome.tag }}"
     pull: yes
     recreate: true
     volumes:

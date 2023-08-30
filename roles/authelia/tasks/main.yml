@@ -58,7 +58,7 @@
 - name: Create and start authelia container
   docker_container:
     name: authelia
-    image: "authelia/authelia"
+    image: "authelia/authelia:{{ authelia.tag }}"
     pull: yes
     recreate: true
     container_default_behavior: compatibility

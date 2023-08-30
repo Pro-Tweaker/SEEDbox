@@ -6,7 +6,7 @@
 - name: Create and start container
   docker_container:
     name: postfix
-    image: boky/postfix
+    image: "boky/postfix:{{ postfix.tag }}"
     pull: yes
     recreate: true
     state: started

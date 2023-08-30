@@ -2,7 +2,7 @@
 - name: Create and start Cloudflare Dynamic DNS Updater
   docker_container:
     name: cf-ddns
-    image: oznu/cloudflare-ddns:latest
+    image: "oznu/cloudflare-ddns:{{ cloudflare.tag_ddns }}"
     pull: yes
     recreate: true
     state: started
@@ -19,7 +19,7 @@
 - name: Create and start Traefik Cloudflare Companion
   docker_container:
     name: cf-companion
-    image: tiredofit/traefik-cloudflare-companion:latest
+    image: "tiredofit/traefik-cloudflare-companion:{{ cloudflare.tag_companion }}"
     pull: yes
     recreate: true
     state: started

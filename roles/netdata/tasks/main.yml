@@ -16,7 +16,7 @@
   docker_container:
     name: netdata
     hostname: "{{ netdata.subdomain }}.{{ domain }}"
-    image: "netdata/netdata"
+    image: "netdata/netdata:{{ netdata.tag }}"
     pull: yes
     recreate: true
     volumes:

@@ -14,7 +14,7 @@
 - name: Create and start Homer container
   docker_container:
     name: homer
-    image: "b4bz/homer"
+    image: "b4bz/homer:{{ homer.tag }}"
     pull: yes
     recreate: true
     volumes:

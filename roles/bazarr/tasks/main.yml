@@ -10,7 +10,7 @@
 - name: Create and start container
   docker_container:
     name: bazarr
-    image: "ghcr.io/linuxserver/bazarr"
+    image: "ghcr.io/linuxserver/bazarr:{{ bazarr.tag }}"
     pull: yes
     recreate: true
     volumes:

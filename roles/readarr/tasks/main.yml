@@ -10,7 +10,7 @@
 - name: Create and start container
   docker_container:
     name: readarr
-    image: "ghcr.io/linuxserver/readarr:nightly"
+    image: "ghcr.io/linuxserver/readarr:{{ readarr.tag }}"
     pull: yes
     recreate: true
     volumes:

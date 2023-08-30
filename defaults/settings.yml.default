@@ -9,6 +9,8 @@ data_folder: /mnt/storage
 tz: "Europe/Berlin"
 notifications_email: example@mail.com
 cloudflare:
+  tag_ddns: latest
+  tag_companion: latest
   api_key:
   api_email:
   domain_zone_id:
@@ -24,17 +26,21 @@ portainer:
   folder: /opt/portainer
   subdomain: portainer
 filebrowser:
+  tag: latest
   folder: /opt/filebrowser
   subdomain: filebrowser
 rutorrent:
+  tag: latest
   folder: /opt/rutorrent
   subdomain: rutorrent
 nzbget:
+  tag: latest
   folder: /opt/nzbget
   subdomain: nzbget
   restricted_username: demo
   restricted_password: demo
 homer:
+  tag: latest
   folder: /opt/homer
   title: "SEEDbox Dashboard"
   subtitle: "{{ domain }}"
@@ -52,20 +58,26 @@ homer:
     - name: Management
       icon: "fas fa-user-shield"
 scrutiny:
+  tag: master-omnibus
   folder: /opt/scrutiny
   subdomain: scrutiny
 jellyfin:
+  tag: latest
   folder: /opt/jellyfin
   subdomain: jellyfin
 netdata:
+  tag: latest
   folder: /opt/netdata
   subdomain: netdata
 navidrome:
+  tag: latest
   folder: /opt/navidrome
   subdomain: navidrome
 postfix:
+  tag: latest
   hostname: postfix
 watchtower:
+  tag: latest
   monitor_only: "false"
   notification_email_to: "{{ notifications_email }}"
   notification_email_from: "watchtower@{{ domain }}"
@@ -75,27 +87,34 @@ watchtower:
   notification_email_server_password: ""
   notification_email_delay: "2"
 prowlarr:
+  tag: develop
   folder: /opt/prowlarr
   subdomain: prowlarr
 sonarr:
+  tag: latest
   folder: /opt/sonarr
   subdomain: sonarr
 radarr:
+  tag: latest
   folder: /opt/radarr
   subdomain: radarr
 lidarr:
+  tag: latest
   folder: /opt/lidarr
   subdomain: lidarr
 readarr:
+  tag: nightly
   folder: /opt/readarr
   subdomain: readarr
 bazarr:
+  tag: latest
   folder: /opt/bazarr
   subdomain: bazarr
 traktarr:
   folder: /opt/traktarr
   subdomain: traktarr
 authelia:
+  tag: latest
   folder: /opt/authelia
   subdomain: login
   username: demo
@@ -116,8 +135,10 @@ authelia:
     folder: /opt/authelia-redis
   storage_encryption_key: a_string_at_least_64_characters_long
 whoami:
+  tag: latest
   subdomain: whoami
 librespeed:
+  tag: latest
   folder: /opt/librespeed
   subdomain: librespeed
 qbittorrent:
@@ -129,24 +150,31 @@ qbittorrent:
   web_password_salt: admin_qbit_password_salt
   bittorrent_port: 6881
 flood:
+  tag: latest
   folder: /opt/flood
   subdomain: flood
 kavita:
+  tag: latest
   folder: /opt/kavita
   subdomain: kavita
 archivebox:
+  tag: latest
   folder: /opt/archivebox
   subdomain: archivebox
 sabnzbd:
+  tag: latest
   folder: /opt/sabnzbd
   subdomain: sabnzbd
 syncthing:
+  tag: latest
   folder: /opt/syncthing
   subdomain: syncthing
 speedtesttracker:
+  tag: latest
   folder: /opt/speedtesttracker
   subdomain: speedtesttracker
 crowdsec:
+  tag: latest
   folder: /opt/crowdsec
   subdomain: crowdsec
 tinymotd:

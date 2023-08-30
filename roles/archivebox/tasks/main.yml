@@ -14,7 +14,7 @@
 - name: Create and start container
   docker_container:
     name: archivebox
-    image: archivebox/archivebox
+    image: "archivebox/archivebox:{{ archivebox.tag }}"
     pull: yes
     recreate: true
     command: server --quick-init 0.0.0.0:8000
