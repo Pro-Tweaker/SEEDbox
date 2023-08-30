@@ -42,3 +42,25 @@
       TZ: "{{ tz }}"
       PUID: "{{ uid | int }}"
       PGID: "{{ gid | int }}"
+
+- name: Settings | Wait for 'config.xml' to be created
+  wait_for:
+    path: "{{ prowlarr.folder }}/config.xml"
+    state: present
+
+- name: Settings | Wait for 10 seconds before stopping prowlarr container
+  wait_for:
+    timeout: 10
+
+- name: Settings | Stop container
+  docker_container:
+    name: prowlarr
+    state: stopped
+
+- name: prowlarr Main Settings Tasks
+  include_tasks: "settings/main.yml"
+
+- name: Re-Start prowlarr container
+  docker_container:
+    name: prowlarr
+    state: started

@@ -1,0 +1,6 @@
+- name: Settings | Disable Authentification
+  lineinfile:
+    path: "{{ prowlarr.folder }}/config.xml"
+    regexp: '<AuthenticationMethod>.*?<\/AuthenticationMethod>'
+    line: '<AuthenticationMethod>External</AuthenticationMethod>'
+    state: present
