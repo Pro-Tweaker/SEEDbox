@@ -13,7 +13,7 @@ cloudflare:
   api_email:
   domain_zone_id:
 traefik:
-  tag: "2.5.6"
+  tag: "2.9.8"
   folder: /opt/traefik
   api_url: "traefik.{{ domain }}"
   acme_domain: "{{ domain }}"
