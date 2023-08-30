@@ -21,7 +21,7 @@
     volumes:
       - "{{ sabnzbd.folder }}:/config"
       - "{{ data_folder }}/usenet:/downloads"
-      - "{{ data_folder }}/usenet/sabnzbd:/incomplete-downloads" #Downloads/incomplete
+      - "{{ data_folder }}/usenet/sabnzbd:/incomplete-downloads"
     networks:
       - name: web
         aliases:
