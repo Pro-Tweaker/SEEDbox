@@ -4,7 +4,8 @@
 import sys
 import codecs
 import binascii
-from backports.pbkdf2 import pbkdf2_hmac
+
+from hashlib import pbkdf2_hmac
 
 salt = sys.argv[1].encode("utf8")
 password = sys.argv[2].encode("utf8")

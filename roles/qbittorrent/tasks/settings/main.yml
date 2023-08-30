@@ -8,6 +8,17 @@
     - { re: '^\[LegalNotice\]$', line: "[LegalNotice]" }
     - { re: "^Accepted=true$", line: "Accepted=true", after: '^\[LegalNotice\]$' }
 
+- name: Settings | Disable Authentification
+  lineinfile:
+    path: "{{qbittorrent.folder }}/qBittorrent/qBittorrent.conf"
+    regexp: "{{ item.re }}"
+    line: "{{ item.line }}"
+    insertafter: "{{ item.after | default(omit) }}"
+    state: present
+  with_items:
+    - { re: '^WebUI\\AuthSubnetWhitelist\s*=.*', line: 'WebUI\AuthSubnetWhitelist=0.0.0.0/0' }
+    - { re: '^WebUI\\AuthSubnetWhitelistEnabled\s*=.*', line: 'WebUI\AuthSubnetWhitelistEnabled=true' }
+
 - name: Settings | Set 'WebUI ClickjackingProtection'
   lineinfile:
     path: "{{ qbittorrent.folder }}/qBittorrent/qBittorrent.conf"

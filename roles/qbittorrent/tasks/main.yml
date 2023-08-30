@@ -29,7 +29,6 @@
       traefik.http.routers.qbittorrent.rule: "Host(`{{ qbittorrent.subdomain }}.{{ domain }}`)"
       traefik.http.routers.qbittorrent.entrypoints: "websecure"
       traefik.http.services.qbittorrent.loadbalancer.server.port: "8080"
-      #traefik.http.middlewares.referer.headers.customresponseheaders.Referer: "{{ qbittorrent.subdomain }}.{{ domain }}"
       traefik.http.routers.qbittorrent.middlewares: "authelia@docker"
       # Homer
       homer.enable: "true"
