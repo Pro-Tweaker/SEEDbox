@@ -19,6 +19,7 @@
 
     - "{{ data_folder }}/usenet"
     - "{{ data_folder }}/usenet/nzbget" # to store app related files
+    - "{{ data_folder }}/usenet/sabnzbd" # to store app related files
     - "{{ data_folder }}/usenet/books"
     - "{{ data_folder }}/usenet/games"
     - "{{ data_folder }}/usenet/misc"
