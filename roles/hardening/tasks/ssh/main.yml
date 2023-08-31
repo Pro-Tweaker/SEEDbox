@@ -1,0 +1,16 @@
+- name: Setup alternate SSH port
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "^Port"
+    line: "Port {{ ssh_port }}"
+  notify: "Restart sshd"
+
+# - name: Setup selinux for alternate SSH port
+#   seport:
+#     ports: "{{ ssh_port }}"
+#     proto: "tcp"
+#     setype: "ssh_port_t"
+#     state: "present"
+
+- name: Ensure SSH is reloaded if need be
+  meta: flush_handlers

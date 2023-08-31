@@ -9,5 +9,5 @@
 - name: Install Fail2Ban
   include_tasks: "fail2ban/main.yml"
 
-- name: Install Unattended Upgrades
-  include_tasks: "unattendedupgrades/main.yml"
+- name: Secure SSH
+  include_tasks: "ssh/main.yml"
