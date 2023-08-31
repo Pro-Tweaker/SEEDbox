@@ -1,5 +1,6 @@
 ---
 - hosts: localhost
+  become: true
   vars_files: ["defaults/settings.yml.default", "settings.yml"]
   roles:
     # Minimal Stack
