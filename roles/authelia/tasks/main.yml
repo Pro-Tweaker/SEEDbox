@@ -74,7 +74,6 @@
       - name: authelia
         aliases:
           - authelia
-    purge_networks: yes
     restart_policy: unless-stopped
     state: started
     labels:
@@ -87,10 +86,8 @@
       # Traefik Authelia Middlewares Config
       traefik.http.middlewares.authelia.forwardauth.address: "http://authelia:9091/api/verify?rd=https://{{ authelia.subdomain }}.{{ domain }}/"
       traefik.http.middlewares.authelia.forwardauth.trustForwardHeader: "true"
-      #traefik.http.middlewares.authelia.forwardauth.authResponseHeaders: "Remote-User, Remote-Groups, Remote-Name, Remote-Email"
       traefik.http.middlewares.authelia-basic.forwardauth.address: "http://authelia:9091/api/verify?auth=basic"
       traefik.http.middlewares.authelia-basic.forwardauth.trustForwardHeader: "true"
-      #traefik.http.middlewares.authelia-basic.forwardauth.authResponseHeaders: "Remote-User, Remote-Groups, Remote-Name, Remote-Email"
       # Homer
       homer.enable: "true"
       homer.name: "Authelia"
