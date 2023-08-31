@@ -47,6 +47,3 @@
     - { role: speedtesttracker, tags: ["speedtesttracker"] }
     - { role: librespeed, tags: ["monitoring", "librespeed"] }
     - { role: scrutiny, tags: ["monitoring", "scrutiny"] }
-
-    # Extras
-    - { role: tinymotd, tags: ["tinymotd"] }
