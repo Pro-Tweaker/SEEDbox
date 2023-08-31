@@ -39,8 +39,10 @@
     - start docker
 
 - name: Add the Python client for Docker
-  pip:
-    name: docker
+  package:
+    name:
+      - python3-docker
+    state: present
 
 - name: Add the default user to the docker group
   user:
