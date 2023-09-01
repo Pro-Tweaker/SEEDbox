@@ -1,0 +1,10 @@
+---
+- name: Wait for '/data/plugins' to be created
+  wait_for:
+    path: "{{ gotify.folder }}/plugins"
+    state: present
+
+- name: Download SMTP Plugin
+  get_url:
+    url: https://github.com/tystuyfzand/gotify-smtp/releases/download/latest-gotify-v2.3.0/smtp-linux-amd64.so
+    dest: "{{ gotify.folder }}/plugins/smtp-linux-amd64.so"

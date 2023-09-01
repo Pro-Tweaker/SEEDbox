@@ -11,7 +11,7 @@
     pull: yes
     recreate: true
     networks:
-      - name: postfix
+      - name: gotify
         aliases:
           - watchtower
     volumes:
@@ -26,11 +26,5 @@
       WATCHTOWER_NO_STARTUP_MESSAGE: "false"
       # Update containers every day at 5:00 a.m.
       WATCHTOWER_SCHEDULE: "0 0 5 * * *"
-      WATCHTOWER_NOTIFICATIONS: "email"
-      WATCHTOWER_NOTIFICATION_EMAIL_TO: "{{ watchtower.notification_email_to }}"
-      WATCHTOWER_NOTIFICATION_EMAIL_FROM: "{{ watchtower.notification_email_from }}"
-      WATCHTOWER_NOTIFICATION_EMAIL_SERVER: "{{ watchtower.notification_email_server }}"
-      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT: "{{ watchtower.notification_email_server_port }}"
-      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER: "{{ watchtower.notification_email_server_user }}"
-      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD: "{{ watchtower.notification_email_server_password }}"
-      WATCHTOWER_NOTIFICATION_EMAIL_DELAY: "{{ watchtower.notification_email_delay }}"
+      WATCHTOWER_NOTIFICATIONS: gotify
+      WATCHTOWER_NOTIFICATION_GOTIFY_URL: http://gotify:80

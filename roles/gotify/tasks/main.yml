@@ -1,0 +1,69 @@
+---
+- name: Create directories
+  file:
+    path: "{{ gotify.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create the gotify network
+  docker_network:
+    name: gotify
+
+- name: Create and start container
+  docker_container:
+    name: gotify
+    image: "ghcr.io/gotify/server:{{ gotify.tag }}"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ gotify.folder }}:/app/data"
+    networks:
+      - name: web
+        aliases:
+          - gotify
+      - name: gotify
+        aliases:
+          - gotify
+    ports:
+      - "127.0.0.1:{{ port }}:80"
+      - "127.0.0.1:{{ smtp_plugin_port }}:1025"
+    restart_policy: always
+    state: started
+    labels:
+      # Traefik
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.gotify.rule: "Host(`{{ gotify.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.gotify.entrypoints: "websecure"
+      traefik.http.services.gotify.loadbalancer.server.port: "80"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Gotify"
+      homer.service: "Management"
+      homer.priority: "50"
+      homer.url: "https://{{ gotify.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/png/gotify.png"
+      homer.target: "_blank"
+    env:
+      TZ: "{{ tz }}"
+      GOTIFY_DEFAULTUSER_NAME: "{{ gotify.default_username }}"
+      GOTIFY_DEFAULTUSER_PASS: "{{ gotify.default_password }}"
+
+- name: Settings | Wait for 10 seconds before stopping gotify container
+  wait_for:
+    timeout: 10
+
+- name: Settings | Stop container
+  docker_container:
+    name: gotify
+    state: stopped
+
+- name: Install Plugins Tasks
+  include_tasks: "settings/plugins.yml"
+
+- name: Start Gotify container
+  docker_container:
+    name: gotify
+    state: started

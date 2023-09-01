@@ -8,7 +8,7 @@
     - { role: cloudflare, tags: ["core", "cloudflare"] }
     - { role: traefik, tags: ["core", "traefik"] }
     - { role: portainer, tags: ["core", "portainer"] }
-    - { role: authelia, tags: ["core", "authelia"] }
+    - { role: gotify, tags: ["core", "gotify"] }
     - { role: filetree, tags: ["core", "filetree"] }
     - { role: hardening, tags: ["core", "hardening"] }
     - { role: homer, tags: ["core", "homer"] }

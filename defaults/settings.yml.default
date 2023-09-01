@@ -177,5 +177,12 @@ crowdsec:
   tag: latest
   folder: /opt/crowdsec
   subdomain: crowdsec
-tinymotd:
-  folder: /opt/tinymotd
+gotify:
+  tag: latest
+  folder: /opt/gotify
+  subdomain: gotify
+  default_username: admin
+  default_password: admin
+  port: 1234
+  smtp_plugin: true
+  smtp_plugin_port: 1025
