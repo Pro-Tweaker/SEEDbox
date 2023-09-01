@@ -28,3 +28,4 @@
       WATCHTOWER_SCHEDULE: "0 0 5 * * *"
       WATCHTOWER_NOTIFICATIONS: gotify
       WATCHTOWER_NOTIFICATION_GOTIFY_URL: http://gotify:80
+      WATCHTOWER_NOTIFICATION_GOTIFY_TOKEN: "{{ watchtower.notification_gotify_token }}"

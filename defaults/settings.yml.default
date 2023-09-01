@@ -79,13 +79,7 @@ postfix:
 watchtower:
   tag: latest
   monitor_only: "false"
-  notification_email_to: "{{ notifications_email }}"
-  notification_email_from: "watchtower@{{ domain }}"
-  notification_email_server: postfix
-  notification_email_server_port: "587"
-  notification_email_server_user: ""
-  notification_email_server_password: ""
-  notification_email_delay: "2"
+  notification_gotify_token: CHANGEME
 prowlarr:
   tag: develop
   folder: /opt/prowlarr
