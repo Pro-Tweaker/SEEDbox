@@ -27,8 +27,8 @@
         aliases:
           - gotify
     ports:
-      - "127.0.0.1:{{ port }}:80"
-      - "127.0.0.1:{{ smtp_plugin_port }}:1025"
+      - "127.0.0.1:{{ gotify.port }}:80"
+      - "127.0.0.1:{{ gotify.smtp_plugin_port }}:1025"
     restart_policy: always
     state: started
     labels:
