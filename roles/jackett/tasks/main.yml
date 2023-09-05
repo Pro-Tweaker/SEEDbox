@@ -1,0 +1,45 @@
+---
+- name: Create directories
+  file:
+    path: "{{ jackett.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: jackett
+    image: "ghcr.io/linuxserver/jackett:{{ jackett.tag }}"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ jackett.folder }}:/config"
+      - "{{ data_folder }}/torrents:/downloads"
+    networks:
+      - name: web
+        aliases:
+          - jackett
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      # Traefik
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.jackett.rule: "Host(`{{ jackett.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.jackett.entrypoints: "websecure"
+      traefik.http.services.jackett.loadbalancer.server.port: "9117"
+      traefik.http.routers.jackett.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Jackett"
+      homer.service: "Tools"
+      homer.priority: "400"
+      homer.subtitle: ""
+      homer.url: "https://{{ jackett.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/svg/jackett.svg"
+      homer.target: "_blank"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | int }}"
