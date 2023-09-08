@@ -180,3 +180,7 @@ gotify:
   port: 1234
   smtp_plugin: true
   smtp_plugin_port: 1025
+jackett:
+  tag: latest
+  folder: /opt/jackett
+  subdomain: jackett
