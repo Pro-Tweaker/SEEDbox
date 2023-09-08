@@ -1,0 +1,23 @@
+---
+- name: Create directories
+  file:
+    path: "{{ prowlarr.folder }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+
+- name: Create and start container
+  docker_container:
+    name: flaresolverr
+    image: "ghcr.io/flaresolverr/flaresolverr:{{ flaresolverr.tag }}"
+    pull: yes
+    recreate: true
+    networks:
+      - name: web
+        aliases:
+          - flaresolverr
+    restart_policy: unless-stopped
+    state: started
+    env:
+      TZ: "{{ tz }}"

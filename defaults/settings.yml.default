@@ -184,3 +184,6 @@ jackett:
   tag: latest
   folder: /opt/jackett
   subdomain: jackett
+flaresolverr:
+  tag: latest
+  folder: /opt/flaresolverr
