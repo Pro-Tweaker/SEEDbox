@@ -187,3 +187,7 @@ jackett:
 flaresolverr:
   tag: latest
   folder: /opt/flaresolverr
+jellyseerr:
+  tag: latest
+  folder: /opt/jellyseerr
+  subdomain: jellyseerr

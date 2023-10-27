@@ -43,6 +43,7 @@
     - { role: archivebox, tags: ["tools", "archivebox"] }
     - { role: whoami, tags: ["whoami"] }
     - { role: flaresolverr, tags: ["flaresolverr"] }
+    - { role: jellyseerr, tags: ["jellyseerr"] }
 
     # Monitoring
     - { role: netdata, tags: ["monitoring", "netdata"] }

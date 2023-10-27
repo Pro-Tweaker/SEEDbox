@@ -1,0 +1,47 @@
+---
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+    recurse: yes
+  loop:
+    - "{{ jellyseerr.folder }}"
+    - "{{ jellyseerr.folder }}/config"
+
+- name: Create and start container
+  docker_container:
+    name: jellyseerr
+    image: "fallenbagel/jellyseerr:{{ kavita.tag }}"
+    pull: yes
+    recreate: true
+    volumes:
+      - "{{ jellyseerr.folder }}/config:/app/config"
+    networks:
+      - name: web
+        aliases:
+          - jellyseerr
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      # Traefik
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.jellyseerr.rule: "Host(`{{ jellyseerr.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.jellyseerr.entrypoints: "websecure"
+      traefik.http.services.jellyseerr.loadbalancer.server.port: "5055"
+      traefik.http.routers.jellyseerr.middlewares: "authelia@docker"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Jellyseerr"
+      homer.service: "Media"
+      homer.priority: "100"
+      homer.subtitle: "Fast, feature-rich, cross-platform reading server"
+      homer.url: "https://{{ jellyseerr.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/svg/jellyseerr.svg"
+      homer.target: "_blank"
+    env:
+      TZ: "{{ tz }}"
+      LOG_LEVEL: "debug"
