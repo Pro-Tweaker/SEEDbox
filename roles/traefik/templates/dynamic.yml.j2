@@ -1,0 +1,14 @@
+---
+tls:
+  options:
+    default:
+      minVersion: VersionTLS13
+      clientAuth:
+        caFiles:
+          - /etc/traefik/dynamic/authenticated_origin_pull_ca.pem
+        clientAuthType: RequireAndVerifyClientCert
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /etc/traefik/dynamic/{{ domain }}.pem
+        keyFile: /etc/traefik/dynamic/{{ domain }}.key
