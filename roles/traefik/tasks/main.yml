@@ -1,21 +1,44 @@
 ---
-- name: Ensures traefik folder exists
+- name: Create directories
   file:
-    path: "{{ traefik.folder }}"
+    path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
+    mode: 0775
+    recurse: yes
+  loop:
+    - "{{ traefik.folder }}"
+    - "{{ traefik.folder }}/certificates"
 
-- name: Ensures acme.json file exists
-  file:
-    path: "{{ traefik.folder }}/acme.json"
-    state: touch
-    mode: 0600
+- name: Download Cloudflare certificate for mTLS
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - { url: "https://developers.cloudflare.com/ssl/static/authenticated_origin_pull_ca.pem", dest: "{{ traefik.folder }}/certificates/cf_authenticated_origin_pull_ca.pem" }
+
+- name: Creating origin_certificate.pem
+  copy:
+    dest: "{{ traefik.folder }}/certificates/origin_certificate.pem"
+    content: "{{ traefik.origin_certificate }}"
+
+- name: Creating origin_certificate.key
+  copy:
+    dest: "{{ traefik.folder }}/certificates/origin_certificate.key"
+    content: "{{ traefik.origin_certificate_private_key }}"
 
 - name: Adding traefik.yml file
   template:
     src: traefik.yml.j2
     dest: "{{ traefik.folder }}/traefik.yml"
+    mode: 0600
+
+- name: Adding dynamic.yml file
+  template:
+    src: dynamic.yml.j2
+    dest: "{{ traefik.folder }}/dynamic.yml"
     mode: 0600
 
 - name: Create the web network
@@ -35,7 +58,11 @@
       - "443:443"
     volumes:
       - "{{ traefik.folder }}/traefik.yml:/etc/traefik/traefik.yml"
-      - "{{ traefik.folder }}/acme.json:/acme.json"
+      - "{{ traefik.folder }}/dynamic.yml:/etc/traefik/dynamic/dynamic.yml"
+      - "{{ traefik.folder }}/certificates/cf_authenticated_origin_pull_ca.pem:/etc/traefik/dynamic/authenticated_origin_pull_ca.pem"
+      - "{{ traefik.folder }}/certificates/origin_certificate.pem:/etc/traefik/dynamic/{{ domain }}.pem"
+      - "{{ traefik.folder }}/certificates/origin_certificate.key:/etc/traefik/dynamic/{{ domain }}.key"
+      - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       # Traefik
@@ -56,4 +83,3 @@
     env:
       CF_API_KEY: "{{ cloudflare.api_key }}"
       CF_API_EMAIL: "{{ cloudflare.api_email }}"
-
