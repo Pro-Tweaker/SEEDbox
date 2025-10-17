@@ -10,7 +10,7 @@
 - name: Create and start container
   docker_container:
     name: radarr
-    image: "ghcr.io/linuxserver/radarr"
+    image: "ghcr.io/linuxserver/radarr:{{ radarr.tag }}"
     pull: yes
     recreate: true
     volumes:

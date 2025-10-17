@@ -20,7 +20,6 @@
     group: "{{ group }}"
     mode: 0775
 
-
 - name: "Create authelia config file"
   template:
     src: configuration.yml.j2
@@ -58,7 +57,7 @@
 - name: Create and start authelia container
   docker_container:
     name: authelia
-    image: "authelia/authelia"
+    image: "authelia/authelia:{{ authelia.tag }}"
     pull: yes
     recreate: true
     container_default_behavior: compatibility

@@ -8,7 +8,7 @@
 - name: Create and start Homer container
   docker_container:
     name: homer
-    image: "b4bz/homer"
+    image: "b4bz/homer:{{ homer.tag }}"
     pull: yes
     recreate: true
     volumes:
@@ -41,7 +41,7 @@
 - name: Create and start Homer Service Discovery container
   docker_container:
     name: homer-discovery
-    image: "ghcr.io/calvinbui/homer-service-discovery:latest"
+    image: "ghcr.io/calvinbui/homer-service-discovery:{{ homer.tag_companion }}"
     pull: yes
     recreate: true
     volumes:

@@ -27,7 +27,7 @@
 - name: Create and start container
   docker_container:
     name: rutorrent
-    image: "horjulf/rutorrent-autodl"
+    image: "horjulf/rutorrent-autodl:{{ rutorrent.tag }}"
     pull: yes
     recreate: true
     volumes:
