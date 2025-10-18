@@ -1,9 +1,4 @@
 ---
-- name: Stop and remove any existing container
-  docker_container:
-    name: filebrowser
-    state: absent
-
 - name: Create directories
   file:
     path: "{{ item }}"
@@ -17,7 +12,7 @@
 
 - name: "Check if filebrowser config file exists"
   stat:
-    path: "{{ filebrowser.folder }}/filebrowser.json"
+    path: "{{ filebrowser.folder }}/settings.json"
   register: filebrowser_config
 
 - name: "Check if filebrowser database file exists"
@@ -27,8 +22,8 @@
 
 - name: "Create filebrowser config file"
   template:
-    src: filebrowser.json.j2
-    dest: "{{ filebrowser.folder }}/filebrowser.json"
+    src: settings.json.j2
+    dest: "{{ filebrowser.folder }}/settings.json"
     force: yes
     owner: "{{ user }}"
     group: "{{ group }}"
@@ -53,8 +48,8 @@
     recreate: true
     volumes:
       - "{{ data_folder }}:/srv"
-      - "{{ filebrowser.folder }}/filebrowser.db:/database.db"
-      - "{{ filebrowser.folder }}/filebrowser.json:/.filebrowser.json"
+      - "{{ filebrowser.folder }}/filebrowser.db:/database/filebrowser.db"
+      - "{{ filebrowser.folder }}/settings.json:/config/settings.json"
     user: "{{ uid }}:{{ gid }}"
     networks:
       - name: web
