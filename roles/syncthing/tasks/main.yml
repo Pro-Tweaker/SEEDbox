@@ -1,7 +1,13 @@
 ---
 - name: Create directories
-  file: "path={{ item }} state=directory mode=0775 owner={{ user }} group={{ group }} recurse=yes"
-  with_items:
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0775
+    recurse: yes
+  loop:
     - "{{ syncthing.folder }}"
     - "{{ data_folder }}/sync"
 

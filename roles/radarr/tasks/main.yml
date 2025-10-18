@@ -1,11 +1,14 @@
 ---
 - name: Create directories
   file:
-    path: "{{ radarr.folder }}"
+    path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: 0775
+    recurse: yes
+  loop:
+    - "{{ radarr.folder }}"
 
 - name: Create and start container
   docker_container:

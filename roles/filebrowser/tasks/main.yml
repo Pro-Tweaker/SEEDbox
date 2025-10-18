@@ -6,11 +6,14 @@
 
 - name: Create directories
   file:
-    path: "{{ filebrowser.folder }}"
+    path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: 0775
+    recurse: yes
+  loop:
+    - "{{ filebrowser.folder }}"
 
 - name: "Check if filebrowser config file exists"
   stat:
