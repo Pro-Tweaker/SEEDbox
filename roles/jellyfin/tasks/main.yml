@@ -26,7 +26,6 @@
       - name: web
         aliases:
           - jellyfin
-    purge_networks: yes
     restart_policy: unless-stopped
     state: started
     labels:
