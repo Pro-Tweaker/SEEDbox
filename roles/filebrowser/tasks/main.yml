@@ -45,7 +45,7 @@
 - name: Create and start container
   docker_container:
     name: filebrowser
-    image: "filebrowser/filebrowser"
+    image: "filebrowser/filebrowser:{{ filebrowser.tag }}"
     pull: yes
     recreate: true
     volumes:

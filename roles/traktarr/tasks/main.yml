@@ -10,7 +10,7 @@
 - name: Create and start container
   docker_container:
     name: traktarr
-    image: "eafxx/traktarr"
+    image: "eafxx/traktarr:{{ traktarr.tag }}"
     pull: yes
     recreate: true
     volumes:

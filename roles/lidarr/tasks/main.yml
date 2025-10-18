@@ -10,7 +10,7 @@
 - name: Create and start container
   docker_container:
     name: lidarr
-    image: "ghcr.io/linuxserver/lidarr"
+    image: "ghcr.io/linuxserver/lidarr:{{ lidarr.tag }}"
     pull: yes
     recreate: true
     volumes:

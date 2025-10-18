@@ -1,7 +1,7 @@
 - name: Create and start container
   docker_container:
     name: whoami
-    image: "traefik/whoami"
+    image: "traefik/whoami:{{ whoami.tag }}"
     pull: yes
     recreate: true
     networks:
