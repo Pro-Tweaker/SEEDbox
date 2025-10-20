@@ -1,0 +1,17 @@
+---
+- name: Create and start Cloudflare Dynamic DNS Updater
+  docker_container:
+    name: cf-ddns
+    image: "oznu/cloudflare-ddns:{{ cloudflare.tag_ddns }}"
+    pull: yes
+    recreate: true
+    state: started
+    restart_policy: always
+    env:
+      API_KEY: "{{ cloudflare.api_key }}"
+      EMAIL: "{{ cloudflare.api_email }}"
+      ZONE: "{{ domain }}"
+      PROXIED: "true"
+      RRTYPE: "A"
+      DELETE_ON_STOP: "false"
+      DNS_SERVER: "1.1.1.1"

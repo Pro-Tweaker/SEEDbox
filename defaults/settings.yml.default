@@ -5,6 +5,7 @@ group: docker
 gid: 998
 ssh_port: 22
 domain: example.com
+dynamic_ip: false
 data_folder: /mnt/storage
 tz: "Europe/Berlin"
 notifications_email: example@mail.com
