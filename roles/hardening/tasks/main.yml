@@ -8,6 +8,7 @@
 
 - name: Install Fail2Ban
   include_tasks: "fail2ban/main.yml"
+  when: not use_crowdsec | bool
 
 - name: Install Unattended Upgrades
   include_tasks: "unattendedupgrades/main.yml"
