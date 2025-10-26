@@ -1,0 +1,20 @@
+---
+filenames:
+  - /var/log/auth.log
+  - /var/log/syslog
+  - /var/log/kern.log
+labels:
+  type: syslog
+---
+poll_without_inotify: false
+filenames:
+  - /var/log/traefik/*.log
+labels:
+  type: traefik
+---
+listen_addr: 0.0.0.0:7422
+appsec_config: crowdsecurity/appsec-default
+name: myAppSecComponent
+source: appsec
+labels:
+  type: appsec

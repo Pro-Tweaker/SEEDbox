@@ -9,6 +9,7 @@ dynamic_ip: false
 data_folder: /mnt/storage
 tz: "Europe/Berlin"
 notifications_email: example@mail.com
+use_crowdsec: true
 cloudflare:
   tag_ddns: latest
   tag_companion: latest
@@ -176,7 +177,11 @@ speedtesttracker:
   folder: /opt/speedtesttracker
   subdomain: speedtesttracker
 crowdsec:
+  tag: latest-debian
   folder: /opt/crowdsec
   subdomain: crowdsec
+  console_enrollment_key: console_enrollment_key
+  firewall_bouncer_key: firewall_bouncer_key
+  traefik_bouncer_key: traefik_bouncer_key
 tinymotd:
   folder: /opt/tinymotd

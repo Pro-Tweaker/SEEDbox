@@ -10,6 +10,7 @@
   loop:
     - "{{ traefik.folder }}"
     - "{{ traefik.folder }}/certificates"
+    - "{{ traefik.folder }}/logs"
 
 - name: Download Cloudflare certificate for mTLS
   ansible.builtin.get_url:
@@ -41,6 +42,11 @@
     dest: "{{ traefik.folder }}/dynamic.yml"
     mode: 0600
 
+- name: Ensure access.log file exists
+  file:
+    path: "{{ traefik.folder }}/logs/access.log"
+    state: touch
+
 - name: Create the web network
   docker_network:
     name: web
@@ -59,9 +65,10 @@
     volumes:
       - "{{ traefik.folder }}/traefik.yml:/etc/traefik/traefik.yml"
       - "{{ traefik.folder }}/dynamic.yml:/etc/traefik/dynamic/dynamic.yml"
-      - "{{ traefik.folder }}/certificates/cf_authenticated_origin_pull_ca.pem:/etc/traefik/dynamic/authenticated_origin_pull_ca.pem"
-      - "{{ traefik.folder }}/certificates/origin_certificate.pem:/etc/traefik/dynamic/{{ domain }}.pem"
-      - "{{ traefik.folder }}/certificates/origin_certificate.key:/etc/traefik/dynamic/{{ domain }}.key"
+      - "{{ traefik.folder }}/certificates/cf_authenticated_origin_pull_ca.pem:/etc/traefik/dynamic/authenticated_origin_pull_ca.pem:ro"
+      - "{{ traefik.folder }}/certificates/origin_certificate.pem:/etc/traefik/dynamic/{{ domain }}.pem:ro"
+      - "{{ traefik.folder }}/certificates/origin_certificate.key:/etc/traefik/dynamic/{{ domain }}.key:ro"
+      - "{{ traefik.folder }}/logs/access.log:/var/log/traefik/access.log"
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
@@ -83,3 +90,9 @@
     env:
       CF_API_KEY: "{{ cloudflare.api_key }}"
       CF_API_EMAIL: "{{ cloudflare.api_email }}"
+
+- name: Enroll Traefik Firewall Bouncer
+  community.docker.docker_container_exec:
+    container: crowdsec
+    command: "crowdsec cscli bouncers add traefik-bouncer --key {{ crowdsec.traefik_bouncer_key }}"
+  when: use_crowdsec | bool

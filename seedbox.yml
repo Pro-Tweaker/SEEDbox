@@ -13,6 +13,7 @@
     - { role: homer, tags: ["core", "homer"] }
     - { role: watchtower, tags: ["core", "watchtower"] }
     - { role: postfix, tags: ["core", "watchtower", "postfix"] }
+    - { role: crowdsec, tags: ["security", "crowdsec"] }
 
     # Download
     - { role: flood, tags: ["download", "torrent", "flood"] }

@@ -1,0 +1,19 @@
+---
+- name: Wait for CrowdSec container to be healthy
+  become: true
+  community.docker.docker_container_info:
+    name: crowdsec
+  register: crowdsec_info
+  until: crowdsec_info.container.State.Running
+  retries: 10
+  delay: 3
+
+- name: Enroll CrowdSec console
+  community.docker.docker_container_exec:
+    container: crowdsec
+    command: "cscli console enroll {{ crowdsec.console_enrollment_key }}"
+
+- name: Enroll CrowdSec Firewall Bouncer
+  community.docker.docker_container_exec:
+    container: crowdsec
+    command: "crowdsec cscli bouncers add firewall-bouncer --key {{ crowdsec.firewall_bouncer_key }}"
