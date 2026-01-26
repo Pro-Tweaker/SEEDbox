@@ -39,7 +39,6 @@ Only tested with:
 - [Lidarr](https://lidarr.audio/)
 - [Readarr](https://readarr.com/)
 - [Bazarr](https://www.bazarr.media/)
-- [Traktarr](https://github.com/l3uddz/traktarr)
 ## Tools
 - [File Browser](https://filebrowser.org/)
 - [Syncthing](https://syncthing.net/)
