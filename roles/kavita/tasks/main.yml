@@ -1,26 +1,30 @@
 ---
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ kavita.folder }}"
 
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: kavita
-    image: "kizaing/kavita:{{ kavita.tag }}"
-    pull: yes
+    image: "ghcr.io/linuxserver/kavita:{{ kavita.tag }}"
+    pull: true
     recreate: true
     volumes:
       - "{{ kavita.folder }}:/kavita/config"
       - "{{ data_folder }}/media/books:/kavita/book"
       - "{{ data_folder }}/media/comics:/kavita/comics"
       - "{{ data_folder }}/media/mangas:/kavita/mangas"
+    env:
+      TZ: "{{ tz }}"
+      PUID: "{{ uid }}"
+      PGID: "{{ gid }}"
     networks:
       - name: web
         aliases:
@@ -33,6 +37,7 @@
       traefik.docker.network: "web"
       traefik.http.routers.kavita.rule: "Host(`{{ kavita.subdomain }}.{{ domain }}`)"
       traefik.http.routers.kavita.entrypoints: "websecure"
+      traefik.http.routers.kavita.middlewares: "authelia@docker"
       traefik.http.services.kavita.loadbalancer.server.port: "5000"
       # Homer
       homer.enable: "true"
