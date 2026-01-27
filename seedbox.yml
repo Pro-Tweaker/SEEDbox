@@ -33,7 +33,6 @@
     - { role: lidarr, tags: ["pvr", "usenet", "lidarr"] }
     - { role: readarr, tags: ["pvr", "usenet", "readarr"] }
     - { role: bazarr, tags: ["pvr", "bazarr"] }
-    #- { role: traktarr, tags: [usenet, "rr", "traktarr"] }
 
     # Tools
     - { role: filebrowser, tags: ["tools", "filebrowser"] }

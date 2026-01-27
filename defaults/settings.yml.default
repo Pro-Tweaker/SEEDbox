@@ -111,10 +111,6 @@ bazarr:
   tag: latest
   folder: /opt/bazarr
   subdomain: bazarr
-traktarr:
-  tag: latest
-  folder: /opt/traktarr
-  subdomain: traktarr
 authelia:
   tag: latest
   folder: /opt/authelia
