@@ -17,8 +17,8 @@ Only tested with:
 - [filetree](https://github.com/Pro-Tweaker/SEEDbox/blob/main/roles/filetree/tasks/main.yml)
 - [hardening](https://github.com/Pro-Tweaker/SEEDbox/blob/main/roles/hardening/tasks/main.yml)
 - [Homer](https://github.com/bastienwirtz/homer)
-- [Homer Service Discovery](https://github.com/calvinbui/homer-service-discovery)
-- [Dashboard Icons](https://github.com/WalkxCode/dashboard-icons)
+- [Homer Service Discovery](https://github.com/Pro-Tweaker/homer-service-discovery)
+- [Dashboard Icons](https://github.com/homarr-labs/dashboard-icons)
 - [Watchtower](https://github.com/containrrr/watchtower)
 - [postfix](https://github.com/bokysan/docker-postfix)
 ## Download

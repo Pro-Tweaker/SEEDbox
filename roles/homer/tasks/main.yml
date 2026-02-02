@@ -1,21 +1,21 @@
 ---
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ homer.folder }}"
     - "{{ homer.folder }}/discovery"
 
 - name: Create and start Homer container
-  docker_container:
+  community.docker.docker_container:
     name: homer
     image: "b4bz/homer:{{ homer.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     volumes:
       - "{{ homer.folder }}:/www/assets"
@@ -38,17 +38,17 @@
     user: "{{ uid | int }}:{{ gid | int }}"
 
 - name: Homer Settings Tasks
-  include_tasks: "settings/main.yml"
+  ansible.builtin.include_tasks: "settings/main.yml"
 
 - name: Create the management network
-  docker_network:
+  community.docker.docker_network:
     name: management
 
 - name: Create and start Homer Service Discovery container
-  docker_container:
+  community.docker.docker_container:
     name: homer-discovery
-    image: "ghcr.io/calvinbui/homer-service-discovery:{{ homer.tag_companion }}"
-    pull: yes
+    image: "ghcr.io/pro-tweaker/homer-service-discovery:{{ homer.tag_companion }}"
+    pull: true
     recreate: true
     volumes:
       - "{{ homer.folder }}/config.yml:/config.yml"
