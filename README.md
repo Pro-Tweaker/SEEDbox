@@ -4,19 +4,19 @@
 
 Ansible-based Docker containerized cloud media server
 
-A modern stack built with Ansible around Docker, Traefik and Homer. Secured by Cloudflare and CrowdSec for maximum security and with the least exposure on internet. Easily deployable and using the best open-source projects.
+A modern stack built with Ansible around Docker, Traefik, and Homer. It is secured by Cloudflare and CrowdSec for enhanced protection and minimal exposure to the internet. Easily deployable and built using leading open-source projects.
+
+![dashboard](https://user-images.githubusercontent.com/89345101/134022283-160d5070-68c2-4cdc-afed-482a92fcf339.png)
 
 > [!WARNING]
-> Please be aware that this is a work in progress (WIP) project and it is going to evolve in the coming week/months (as of Feb. 2026).
-
-## Screenshot
-![dashboard](https://user-images.githubusercontent.com/89345101/134022283-160d5070-68c2-4cdc-afed-482a92fcf339.png)
+> Please be aware that this is a work in progress (WIP) and will continue to evolve in the coming weeks/months (as of Feb. 2026).
 
 ## Table of Contents
 
 - [Background](#background)
-- [Important Notices](#important-notices)
 - [Install](#install)
+    - [Prerequisites](#prerequisites)
+    - [Getting started](#getting-started)
 - [Usage](#usage)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
@@ -24,16 +24,18 @@ A modern stack built with Ansible around Docker, Traefik and Homer. Secured by C
 
 ## Background
 
-We wanted a better, more modern solution that swizzin. Simpler and easier to maintain than Cloudbox & Saltbox. And made with the best open-source projects and the best ideas. That's how SEEDbox was born.
+We wanted a better, more modern solution than swizzin. Simpler and easier to maintain than Cloudbox & Saltbox. Made with the best open-source projects and the best ideas. That's how SEEDbox was born.
 
-## Important Notices
+## Install
+
+### Prerequisites
 
 > [!IMPORTANT]
-> Operating systems supported and software required: 
+> Supported operating systems and software versions:
 > - Debian 13 (Trixie) - 64-bit (amd64)
-> - Ansible 12 / ansible-core 2.19 and up
-> - Python 3.13 and up
-> - Docker 29.x / Docker Compose 5.x and up
+> - Ansible 12 / ansible-core 2.19 and newer
+> - Python 3.13 and newer
+> - Docker 29.x / Docker Compose 5.x and newer
 
 > [!IMPORTANT]
 > Requirements:
@@ -44,23 +46,12 @@ We wanted a better, more modern solution that swizzin. Simpler and easier to mai
 > - CrowdSec account
 
 > [!NOTE]
-> Check the documentation in the Wiki for more details
+> Check the documentation in the [Wiki](https://github.com/Pro-Tweaker/SEEDbox/wiki) for more details!
 
-> [!IMPORTANT]
-> Minimal Stack (mandatory "core" role):
-> - [Docker](https://www.docker.com/)
-> - [Cloudflare](https://www.cloudflare.com/)
-> - [Traefik](https://traefik.io/)
-> - [Portainer](https://www.portainer.io/)
-> - [Authelia](https://www.authelia.com/)
-> - [filetree](https://github.com/Pro-Tweaker/SEEDbox/blob/main/roles/filetree/tasks/main.yml)
-> - [Homer](https://github.com/bastienwirtz/homer)
-> - [Homer Service Discovery](https://github.com/Pro-Tweaker/homer-service-discovery)
-> - [Dashboard Icons](https://github.com/homarr-labs/dashboard-icons)
-> - [Watchtower](https://github.com/containrrr/watchtower)
-> - [postfix](https://github.com/bokysan/docker-postfix)
+### Getting started
 
-## Install
+> [!TIP]
+> You might need to run some of these commands as `sudo`, depending on your environment.
 
 Install the minimal required packages to use the SEEDbox playbook:
 ```sh
@@ -73,65 +64,80 @@ Install the Docker collection from Ansible Galaxy:
 ansible-galaxy collection install community.docker
 ```
 
-Optional : Check Ansible version:
+Optional: Check Ansible version:
 ```sh
 ansible --version
 ansible --version | grep "python version"
 ansible-community --version
 ```
 
-Prepare a folder, clone this repo, prepare the default file:
+Prepare a folder, clone this repo, and copy the default settings file:
 ```sh
 cd /home/username
 git clone https://github.com/Pro-Tweaker/SEEDbox.git
-cp SEEDbox\defaults\settings.yml.default SEEDbox\settings.yml
+cp SEEDbox/defaults/settings.yml.default SEEDbox/settings.yml
 ```
 
-Customize the seetings.yml with your custom informations:
+Customize `settings.yml` with your information:
 ```sh
 nano settings.yml
 ```
 
 ## Usage
 
-Run the docker role or directly all core role(s):
+> [!TIP]
+> You might need to run some of these commands as `sudo`, depending on your environment and the roles used.
+
+> [!IMPORTANT]
+> Minimal stack (mandatory `core` roles):
+> - [Docker](https://www.docker.com/)
+> - [Cloudflare](https://www.cloudflare.com/)
+> - [Traefik](https://traefik.io/)
+> - [Portainer](https://www.portainer.io/)
+> - [Authelia](https://www.authelia.com/)
+> - [filetree](https://github.com/Pro-Tweaker/SEEDbox/blob/main/roles/filetree/tasks/main.yml)
+> - [Homer](https://github.com/bastienwirtz/homer)
+> - [Homer Service Discovery](https://github.com/Pro-Tweaker/homer-service-discovery)
+> - [Dashboard Icons](https://github.com/homarr-labs/dashboard-icons)
+> - [Watchtower](https://github.com/nicholas-fedor/watchtower)
+
+Run the Docker role or all mandatory core roles using the `core` tag:
 ```sh
-sudo ansible-playbook seedbox.yml --tags=docker
-sudo ansible-playbook seedbox.yml --tags=core
+ansible-playbook seedbox.yml --tags=docker
+ansible-playbook seedbox.yml --tags=core
 ```
 
-Optional : Check Docker version:
+Optional: Check Docker version:
 ```sh
 docker --version
 docker-compose --version
 docker info
 ```
 
-Run the desired optionnal roles:
+Run the desired optional tags:
 ```sh
-sudo ansible-playbook seedbox.yml --tags=download,pvr,media,tools,monitoring
+ansible-playbook seedbox.yml --tags=download,pvr,media,tools,monitoring
 ```
 
-Or the single roles:
+Or run single roles:
 ```sh
-sudo ansible-playbook seedbox.yml --tags=qbittorrent,jellyfin
+ansible-playbook seedbox.yml --tags=qbittorrent,jellyfin
 ```
-### Applications and roles available:
+### Applications (roles) and tags available:
 
-#### Role : "Download"
+#### Tag: "Download"
 - [Flood](https://flood.js.org/)
 - [qBittorrent](https://www.qbittorrent.org/)
-- [rTorrent](https://rakshasa.github.io/rtorrent/)
-- [ruTorrent](https://github.com/Novik/ruTorrent)
-- [NZBGet](https://nzbget.net/)
+- [ruTorrent](https://github.com/Novik/ruTorrent) ([rTorrent](https://rakshasa.github.io/rtorrent/))
+- [NZBGet](https://nzbget.com/)
 - [SABnzbd](https://sabnzbd.org/)
 
-#### Role : "Media"
+#### Tag: "Media"
 - [Jellyfin](https://jellyfin.org/)
 - [Navidrome](https://www.navidrome.org/)
 - [Kavita](https://www.kavitareader.com/)
 
-#### Role : "PVR" aka *arr apps
+#### Tag: "PVR" (aka *arr apps)
 - [Prowlarr](https://prowlarr.com/)
 - [Sonarr](https://sonarr.tv/)
 - [Radarr](https://radarr.video/)
@@ -139,20 +145,20 @@ sudo ansible-playbook seedbox.yml --tags=qbittorrent,jellyfin
 - [Readarr](https://readarr.com/)
 - [Bazarr](https://www.bazarr.media/)
 
-#### Role : "Tools"
+#### Tag: "Tools"
 - [File Browser](https://filebrowser.org/)
 - [Syncthing](https://syncthing.net/)
 - [ArchiveBox](https://archivebox.io/)
 - [whoami](https://github.com/traefik/whoami/)
 
-#### Role : "Monitoring"
+#### Tag: "Monitoring"
 - [Netdata](https://www.netdata.cloud/)
 - [Speedtest Tracker](https://github.com/henrywhitaker3/Speedtest-Tracker)
 - [LibreSpeed](https://librespeed.org/)
 - [Scrutiny](https://github.com/AnalogJ/scrutiny)
 
-> [!NOTE]
-> A list of all the roles is available in the Wiki
+> [!TIP]
+> You can check all the roles and tags available in the playbook file: [seedbox.yml](https://github.com/Pro-Tweaker/SEEDbox/blob/main/seedbox.yml)
 
 ## Maintainers
 
@@ -162,7 +168,7 @@ sudo ansible-playbook seedbox.yml --tags=qbittorrent,jellyfin
 
 ## Contributing
 
-PRs to update/fix/enhance the stack accepted. We probably won't add roles for projects we don't already have selected.
+PRs to update, fix, or enhance the stack accepted. We will likely not add roles for projects that are not already part of the selected stack.
 
 ## License
 
