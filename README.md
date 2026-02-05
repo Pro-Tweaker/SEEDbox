@@ -1,6 +1,10 @@
 # SEEDbox
 
-[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+![GitHub Created At](https://img.shields.io/github/created-at/Pro-Tweaker/SEEDbox)
+![GitHub last commit](https://img.shields.io/github/last-commit/Pro-Tweaker/SEEDbox)
+![GitHub contributors](https://img.shields.io/github/contributors/Pro-Tweaker/SEEDbox)
+![GitHub License](https://img.shields.io/github/license/Pro-Tweaker/SEEDbox)
+[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 Ansible-based Docker containerized cloud media server
 
@@ -55,8 +59,7 @@ We wanted a better, more modern solution than swizzin. Simpler and easier to mai
 
 Install the minimal required packages to use the SEEDbox playbook:
 ```sh
-apt update && apt upgrade
-apt install git python3 pip ansible
+apt update && apt install -y git python3 python3-pip python3-passlib python3-lxml python3-pbkdf2 ansible
 ```
 
 Install the Docker collection from Ansible Galaxy:
@@ -67,8 +70,6 @@ ansible-galaxy collection install community.docker
 Optional: Check Ansible version:
 ```sh
 ansible --version
-ansible --version | grep "python version"
-ansible-community --version
 ```
 
 Prepare a folder, clone this repo, and copy the default settings file:
@@ -107,7 +108,7 @@ ansible-playbook seedbox.yml --tags=docker
 ansible-playbook seedbox.yml --tags=core
 ```
 
-Optional: Check Docker version:
+Optional: Check Docker version and status:
 ```sh
 docker --version
 docker-compose --version
@@ -132,18 +133,18 @@ ansible-playbook seedbox.yml --tags=qbittorrent,jellyfin
 - [NZBGet](https://nzbget.com/)
 - [SABnzbd](https://sabnzbd.org/)
 
-#### Tag: "Media"
-- [Jellyfin](https://jellyfin.org/)
-- [Navidrome](https://www.navidrome.org/)
-- [Kavita](https://www.kavitareader.com/)
-
-#### Tag: "PVR" (aka *arr apps)
+#### Tag: "PVR"
 - [Prowlarr](https://prowlarr.com/)
 - [Sonarr](https://sonarr.tv/)
 - [Radarr](https://radarr.video/)
 - [Lidarr](https://lidarr.audio/)
 - [Readarr](https://readarr.com/)
 - [Bazarr](https://www.bazarr.media/)
+
+#### Tag: "Media"
+- [Jellyfin](https://jellyfin.org/)
+- [Navidrome](https://www.navidrome.org/)
+- [Kavita](https://www.kavitareader.com/)
 
 #### Tag: "Tools"
 - [File Browser](https://filebrowser.org/)
