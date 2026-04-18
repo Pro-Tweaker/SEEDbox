@@ -1,14 +1,14 @@
 ---
 - name: Stop and remove any existing container
-  docker_container:
+  community.docker.docker_container:
     name: watchtower
     state: absent
 
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: watchtower
-    image: "containrrr/watchtower:{{ watchtower.tag }}"
-    pull: yes
+    image: "nickfedor/watchtower:{{ watchtower.tag }}"
+    pull: true
     recreate: true
     networks:
       - name: postfix
@@ -16,7 +16,6 @@
           - watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /etc/localtime:/etc/localtime:ro
     restart_policy: unless-stopped
     state: started
     env:
