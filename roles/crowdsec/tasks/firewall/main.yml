@@ -16,6 +16,7 @@
 - name: Install CrowdSec Repository
   become: true
   ansible.builtin.command: /tmp/install-crowdsec.sh
+  changed_when: false
 
 - name: Install CrowdSec firewall bouncer
   become: true
