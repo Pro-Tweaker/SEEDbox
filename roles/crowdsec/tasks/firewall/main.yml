@@ -5,7 +5,7 @@
     state: present
     update_cache: true
 
-- name: Download CrowdSec installer script
+- name: Download CrowdSec repository installer script
   become: true
   ansible.builtin.get_url:
     url: https://install.crowdsec.net
