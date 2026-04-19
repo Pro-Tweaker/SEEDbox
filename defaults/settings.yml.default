@@ -184,5 +184,6 @@ crowdsec:
   console_enrollment_key: console_enrollment_key
   firewall_bouncer_key: firewall_bouncer_key
   traefik_bouncer_key: traefik_bouncer_key
+  whitelist_ip_range: x.x.0.0/16
 tinymotd:
   folder: /opt/tinymotd
