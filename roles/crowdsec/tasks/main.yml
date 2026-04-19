@@ -1,31 +1,31 @@
 ---
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ crowdsec.folder }}"
     - "{{ crowdsec.folder }}/config"
     - "{{ crowdsec.folder }}/database"
 
 - name: "Create acquis config file"
-  template:
+  ansible.builtin.template:
     src: acquis.yaml.j2
     dest: "{{ crowdsec.folder }}/acquis.yaml"
-    force: yes
+    force: true
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
+    mode: "0775"
 
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: crowdsec
     image: "crowdsecurity/crowdsec:{{ crowdsec.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     volumes:
       - "{{ crowdsec.folder }}/config:/etc/crowdsec"
@@ -47,11 +47,18 @@
     state: started
     labels:
     env:
-      GID: "{{ gid | int }}"
-      COLLECTIONS: "crowdsecurity/linux crowdsecurity/traefik crowdsecurity/http-cve crowdsecurity/base-http-scenarios crowdsecurity/sshd crowdsecurity/appsec-generic-rules crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-crs"
+      GID: "{{ gid }}"
+      COLLECTIONS: "crowdsecurity/linux
+                    crowdsecurity/traefik
+                    crowdsecurity/http-cve
+                    crowdsecurity/base-http-scenarios
+                    crowdsecurity/sshd
+                    crowdsecurity/appsec-generic-rules
+                    crowdsecurity/appsec-virtual-patching
+                    crowdsecurity/appsec-crs"
 
 - name: Configure Crowdsec
-  include_tasks: "config/main.yml"
+  ansible.builtin.include_tasks: "config/main.yml"
 
 - name: Configure Firewall Bouncer
-  include_tasks: "firewall/main.yml"
+  ansible.builtin.include_tasks: "firewall/main.yml"

@@ -1,32 +1,37 @@
 - name: Install syslog-ng
-  become: yes
+  become: true
   ansible.builtin.apt:
     name: syslog-ng
     state: present
-    update_cache: yes
+    update_cache: true
+
+- name: Download CrowdSec installer script
+  become: true
+  ansible.builtin.get_url:
+    url: https://install.crowdsec.net
+    dest: /tmp/install-crowdsec.sh
+    mode: "0755"
+    force: true
 
 - name: Install CrowdSec Repository
-  become: yes
-  ansible.builtin.shell: |
-    curl -s https://install.crowdsec.net | sh
-  args:
-    executable: /bin/bash
+  become: true
+  ansible.builtin.command: /tmp/install-crowdsec.sh
 
 - name: Install CrowdSec firewall bouncer
-  become: yes
+  become: true
   ansible.builtin.apt:
     name: crowdsec-firewall-bouncer-iptables
     state: present
-    update_cache: yes
+    update_cache: true
 
 - name: Create firewall bouncer config file
-  template:
+  ansible.builtin.template:
     src: firewall-bouncer.yaml.j2
     dest: /etc/crowdsec/bouncers/crowdsec-firewall-bouncer.yaml
-    force: yes
+    force: true
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
 
 - name: Enable and start CrowdSec Firewall Bouncer
   ansible.builtin.systemd:
