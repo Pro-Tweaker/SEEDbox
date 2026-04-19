@@ -1,12 +1,12 @@
 ---
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ traefik.folder }}"
     - "{{ traefik.folder }}/certificates"
@@ -16,43 +16,47 @@
   ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "{{ item.dest }}"
-    mode: '0644'
+    mode: "0644"
   loop:
-    - { url: "https://developers.cloudflare.com/ssl/static/authenticated_origin_pull_ca.pem", dest: "{{ traefik.folder }}/certificates/cf_authenticated_origin_pull_ca.pem" }
+    - { url: "https://developers.cloudflare.com/ssl/static/authenticated_origin_pull_ca.pem",
+        dest: "{{ traefik.folder }}/certificates/cf_authenticated_origin_pull_ca.pem" }
 
 - name: Creating origin_certificate.pem
-  copy:
+  ansible.builtin.copy:
     dest: "{{ traefik.folder }}/certificates/origin_certificate.pem"
     content: "{{ traefik.origin_certificate }}"
+    mode: "0644"
 
 - name: Creating origin_certificate.key
-  copy:
+  ansible.builtin.copy:
     dest: "{{ traefik.folder }}/certificates/origin_certificate.key"
     content: "{{ traefik.origin_certificate_private_key }}"
+    mode: "0644"
 
 - name: Adding traefik.yml file
-  template:
+  ansible.builtin.template:
     src: traefik.yml.j2
     dest: "{{ traefik.folder }}/traefik.yml"
-    mode: 0600
+    mode: "0600"
 
 - name: Adding dynamic.yml file
-  template:
+  ansible.builtin.template:
     src: dynamic.yml.j2
     dest: "{{ traefik.folder }}/dynamic.yml"
-    mode: 0600
+    mode: "0600"
 
 - name: Ensure access.log file exists
-  file:
+  ansible.builtin.file:
     path: "{{ traefik.folder }}/logs/access.log"
     state: touch
+    mode: "0600"
 
 - name: Create the web network
-  docker_network:
+  community.docker.docker_network:
     name: web
 
 - name: Create the traefik container
-  docker_container:
+  community.docker.docker_container:
     name: traefik
     image: "traefik:{{ traefik.tag }}"
     restart_policy: always
