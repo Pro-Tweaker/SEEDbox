@@ -34,7 +34,7 @@
 - name: Add personal IP to the whitelist
   community.docker.docker_container_exec:
     container: crowdsec
-    command: "cscli allowlist add my_allowlist {{ whitelist_ip_range }}"
+    command: "cscli allowlist add my_allowlist {{ crowdsec.whitelist_ip_range }}"
   register: crowdsec_allowlist_add
   failed_when: >
     crowdsec_allowlist_add.rc != 0 and 'already exists' not in (crowdsec_allowlist_add.stderr | default(''))
