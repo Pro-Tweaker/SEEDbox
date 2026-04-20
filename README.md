@@ -145,6 +145,7 @@ ansible-playbook seedbox.yml --tags=qbittorrent,jellyfin
 - [Jellyfin](https://jellyfin.org/)
 - [Navidrome](https://www.navidrome.org/)
 - [Kavita](https://www.kavitareader.com/)
+- [Yamtrack](https://github.com/FuzzyGrim/Yamtrack)
 
 #### Tag: "Tools"
 - [File Browser](https://filebrowser.org/)
