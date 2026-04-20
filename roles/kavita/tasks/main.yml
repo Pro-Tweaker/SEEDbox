@@ -37,7 +37,6 @@
       traefik.docker.network: "web"
       traefik.http.routers.kavita.rule: "Host(`{{ kavita.subdomain }}.{{ domain }}`)"
       traefik.http.routers.kavita.entrypoints: "websecure"
-      traefik.http.routers.kavita.middlewares: "authelia@docker"
       traefik.http.services.kavita.loadbalancer.server.port: "5000"
       # Homer
       homer.enable: "true"
