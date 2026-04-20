@@ -183,3 +183,15 @@ crowdsec:
   whitelist_ip_range: x.x.0.0/16
 tinymotd:
   folder: /opt/tinymotd
+yamtrack:
+  tag: latest
+  folder: /opt/yamtrack
+  subdomain: yamtrack
+  secret:
+  tmdb_api:
+  trakt_api:
+  mal_api:
+  igdb_id:
+  igdb_secret:
+  simkl_id:
+  simkl_secret:
