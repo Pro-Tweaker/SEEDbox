@@ -8,7 +8,7 @@
     state: started
     restart_policy: always
     env:
-      CLOUDFLARE_API_TOKEN: "{{ cloudflare.api_key }}"
+      CLOUDFLARE_API_TOKEN: "{{ cloudflare.api_token }}"
       DOMAINS: "{{ domain }}"
       PROXIED: "true"
       RRTYPE: "A"
