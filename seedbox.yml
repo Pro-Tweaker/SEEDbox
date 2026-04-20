@@ -26,6 +26,7 @@
     - { role: jellyfin, tags: ["jellyfin"] }
     - { role: navidrome, tags: ["navidrome"] }
     - { role: kavita, tags: ["kavita"] }
+    - { role: yamtrack, tags: ["yamtrack"] }
 
     # PVR
     - { role: prowlarr, tags: ["pvr", "usenet", "prowlarr"] }
