@@ -142,7 +142,7 @@ librespeed:
   folder: /opt/librespeed
   subdomain: librespeed
 qbittorrent:
-  tag: latest
+  tag: "5.1.4"
   folder: /opt/qbittorrent
   subdomain: qbittorrent
   web_user: admin_qbit
