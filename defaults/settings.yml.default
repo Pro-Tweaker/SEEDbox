@@ -61,7 +61,7 @@ homer:
     - name: Management
       icon: "fas fa-user-shield"
 scrutiny:
-  tag: master-omnibus
+  tag: latest-omnibus
   folder: /opt/scrutiny
   subdomain: scrutiny
 jellyfin:
