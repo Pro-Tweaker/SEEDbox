@@ -93,6 +93,7 @@ nano settings.yml
 > Minimal stack (mandatory `core` roles):
 > - [Docker](https://www.docker.com/)
 > - [Cloudflare](https://www.cloudflare.com/)
+> - [CrowdSec](https://www.crowdsec.net/)
 > - [Traefik](https://traefik.io/)
 > - [Portainer](https://www.portainer.io/)
 > - [Authelia](https://www.authelia.com/)
