@@ -1,6 +1,6 @@
 ---
 - name: Create and start Cloudflare Dynamic DNS Updater
-  community.docker.docker_containe:
+  community.docker.docker_container:
     name: cf-ddns
     image: "oznu/cloudflare-ddns:{{ cloudflare.tag_ddns }}"
     pull: true
