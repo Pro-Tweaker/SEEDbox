@@ -1,14 +1,24 @@
 ---
 - name: Create and start Traefik Cloudflare Companion
-  docker_container:
+  community.docker.docker_container:
     name: cf-companion
     image: "tiredofit/traefik-cloudflare-companion:{{ cloudflare.tag_companion }}"
-    pull: yes
+    pull: true
     recreate: true
     state: started
     restart_policy: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      # Homer
+      homer.enable: "true"
+      homer.name: "Cloudflare"
+      homer.service: "Management"
+      homer.priority: "600"
+      homer.subtitle: "DNS, CDN and DDoS mitigation services"
+      homer.url: "https://dash.cloudflare.com/"
+      homer.logo: "assets/homer-icons/svg/cloudflare.svg"
+      homer.target: "_blank"
     env:
       TRAEFIK_VERSION: "2"
       CF_TOKEN: "{{ cloudflare.api_key }}"

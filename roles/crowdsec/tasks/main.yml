@@ -46,6 +46,15 @@
     restart_policy: unless-stopped
     state: started
     labels:
+      # Homer
+      homer.enable: "true"
+      homer.name: "CrowdSec"
+      homer.service: "Management"
+      homer.priority: "500"
+      homer.subtitle: "Curated Threat Intelligence Powered by the Crowd"
+      homer.url: "https://app.crowdsec.net/"
+      homer.logo: "assets/homer-icons/svg/crowdsec.svg"
+      homer.target: "_blank"
     env:
       GID: "{{ gid }}"
       COLLECTIONS: "crowdsecurity/linux

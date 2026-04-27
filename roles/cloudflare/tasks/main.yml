@@ -1,7 +1,7 @@
 ---
 - name: Cloudflare | Dynamic DNS Updater
-  include_tasks: "ddns/main.yml"
+  ansible.builtin.include_tasks: "ddns/main.yml"
   when: dynamic_ip | bool
 
 - name: Cloudflare | Traefik Companion
-  include_tasks: "traefik/main.yml"
+  ansible.builtin.include_tasks: "traefik/main.yml"
