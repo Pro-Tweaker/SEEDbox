@@ -55,7 +55,7 @@
       homer.priority: "400"
       homer.subtitle: "Monitor everything in real time"
       homer.url: "https://{{ netdata.subdomain }}.{{ domain }}"
-      homer.logo: "assets/homer-icons/png/netdata.png"
+      homer.logo: "assets/homer-icons/svg/netdata.svg"
       homer.target: "_blank"
     env:
       TZ: "{{ tz }}"

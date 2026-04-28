@@ -41,7 +41,7 @@
       homer.priority: "400"
       homer.subtitle: "Best BitTorrent client"
       homer.url: "https://{{ qbittorrent.subdomain }}.{{ domain }}"
-      homer.logo: "assets/homer-icons/png/qbittorrent.png"
+      homer.logo: "assets/homer-icons/svg/qbittorrent.svg"
       homer.target: "_blank"
     published_ports:
       - "51413:51413"

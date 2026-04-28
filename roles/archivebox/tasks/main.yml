@@ -42,7 +42,7 @@
       homer.priority: "1"
       homer.subtitle: "Open-source self-hosted web archiving"
       homer.url: "https://{{ archivebox.subdomain }}.{{ domain }}"
-      homer.logo: "assets/homer-icons/png/archivebox.png"
+      homer.logo: "assets/homer-icons/svg/archivebox.svg"
       homer.target: "_blank"
     env:
       TIMEOUT: "120"

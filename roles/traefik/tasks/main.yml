@@ -89,7 +89,7 @@
       homer.priority: "400"
       homer.subtitle: "Dashboard of the Traefik proxy"
       homer.url: "https://{{ traefik.api_url }}"
-      homer.logo: "assets/homer-icons/png/traefik.png"
+      homer.logo: "assets/homer-icons/svg/traefik-proxy.svg"
       homer.target: "_blank"
     env:
       CF_API_KEY: "{{ cloudflare.api_key }}"

@@ -42,7 +42,7 @@
       homer.priority: "200"
       homer.subtitle: "Open Source Continuous File Synchronization"
       homer.url: "https://{{ syncthing.subdomain }}.{{ domain }}"
-      homer.logo: "assets/homer-icons/png/syncthing.png"
+      homer.logo: "assets/homer-icons/svg/syncthing.svg"
       homer.target: "_blank"
     published_ports:
       - "22000:22000/tcp"

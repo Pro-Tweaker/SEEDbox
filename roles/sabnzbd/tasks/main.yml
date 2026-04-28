@@ -39,7 +39,7 @@
       homer.priority: "100"
       homer.subtitle: "Automated Usenet download tool"
       homer.url: "https://{{ sabnzbd.subdomain }}.{{ domain }}"
-      homer.logo: "assets/homer-icons/png/sabnzbd.png"
+      homer.logo: "assets/homer-icons/svg/sabnzbd.svg"
       homer.target: "_blank"
     env:
       TZ: "{{ tz }}"

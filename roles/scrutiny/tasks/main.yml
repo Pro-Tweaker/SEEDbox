@@ -50,5 +50,5 @@
       homer.priority: "100"
       homer.subtitle: "Hard Drive S.M.A.R.T Monitoring"
       homer.url: "https://{{ scrutiny.subdomain }}.{{ domain }}"
-      homer.logo: "assets/homer-icons/png/scrutiny.png"
+      homer.logo: "assets/homer-icons/svg/scrutiny.svg"
       homer.target: "_blank"
