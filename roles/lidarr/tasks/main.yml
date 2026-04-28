@@ -40,7 +40,7 @@
       homer.priority: "200"
       homer.subtitle: "Music collection manager for Usenet and BitTorrent users"
       homer.url: "https://{{ lidarr.subdomain }}.{{ domain }}"
-      homer.logo: "assets/homer-icons/png/lidarr.png"
+      homer.logo: "assets/homer-icons/svg/lidarr.svg"
       homer.target: "_blank"
     env:
       TZ: "{{ tz }}"

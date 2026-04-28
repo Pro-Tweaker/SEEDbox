@@ -42,7 +42,7 @@
       homer.priority: "500"
       homer.subtitle: "Modern web UI for various torrent clients"
       homer.url: "https://{{ flood.subdomain }}.{{ domain }}"
-      homer.logo: "assets/homer-icons/png/flood.png"
+      homer.logo: "assets/homer-icons/svg/flood.svg"
       homer.target: "_blank"
     env:
       HOME: /config

@@ -42,7 +42,7 @@
       homer.priority: "300"
       homer.subtitle: "Stream to any device from your own server"
       homer.url: "https://{{ jellyfin.subdomain }}.{{ domain }}"
-      homer.logo: "assets/homer-icons/png/jellyfin.png"
+      homer.logo: "assets/homer-icons/svg/jellyfin.svg"
       homer.target: "_blank"
     env:
       TZ: "{{ tz }}"

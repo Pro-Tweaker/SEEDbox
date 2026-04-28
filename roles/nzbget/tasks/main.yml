@@ -45,7 +45,7 @@
       homer.priority: "200"
       homer.subtitle: "Efficient Usenet downloader"
       homer.url: "https://{{ nzbget.subdomain }}.{{ domain }}"
-      homer.logo: "assets/homer-icons/png/nzbget.png"
+      homer.logo: "assets/homer-icons/svg/nzbget.svg"
       homer.target: "_blank"
     env:
       TZ: "{{ tz }}"

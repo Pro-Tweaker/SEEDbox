@@ -60,7 +60,7 @@
       homer.priority: "300"
       homer.subtitle: "rTorrent client with a webui"
       homer.url: "https://{{ rutorrent.subdomain }}.{{ domain }}"
-      homer.logo: "assets/homer-icons/png/rutorrent.png"
+      homer.logo: "assets/homer-icons/svg/rutorrent.svg"
       homer.target: "_blank"
     published_ports:
       - "51413:51413"

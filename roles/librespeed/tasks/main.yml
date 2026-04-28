@@ -39,7 +39,7 @@
       homer.priority: "200"
       homer.subtitle: "FOSS Speedtest. No Bullshit."
       homer.url: "https://{{ librespeed.subdomain }}.{{ domain }}"
-      homer.logo: "assets/homer-icons/png/librespeed.png"
+      homer.logo: "assets/homer-icons/svg/librespeed.svg"
       homer.target: "_blank"
     env:
       TZ: "{{ tz }}"

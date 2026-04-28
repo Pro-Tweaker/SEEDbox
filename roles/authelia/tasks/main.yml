@@ -96,7 +96,7 @@
       homer.priority: "100"
       homer.subtitle: "Authentication server providing 2FA and SSO"
       homer.url: "https://{{ authelia.subdomain }}.{{ domain }}"
-      homer.logo: "assets/homer-icons/png/authelia.png"
+      homer.logo: "assets/homer-icons/svg/authelia.svg"
       homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
