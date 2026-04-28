@@ -1,0 +1,73 @@
+---
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: "0775"
+    recurse: true
+  loop:
+    - "{{ crowdsec.folder }}"
+    - "{{ crowdsec.folder }}/config"
+    - "{{ crowdsec.folder }}/database"
+
+- name: "Create acquis config file"
+  ansible.builtin.template:
+    src: acquis.yaml.j2
+    dest: "{{ crowdsec.folder }}/acquis.yaml"
+    force: true
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: "0775"
+
+- name: Create and start container
+  community.docker.docker_container:
+    name: crowdsec
+    image: "crowdsecurity/crowdsec:{{ crowdsec.tag }}"
+    pull: true
+    recreate: true
+    volumes:
+      - "{{ crowdsec.folder }}/config:/etc/crowdsec"
+      - "{{ crowdsec.folder }}/acquis.yaml:/etc/crowdsec/acquis.yaml"
+      - "{{ crowdsec.folder }}/database:/var/lib/crowdsec/data"
+      # System logs
+      - /var/log/auth.log:/var/log/auth.log:ro
+      - /var/log/syslog:/var/log/syslog.log:ro
+      - /var/log/kern.log:/var/log/kern.log:ro
+      # Traefik logs
+      - "{{ traefik.folder }}/logs:/var/log/traefik:ro"
+    networks:
+      - name: web
+        aliases:
+          - crowdsec
+    ports:
+      - 127.0.0.1:9876:8080 # port mapping for local firewall bouncer
+    restart_policy: unless-stopped
+    state: started
+    labels:
+      # Homer
+      homer.enable: "true"
+      homer.name: "CrowdSec"
+      homer.service: "Management"
+      homer.priority: "500"
+      homer.subtitle: "Curated Threat Intelligence Powered by the Crowd"
+      homer.url: "https://app.crowdsec.net/"
+      homer.logo: "assets/homer-icons/svg/crowdsec.svg"
+      homer.target: "_blank"
+    env:
+      GID: "{{ gid }}"
+      COLLECTIONS: "crowdsecurity/linux
+                    crowdsecurity/traefik
+                    crowdsecurity/http-cve
+                    crowdsecurity/base-http-scenarios
+                    crowdsecurity/sshd
+                    crowdsecurity/appsec-generic-rules
+                    crowdsecurity/appsec-virtual-patching
+                    crowdsecurity/appsec-crs"
+
+- name: Configure Crowdsec
+  ansible.builtin.include_tasks: "config/main.yml"
+
+- name: Configure Firewall Bouncer
+  ansible.builtin.include_tasks: "firewall/main.yml"

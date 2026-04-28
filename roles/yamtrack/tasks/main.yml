@@ -1,0 +1,64 @@
+---
+- name: Create YamTrack Directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: "0775"
+    recurse: true
+  with_items:
+    - "{{ yamtrack.folder }}/data"
+    - "{{ yamtrack.folder }}/redis"
+
+- name: Create YamTrack redis Docker Container
+  community.docker.docker_container:
+    name: yamtrack-redis
+    image: redis:8-alpine
+    pull: true
+    volumes:
+      - "{{ yamtrack.folder }}/redis:/data"
+    restart_policy: unless-stopped
+    networks:
+      - name: web
+        aliases:
+          - yamtrack-redis
+
+- name: Create YamTrack Docker Container
+  community.docker.docker_container:
+    name: yamtrack
+    image: "ghcr.io/fuzzygrim/yamtrack:{{ yamtrack.tag }}"
+    pull: true
+    restart_policy: unless-stopped
+    volumes:
+      - "{{ yamtrack.folder }}/data:/yamtrack/db"
+    env:
+      SECRET: "{{ yamtrack.secret | string }}"
+      REDIS_URL: "redis://yamtrack-redis:6379"
+      URLS: "https://{{ yamtrack.subdomain }}.{{ domain }}"
+      TMDB_API: "{{ yamtrack.tmdb_api if yamtrack.tmdb_api else omit }}"
+      TRAKT_API: "{{ yamtrack.trakt_api if yamtrack.trakt_api else omit }}"
+      MAL_API: "{{ yamtrack.mal_api if yamtrack.mal_api else omit }}"
+      IGDB_ID: "{{ yamtrack.igdb_id if yamtrack.igdb_id else omit }}"
+      IGDB_SECRET: "{{ yamtrack.igdb_secret if yamtrack.igdb_secret else omit }}"
+      SIMKL_ID: "{{ yamtrack.simkl_id if yamtrack.simkl_id else omit }}"
+      SIMKL_SECRET: "{{ yamtrack.simkl_secret if yamtrack.simkl_secret else omit }}"
+      TZ: "{{ tz }}"
+    networks:
+      - name: web
+    labels:
+      # Traefik
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.yamtrack.rule: "Host(`{{ yamtrack.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.yamtrack.entrypoints: "websecure"
+      traefik.http.services.yamtrack.loadbalancer.server.port: "8000"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Yamtrack"
+      homer.service: "Media"
+      homer.priority: "50"
+      homer.subtitle: "A self hosted media tracker"
+      homer.url: "https://{{ yamtrack.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/svg/yamtrack.svg"
+      homer.target: "_blank"

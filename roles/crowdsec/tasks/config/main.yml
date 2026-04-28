@@ -1,0 +1,40 @@
+---
+- name: Wait for CrowdSec container to be healthy
+  community.docker.docker_container_info:
+    name: crowdsec
+  register: crowdsec_info
+  until: crowdsec_info.container.State.Running
+  retries: 10
+  delay: 3
+
+- name: Enroll CrowdSec console
+  community.docker.docker_container_exec:
+    container: crowdsec
+    command: "cscli console enroll {{ crowdsec.console_enrollment_key }}"
+  register: crowdsec_console_enroll
+  failed_when: >
+    crowdsec_console_enroll.rc != 0 and 'already enrolled' not in (crowdsec_console_enroll.stderr | default(''))
+
+- name: Enroll CrowdSec Firewall Bouncer
+  community.docker.docker_container_exec:
+    container: crowdsec
+    command: "cscli bouncers add firewall-bouncer --key {{ crowdsec.firewall_bouncer_key }}"
+  register: crowdsec_bouncer_enroll
+  failed_when: >
+    crowdsec_bouncer_enroll.rc != 0 and 'already exists' not in (crowdsec_bouncer_enroll.stderr | default(''))
+
+- name: Create whitelist in Crowdsec
+  community.docker.docker_container_exec:
+    container: crowdsec
+    command: "cscli allowlist create my_allowlist -d 'my personal IP address'"
+  register: crowdsec_allowlist_create
+  failed_when: >
+    crowdsec_allowlist_create.rc != 0 and 'already exists' not in (crowdsec_allowlist_create.stderr | default(''))
+
+- name: Add personal IP to the whitelist
+  community.docker.docker_container_exec:
+    container: crowdsec
+    command: "cscli allowlist add my_allowlist {{ crowdsec.whitelist_ip_range }}"
+  register: crowdsec_allowlist_add
+  failed_when: >
+    crowdsec_allowlist_add.rc != 0 and 'already exists' not in (crowdsec_allowlist_add.stderr | default(''))

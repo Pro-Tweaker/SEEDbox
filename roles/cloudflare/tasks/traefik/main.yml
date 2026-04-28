@@ -9,6 +9,16 @@
     restart_policy: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      # Homer
+      homer.enable: "true"
+      homer.name: "Cloudflare"
+      homer.service: "Management"
+      homer.priority: "600"
+      homer.subtitle: "DNS, CDN and DDoS mitigation services"
+      homer.url: "https://dash.cloudflare.com/"
+      homer.logo: "assets/homer-icons/svg/cloudflare.svg"
+      homer.target: "_blank"
     env:
       TIMEZONE: "{{ tz }}"
       TRAEFIK_VERSION: "2"

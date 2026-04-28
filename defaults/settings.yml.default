@@ -9,6 +9,7 @@ dynamic_ip: false
 data_folder: /mnt/storage
 tz: "Europe/Berlin"
 notifications_email: example@mail.com
+use_crowdsec: true
 cloudflare:
   tag_ddns: latest
   tag_companion: latest
@@ -17,7 +18,8 @@ cloudflare:
   api_token:
   domain_zone_id:
 traefik:
-  tag: "3.5.3"
+  tag: "3.6.14"
+  tag_bouncer: "v1.6.0"
   folder: /opt/traefik
   api_url: "traefik.{{ domain }}"
   origin_certificate: ""
@@ -60,7 +62,7 @@ homer:
     - name: Management
       icon: "fas fa-user-shield"
 scrutiny:
-  tag: master-omnibus
+  tag: latest-omnibus
   folder: /opt/scrutiny
   subdomain: scrutiny
 jellyfin:
@@ -112,10 +114,6 @@ bazarr:
   tag: latest
   folder: /opt/bazarr
   subdomain: bazarr
-traktarr:
-  tag: latest
-  folder: /opt/traktarr
-  subdomain: traktarr
 authelia:
   tag: latest
   folder: /opt/authelia
@@ -145,7 +143,7 @@ librespeed:
   folder: /opt/librespeed
   subdomain: librespeed
 qbittorrent:
-  tag: latest
+  tag: "5.1.4"
   folder: /opt/qbittorrent
   subdomain: qbittorrent
   web_user: admin_qbit
@@ -177,7 +175,24 @@ speedtesttracker:
   folder: /opt/speedtesttracker
   subdomain: speedtesttracker
 crowdsec:
+  tag: latest-debian
   folder: /opt/crowdsec
   subdomain: crowdsec
+  console_enrollment_key: console_enrollment_key
+  firewall_bouncer_key: firewall_bouncer_key
+  traefik_bouncer_key: traefik_bouncer_key
+  whitelist_ip_range: x.x.0.0/16
 tinymotd:
   folder: /opt/tinymotd
+yamtrack:
+  tag: latest
+  folder: /opt/yamtrack
+  subdomain: yamtrack
+  secret:
+  tmdb_api:
+  trakt_api:
+  mal_api:
+  igdb_id:
+  igdb_secret:
+  simkl_id:
+  simkl_secret:

@@ -13,6 +13,7 @@
     - { role: homer, tags: ["core", "homer"] }
     - { role: watchtower, tags: ["core", "watchtower"] }
     - { role: postfix, tags: ["core", "watchtower", "postfix"] }
+    - { role: crowdsec, tags: ["security", "crowdsec"] }
 
     # Download
     - { role: flood, tags: ["download", "torrent", "flood"] }
@@ -25,6 +26,7 @@
     - { role: jellyfin, tags: ["jellyfin"] }
     - { role: navidrome, tags: ["navidrome"] }
     - { role: kavita, tags: ["kavita"] }
+    - { role: yamtrack, tags: ["yamtrack"] }
 
     # PVR
     - { role: prowlarr, tags: ["pvr", "usenet", "prowlarr"] }
@@ -33,7 +35,6 @@
     - { role: lidarr, tags: ["pvr", "usenet", "lidarr"] }
     - { role: readarr, tags: ["pvr", "usenet", "readarr"] }
     - { role: bazarr, tags: ["pvr", "bazarr"] }
-    #- { role: traktarr, tags: [usenet, "rr", "traktarr"] }
 
     # Tools
     - { role: filebrowser, tags: ["tools", "filebrowser"] }
