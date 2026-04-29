@@ -1,5 +1,5 @@
 ---
-- name: Update all packages
+- name: Update all packages # noqa: package-latest
   ansible.builtin.apt:
     name: "*"
     state: latest

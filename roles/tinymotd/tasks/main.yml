@@ -17,7 +17,7 @@
   loop:
     - "{{ tinymotd.folder }}"
 
-- name: GIT Clone/Pull Repository
+- name: GIT Clone/Pull Repository # noqa: latest[git]
   ansible.builtin.git:
     repo: https://github.com/bderenzo/tinymotd.git
     dest: "{{ tinymotd.folder }}"
