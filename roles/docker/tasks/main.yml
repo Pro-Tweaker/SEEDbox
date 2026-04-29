@@ -20,11 +20,12 @@
     dest: "/etc/apt/sources.list.d/docker.list"
     line: deb [arch=amd64] https://download.docker.com/linux/debian/ {{ ansible_distribution_release }} stable
     state: present
-    create: yes
+    create: true
+    mode: "0644"
 
 - name: Update APT cache
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true
 
 - name: Install Docker required packages
   ansible.builtin.package:
@@ -34,7 +35,7 @@
       - docker-compose
       - containerd.io
     state: present
-    install_recommends: yes
+    install_recommends: true
   notify:
     - start docker
 

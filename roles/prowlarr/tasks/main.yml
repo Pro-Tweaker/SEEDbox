@@ -5,8 +5,8 @@
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ prowlarr.folder }}"
 
@@ -14,7 +14,7 @@
   community.docker.docker_container:
     name: prowlarr
     image: "ghcr.io/linuxserver/prowlarr:{{ prowlarr.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     volumes:
       - "{{ prowlarr.folder }}:/config"

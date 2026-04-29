@@ -5,8 +5,8 @@
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ sonarr.folder }}"
 
@@ -14,7 +14,7 @@
   community.docker.docker_container:
     name: sonarr
     image: "ghcr.io/linuxserver/sonarr:{{ sonarr.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     volumes:
       - "{{ sonarr.folder }}:/config"

@@ -2,6 +2,6 @@
 - name: Settings | Set 'host_whitelist'
   ansible.builtin.lineinfile:
     path: "{{ sabnzbd.folder }}/sabnzbd.ini"
-    regexp: '^host_whitelist\s*=.*'
-    line: 'host_whitelist = {{ sabnzbd.subdomain }}.{{ domain }}'
+    regexp: "^host_whitelist\\s*=.*"
+    line: "host_whitelist = {{ sabnzbd.subdomain }}.{{ domain }}"
     state: present

@@ -5,8 +5,8 @@
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ qbittorrent.folder }}"
 
@@ -14,7 +14,7 @@
   community.docker.docker_container:
     name: qbittorrent
     image: "ghcr.io/linuxserver/qbittorrent:{{ qbittorrent.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     volumes:
       - "{{ qbittorrent.folder }}:/config"
@@ -32,7 +32,7 @@
       traefik.http.routers.qbittorrent.rule: "Host(`{{ qbittorrent.subdomain }}.{{ domain }}`)"
       traefik.http.routers.qbittorrent.entrypoints: "websecure"
       traefik.http.services.qbittorrent.loadbalancer.server.port: "8080"
-      #traefik.http.middlewares.referer.headers.customresponseheaders.Referer: "{{ qbittorrent.subdomain }}.{{ domain }}"
+      # traefik.http.middlewares.referer.headers.customresponseheaders.Referer: "{{ qbittorrent.subdomain }}.{{ domain }}"
       traefik.http.routers.qbittorrent.middlewares: "authelia@docker"
       # Homer
       homer.enable: "true"

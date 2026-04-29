@@ -10,8 +10,8 @@
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ rutorrent.folder }}"
     - "{{ rutorrent.folder }}/plugins"
@@ -34,7 +34,7 @@
   community.docker.docker_container:
     name: rutorrent
     image: "horjulf/rutorrent-autodl:{{ rutorrent.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     volumes:
       - "{{ rutorrent.folder }}:/config"

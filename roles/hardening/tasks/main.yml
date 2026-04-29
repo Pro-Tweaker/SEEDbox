@@ -3,8 +3,8 @@
   ansible.builtin.apt:
     name: "*"
     state: latest
-    force_apt_get: yes
-    update_cache: yes
+    force_apt_get: true
+    update_cache: true
 
 - name: Install Fail2Ban
   ansible.builtin.include_tasks: "fail2ban/main.yml"

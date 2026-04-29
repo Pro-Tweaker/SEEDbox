@@ -5,8 +5,8 @@
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ netdata.folder }}"
     - "{{ netdata.folder }}/config"
@@ -18,7 +18,7 @@
     name: netdata
     hostname: "{{ netdata.subdomain }}.{{ domain }}"
     image: "netdata/netdata:{{ netdata.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     volumes:
       - "{{ netdata.folder }}/config:/etc/netdata"

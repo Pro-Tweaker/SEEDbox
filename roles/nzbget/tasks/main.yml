@@ -10,8 +10,8 @@
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ nzbget.folder }}"
 
@@ -19,7 +19,7 @@
   community.docker.docker_container:
     name: nzbget
     image: "ghcr.io/linuxserver/nzbget:{{ nzbget.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     volumes:
       - "{{ nzbget.folder }}:/config"

@@ -53,7 +53,7 @@ entryPoints:
       middlewares:
         - crowdsec@file
       {% endif %}
-    {% if use_crowdsec %}  
+    {% if use_crowdsec %}
     forwardedHeaders:
       trustedIPs: &trustedIps
         # Start of Cloudlare's public IP list

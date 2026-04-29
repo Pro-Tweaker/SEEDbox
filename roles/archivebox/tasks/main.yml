@@ -5,8 +5,8 @@
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ archivebox.folder }}"
     - "{{ data_folder }}/archives"
@@ -15,7 +15,7 @@
   community.docker.docker_container:
     name: archivebox
     image: "archivebox/archivebox:{{ archivebox.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     command: server --quick-init 0.0.0.0:8000
     volumes:

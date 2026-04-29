@@ -1,5 +1,5 @@
 ---
-- name: start docker
+- name: Start docker
   ansible.builtin.service:
     name: docker
     state: started

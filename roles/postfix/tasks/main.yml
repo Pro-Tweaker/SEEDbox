@@ -7,7 +7,7 @@
   community.docker.docker_container:
     name: postfix
     image: "boky/postfix:{{ postfix.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     state: started
     restart_policy: unless-stopped

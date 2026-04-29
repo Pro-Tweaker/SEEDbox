@@ -5,8 +5,8 @@
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ radarr.folder }}"
 
@@ -14,7 +14,7 @@
   community.docker.docker_container:
     name: radarr
     image: "ghcr.io/linuxserver/radarr:{{ radarr.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     volumes:
       - "{{ radarr.folder }}:/config"

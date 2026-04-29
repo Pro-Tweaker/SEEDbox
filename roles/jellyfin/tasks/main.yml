@@ -5,8 +5,8 @@
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ jellyfin.folder }}"
     - "{{ data_folder }}/media/tv"
@@ -16,7 +16,7 @@
   community.docker.docker_container:
     name: jellyfin
     image: "ghcr.io/linuxserver/jellyfin:{{ jellyfin.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     volumes:
       - "{{ jellyfin.folder }}:/config"

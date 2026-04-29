@@ -10,8 +10,8 @@
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ navidrome.folder }}"
     - "{{ navidrome.folder }}/data"
@@ -21,7 +21,7 @@
   community.docker.docker_container:
     name: navidrome
     image: "deluan/navidrome:{{ navidrome.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     volumes:
       - "{{ navidrome.folder }}/data:/data"
@@ -51,6 +51,6 @@
       homer.target: "_blank"
     env:
       ND_SCANSCHEDULE: 1h
-      ND_LOGLEVEL: info  
+      ND_LOGLEVEL: info
       ND_SESSIONTIMEOUT: 24h
       ND_BASEURL: ""

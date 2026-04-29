@@ -17,27 +17,27 @@
 - name: Settings | Dynamic | Set 'network.local_address.set'
   ansible.builtin.lineinfile:
     path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"
-    regexp: '^network\.local_address\.set\s*=.*'
-    line: 'network.local_address.set = {{ public_ip }}'
+    regexp: "^network\\.local_address\\.set\\s*=.*"
+    line: "network.local_address.set = {{ public_ip }}"
     state: present
 
 - name: Settings | Dynamic | Add comment for 'network.local_address.set'
   ansible.builtin.lineinfile:
     path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"
-    insertbefore: '^network\.local_address\.set\s*=.*'
+    insertbefore: "^network\\.local_address\\.set\\s*=.*"
     line: "# The ip address reported to the tracker"
     state: present
 
 - name: Settings | Dynamic | Add line space
   ansible.builtin.lineinfile:
     path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"
-    insertbefore: '# The ip address reported to the tracker'
+    insertbefore: "# The ip address reported to the tracker"
     line: ""
     state: present
 
 - name: Settings | Dynamic | Set 'execute'
   ansible.builtin.lineinfile:
     path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"
-    regexp: '^execute\s=.*'
-    line: 'execute = {sh,-c,/usr/bin/php7 /app/rutorrent/php/initplugins.php abc &}'
+    regexp: "^execute\\s=.*"
+    line: "execute = {sh,-c,/usr/bin/php7 /app/rutorrent/php/initplugins.php abc &}"
     state: present

@@ -5,19 +5,19 @@
     dest: "{{ tinymotd.folder }}/headers/header.txt"
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    force: yes
+    mode: "0775"
+    force: true
 
 - name: Settings | Config | Replace lxc by docker
   ansible.builtin.lineinfile:
     path: "{{ tinymotd.folder }}/config"
-    regexp: '^lxc\s*'
-    line: 'docker'
+    regexp: "^lxc\\s*"
+    line: "docker"
     state: present
 
 - name: Settings | Widgets | Partitions
   ansible.builtin.lineinfile:
     path: "{{ tinymotd.folder }}/widgets/partitions"
-    regexp: '^filter\s*=.*'
+    regexp: "^filter\\s*=.*"
     line: "filter='docker'"
     state: present

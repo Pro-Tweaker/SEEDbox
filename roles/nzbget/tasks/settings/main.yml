@@ -2,27 +2,27 @@
 - name: Settings | Clear 'ControlUsername'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^ControlUsername\s*=.*'
-    line: 'ControlUsername='
+    regexp: "^ControlUsername\\s*=.*"
+    line: "ControlUsername="
     state: present
 
 - name: Settings | Clear 'ControlPassword'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^ControlPassword\s*=.*'
-    line: 'ControlPassword='
+    regexp: "^ControlPassword\\s*=.*"
+    line: "ControlPassword="
     state: present
 
 - name: Settings | Set 'RestrictedUsername'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^RestrictedUsername\s*=.*'
-    line: 'RestrictedUsername={{ nzbget.restricted_username }}'
+    regexp: "^RestrictedUsername\\s*=.*"
+    line: "RestrictedUsername={{ nzbget.restricted_username }}"
     state: present
 
 - name: Settings | Set 'RestrictedPassword'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^RestrictedPassword\s*=.*'
-    line: 'RestrictedPassword={{ nzbget.restricted_password }}'
+    regexp: "^RestrictedPassword\\s*=.*"
+    line: "RestrictedPassword={{ nzbget.restricted_password }}"
     state: present

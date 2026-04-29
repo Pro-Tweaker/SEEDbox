@@ -5,8 +5,8 @@
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ authelia.folder }}"
     - "{{ authelia.redis.folder }}"
@@ -15,19 +15,19 @@
   ansible.builtin.template:
     src: users_database.yml.j2
     dest: "{{ authelia.folder }}/users_database.yml"
-    force: yes
+    force: true
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
+    mode: "0775"
 
 - name: "Create authelia config file"
   ansible.builtin.template:
     src: configuration.yml.j2
     dest: "{{ authelia.folder }}/configuration.yml"
-    force: yes
+    force: true
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
+    mode: "0775"
 
 - name: Create the authelia network
   community.docker.docker_network:
@@ -37,7 +37,7 @@
   community.docker.docker_container:
     name: authelia-redis
     image: "redis:alpine"
-    pull: yes
+    pull: true
     recreate: true
     container_default_behavior: compatibility
     volumes:
@@ -57,7 +57,7 @@
   community.docker.docker_container:
     name: authelia
     image: "authelia/authelia:{{ authelia.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     container_default_behavior: compatibility
     volumes:
@@ -85,10 +85,10 @@
       # Traefik Authelia Middlewares Config
       traefik.http.middlewares.authelia.forwardauth.address: "http://authelia:9091/api/verify?rd=https://{{ authelia.subdomain }}.{{ domain }}/"
       traefik.http.middlewares.authelia.forwardauth.trustForwardHeader: "true"
-      #traefik.http.middlewares.authelia.forwardauth.authResponseHeaders: "Remote-User, Remote-Groups, Remote-Name, Remote-Email"
+      # traefik.http.middlewares.authelia.forwardauth.authResponseHeaders: "Remote-User, Remote-Groups, Remote-Name, Remote-Email"
       traefik.http.middlewares.authelia-basic.forwardauth.address: "http://authelia:9091/api/verify?auth=basic"
       traefik.http.middlewares.authelia-basic.forwardauth.trustForwardHeader: "true"
-      #traefik.http.middlewares.authelia-basic.forwardauth.authResponseHeaders: "Remote-User, Remote-Groups, Remote-Name, Remote-Email"
+      # traefik.http.middlewares.authelia-basic.forwardauth.authResponseHeaders: "Remote-User, Remote-Groups, Remote-Name, Remote-Email"
       # Homer
       homer.enable: "true"
       homer.name: "Authelia"

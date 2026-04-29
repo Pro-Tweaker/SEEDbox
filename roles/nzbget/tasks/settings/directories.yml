@@ -2,62 +2,62 @@
 - name: Settings | Set 'MainDir'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^MainDir\s*=.*'
-    line: 'MainDir=/data/usenet'
+    regexp: "^MainDir\\s*=.*"
+    line: "MainDir=/data/usenet"
     state: present
 
 - name: Settings | Set 'DestDir'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^DestDir\s*=.*'
-    line: 'DestDir=${MainDir}' # DestDir=${MainDir}/completed
+    regexp: "^DestDir\\s*=.*"
+    line: "DestDir=${MainDir}" # DestDir=${MainDir}/completed
     state: present
 
 - name: Settings | Set 'InterDir'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^InterDir\s*=.*'
-    line: 'InterDir=${MainDir}/nzbget/intermediate'
+    regexp: "^InterDir\\s*=.*"
+    line: "InterDir=${MainDir}/nzbget/intermediate"
     state: present
 
 - name: Settings | Set 'NzbDir'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^NzbDir\s*=.*'
-    line: 'NzbDir=${MainDir}/nzbget/nzb'
+    regexp: "^NzbDir\\s*=.*"
+    line: "NzbDir=${MainDir}/nzbget/nzb"
     state: present
 
 - name: Settings | Set 'QueueDir'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^QueueDir\s*=.*'
-    line: 'QueueDir=${MainDir}/nzbget/queue'
+    regexp: "^QueueDir\\s*=.*"
+    line: "QueueDir=${MainDir}/nzbget/queue"
     state: present
 
 - name: Settings | Set 'TempDir'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^TempDir\s*=.*'
-    line: 'TempDir=${MainDir}/nzbget/tmp'
+    regexp: "^TempDir\\s*=.*"
+    line: "TempDir=${MainDir}/nzbget/tmp"
     state: present
 
 - name: Settings | Set 'ScriptDir'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^ScriptDir\s*=.*'
-    line: 'ScriptDir=${MainDir}/nzbget/scripts'
+    regexp: "^ScriptDir\\s*=.*"
+    line: "ScriptDir=${MainDir}/nzbget/scripts"
     state: present
 
 - name: Settings | Set 'LockFile'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^LockFile\s*=.*'
-    line: 'LockFile=${MainDir}/nzbget/nzbget.lock'
+    regexp: "^LockFile\\s*=.*"
+    line: "LockFile=${MainDir}/nzbget/nzbget.lock"
     state: present
 
 - name: Settings | Set 'LogFile'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^LogFile\s*=.*'
-    line: 'LogFile=${MainDir}/nzbget/nzbget.log'
+    regexp: "^LogFile\\s*=.*"
+    line: "LogFile=${MainDir}/nzbget/nzbget.log"
     state: present

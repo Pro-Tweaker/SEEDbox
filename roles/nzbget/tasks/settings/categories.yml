@@ -1,104 +1,105 @@
 ---
+# books
 - name: Settings | Set 'Category1.Name'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^Category1.Name\s*=.*'
-    line: 'Category1.Name=Books'
+    regexp: "^Category1.Name\\s*=.*"
+    line: "Category1.Name=Books"
     state: present
 
 - name: Settings | Set 'Category1.DestDir'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^Category1.DestDir\s*=.*'
-    line: 'Category1.DestDir=${DestDir}/books'
+    regexp: "^Category1.DestDir\\s*=.*"
+    line: "Category1.DestDir=${DestDir}/books"
     state: present
 
-#games
+# games
 - name: Settings | Set 'Category2.Name'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^Category2.Name\s*=.*'
-    line: 'Category2.Name=Games'
+    regexp: "^Category2.Name\\s*=.*"
+    line: "Category2.Name=Games"
     state: present
 
 - name: Settings | Set 'Category2.DestDir'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^Category2.DestDir\s*=.*'
-    line: 'Category2.DestDir=${DestDir}/games'
+    regexp: "^Category2.DestDir\\s*=.*"
+    line: "Category2.DestDir=${DestDir}/games"
     state: present
 
-#movies
+# movies
 - name: Settings | Set 'Category3.Name'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^Category3.Name\s*=.*'
-    line: 'Category3.Name=Movies'
+    regexp: "^Category3.Name\\s*=.*"
+    line: "Category3.Name=Movies"
     state: present
 
 - name: Settings | Set 'Category3.DestDir'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^Category3.DestDir\s*=.*'
-    line: 'Category3.DestDir=${DestDir}/movies'
+    regexp: "^Category3.DestDir\\s*=.*"
+    line: "Category3.DestDir=${DestDir}/movies"
     state: present
 
-#music
+# music
 - name: Settings | Set 'Category4.Name'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^Category4.Name\s*=.*'
-    line: 'Category4.Name=Music'
+    regexp: "^Category4.Name\\s*=.*"
+    line: "Category4.Name=Music"
     state: present
 
 - name: Settings | Set 'Category4.DestDir'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^Category4.DestDir\s*=.*'
-    line: 'Category4.DestDir=${DestDir}/music'
+    regexp: "^Category4.DestDir\\s*=.*"
+    line: "Category4.DestDir=${DestDir}/music"
     state: present
 
-#software
+# software
 - name: Settings | Set 'Category5.Name'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^Category5.Name\s*=.*'
-    line: 'Category5.Name=Software'
+    regexp: "^Category5.Name\\s*=.*"
+    line: "Category5.Name=Software"
     state: present
 
 - name: Settings | Set 'Category5.DestDir'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^Category5.DestDir\s*=.*'
-    line: 'Category5.DestDir=${DestDir}/software'
+    regexp: "^Category5.DestDir\\s*=.*"
+    line: "Category5.DestDir=${DestDir}/software"
     state: present
 
-#tv
+# tv
 - name: Settings | Set 'Category6.Name'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^Category6.Name\s*=.*'
-    line: 'Category6.Name=Tv'
+    regexp: "^Category6.Name\\s*=.*"
+    line: "Category6.Name=Tv"
     state: present
 
 - name: Settings | Set 'Category6.DestDir'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^Category6.DestDir\s*=.*'
-    line: 'Category6.DestDir=${DestDir}/tv'
+    regexp: "^Category6.DestDir\\s*=.*"
+    line: "Category6.DestDir=${DestDir}/tv"
     state: present
 
-#misc
+# misc
 - name: Settings | Set 'Category7.Name'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^Category7.Name\s*=.*'
-    line: 'Category7.Name=Miscellaneous'
+    regexp: "^Category7.Name\\s*=.*"
+    line: "Category7.Name=Miscellaneous"
     state: present
 
 - name: Settings | Set 'Category7.DestDir'
   ansible.builtin.lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"
-    regexp: '^Category7.DestDir\s*=.*'
-    line: 'Category7.DestDir=${DestDir}/misc'
+    regexp: "^Category7.DestDir\\s*=.*"
+    line: "Category7.DestDir=${DestDir}/misc"
     state: present
