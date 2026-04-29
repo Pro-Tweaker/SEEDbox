@@ -1,3 +1,4 @@
+---
 - name: Settings | Clear 'ControlUsername'
   lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"

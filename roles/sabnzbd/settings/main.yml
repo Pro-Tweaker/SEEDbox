@@ -1,3 +1,4 @@
+---
 - name: Settings | Set 'host_whitelist'
   lineinfile:
     path: "{{ sabnzbd.folder }}/sabnzbd.ini"

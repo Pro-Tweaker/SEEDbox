@@ -1,3 +1,4 @@
+---
 - name: Settings | Set 'MainDir'
   lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"

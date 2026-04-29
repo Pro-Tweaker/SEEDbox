@@ -1,4 +1,4 @@
-#books
+---
 - name: Settings | Set 'Category1.Name'
   lineinfile:
     path: "{{ nzbget.folder }}/nzbget.conf"

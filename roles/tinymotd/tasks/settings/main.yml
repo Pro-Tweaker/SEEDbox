@@ -1,3 +1,4 @@
+---
 - name: Settings | Headers | Import Custom Header
   copy:
     src: header.txt

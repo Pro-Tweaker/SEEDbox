@@ -1,3 +1,4 @@
+---
 - name: Settings | Wait for 'rtorrent.rc' to be created
   wait_for:
     path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"

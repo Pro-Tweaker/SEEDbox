@@ -1,3 +1,4 @@
+---
 - name: Settings | Ensure legal notice is accepted
   lineinfile:
     path: "{{qbittorrent.folder }}/qBittorrent/qBittorrent.conf"

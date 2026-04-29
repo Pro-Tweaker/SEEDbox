@@ -1,3 +1,4 @@
+---
 - name: Read Lidarr API Key Value
   xml:
     path: "{{ lidarr.folder }}/config.xml"

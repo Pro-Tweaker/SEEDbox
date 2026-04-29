@@ -1,3 +1,4 @@
+---
 - name: Read Radarr API Key Value
   xml:
     path: "{{ radarr.folder }}/config.xml"

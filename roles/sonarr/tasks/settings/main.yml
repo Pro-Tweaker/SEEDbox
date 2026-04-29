@@ -1,3 +1,4 @@
+---
 - name: Read Sonarr API Key Value
   xml:
     path: "{{ sonarr.folder }}/config.xml"

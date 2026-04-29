@@ -1,3 +1,4 @@
+---
 - name: Settings | Wait for 'config.yml' to be created
   ansible.builtin.wait_for:
     path: "{{ homer.folder }}/config.yml"

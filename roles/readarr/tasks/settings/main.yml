@@ -1,3 +1,4 @@
+---
 - name: Read Readarr API Key Value
   xml:
     path: "{{ readarr.folder }}/config.xml"
