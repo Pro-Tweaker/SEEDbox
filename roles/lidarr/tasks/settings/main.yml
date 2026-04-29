@@ -44,4 +44,3 @@
     body_format: json
     headers:
       X-Api-Key: "{{ api_info.matches[0].ApiKey }}"
-
