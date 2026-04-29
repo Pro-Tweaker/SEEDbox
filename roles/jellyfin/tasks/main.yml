@@ -1,6 +1,6 @@
 ---
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
@@ -13,7 +13,7 @@
     - "{{ data_folder }}/media/movies"
 
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: jellyfin
     image: "ghcr.io/linuxserver/jellyfin:{{ jellyfin.tag }}"
     pull: yes

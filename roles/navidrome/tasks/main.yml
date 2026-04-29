@@ -1,11 +1,11 @@
 ---
 - name: Stop and remove any existing container
-  docker_container:
+  community.docker.docker_container:
     name: navidrome
     state: absent
 
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
@@ -18,7 +18,7 @@
     - "{{ data_folder }}/media/music"
 
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: navidrome
     image: "deluan/navidrome:{{ navidrome.tag }}"
     pull: yes

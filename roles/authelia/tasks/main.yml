@@ -1,6 +1,6 @@
 ---
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
@@ -12,7 +12,7 @@
     - "{{ authelia.redis.folder }}"
 
 - name: "Create authelia users database file"
-  template:
+  ansible.builtin.template:
     src: users_database.yml.j2
     dest: "{{ authelia.folder }}/users_database.yml"
     force: yes
@@ -21,7 +21,7 @@
     mode: 0775
 
 - name: "Create authelia config file"
-  template:
+  ansible.builtin.template:
     src: configuration.yml.j2
     dest: "{{ authelia.folder }}/configuration.yml"
     force: yes
@@ -30,11 +30,11 @@
     mode: 0775
 
 - name: Create the authelia network
-  docker_network:
+  community.docker.docker_network:
     name: authelia
 
 - name: Create and start authelia redis container
-  docker_container:
+  community.docker.docker_container:
     name: authelia-redis
     image: "redis:alpine"
     pull: yes
@@ -54,7 +54,7 @@
       TZ: "{{ tz }}"
 
 - name: Create and start authelia container
-  docker_container:
+  community.docker.docker_container:
     name: authelia
     image: "authelia/authelia:{{ authelia.tag }}"
     pull: yes

@@ -1,10 +1,10 @@
 ---
 - name: Create the postfix network
-  docker_network:
+  community.docker.docker_network:
     name: postfix
 
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: postfix
     image: "boky/postfix:{{ postfix.tag }}"
     pull: yes

@@ -1,38 +1,42 @@
 ---
 - name: Settings | Dynamic | Install 'dnsutils'
-  apt: "name=dnsutils state=present"
-
+  ansible.builtin.apt:
+    name: dnsutils
+    state: present
 - name: Settings | Dynamic | Get Public IP Address
-  shell: dig -4 TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'\"' '{ print $2}'
+  ansible.builtin.shell:
+    cmd: set -o pipefail && dig -4 TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'"' '{ print $2}'
+    executable: /bin/bash
   register: public_ip_lookup
+  changed_when: false
 
 - name: Settings | Dynamic | Set 'public_ip' variable
-  set_fact:
+  ansible.builtin.set_fact:
     public_ip: "{{ public_ip_lookup.stdout }}"
 
 - name: Settings | Dynamic | Set 'network.local_address.set'
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"
     regexp: '^network\.local_address\.set\s*=.*'
     line: 'network.local_address.set = {{ public_ip }}'
     state: present
 
 - name: Settings | Dynamic | Add comment for 'network.local_address.set'
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"
     insertbefore: '^network\.local_address\.set\s*=.*'
     line: "# The ip address reported to the tracker"
     state: present
 
 - name: Settings | Dynamic | Add line space
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"
     insertbefore: '# The ip address reported to the tracker'
     line: ""
     state: present
 
 - name: Settings | Dynamic | Set 'execute'
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"
     regexp: '^execute\s=.*'
     line: 'execute = {sh,-c,/usr/bin/php7 /app/rutorrent/php/initplugins.php abc &}'

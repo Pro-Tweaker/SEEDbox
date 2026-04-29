@@ -1,6 +1,6 @@
 ---
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
@@ -12,7 +12,7 @@
     - "{{ data_folder }}/sync"
 
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: syncthing
     hostname: "{{ syncthing.subdomain }}.{{ domain }}"
     image: "syncthing/syncthing:{{ syncthing.tag }}"

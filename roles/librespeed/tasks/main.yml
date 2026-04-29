@@ -1,6 +1,6 @@
 ---
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
@@ -11,7 +11,7 @@
     - "{{ librespeed.folder }}"
 
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: librespeed
     image: "ghcr.io/linuxserver/librespeed:{{ librespeed.tag }}"
     pull: yes

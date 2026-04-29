@@ -1,6 +1,6 @@
 ---
 - name: Read Lidarr API Key Value
-  xml:
+  community.general.xml:
     path: "{{ lidarr.folder }}/config.xml"
     xpath: /Config/ApiKey
     content: text
@@ -12,7 +12,7 @@
   register: container_info
 
 - name: "Wait for Lidarr API to come up and returns a status 200"
-  uri:
+  ansible.builtin.uri:
     url: "http://{{ container_info.container.NetworkSettings.Networks.web.IPAddress }}:8686/api/v1/health"
     headers:
       X-Api-Key: "{{ api_info.matches[0].ApiKey }}"
@@ -22,7 +22,7 @@
   delay: 1
 
 - name: "Add Root Folder"
-  uri:
+  ansible.builtin.uri:
     url: "http://{{ container_info.container.NetworkSettings.Networks.web.IPAddress }}:8686/api/v1/rootFolder"
     method: POST
     status_code:
@@ -34,7 +34,7 @@
       X-Api-Key: "{{ api_info.matches[0].ApiKey }}"
 
 - name: "Add Download Client"
-  uri:
+  ansible.builtin.uri:
     url: "http://{{ container_info.container.NetworkSettings.Networks.web.IPAddress }}:8686/api/v1/downloadclient"
     method: POST
     status_code:

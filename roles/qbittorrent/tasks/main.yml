@@ -1,6 +1,6 @@
 ---
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
@@ -11,7 +11,7 @@
     - "{{ qbittorrent.folder }}"
 
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: qbittorrent
     image: "ghcr.io/linuxserver/qbittorrent:{{ qbittorrent.tag }}"
     pull: yes
@@ -54,23 +54,22 @@
       WEBUI_PORT: "8080"
 
 - name: Settings | Wait for 'qBittorrent.conf' to be created
-  wait_for:
+  ansible.builtin.wait_for:
     path: "{{ qbittorrent.folder }}/qBittorrent/qBittorrent.conf"
     state: present
 
 - name: Settings | Wait for 10 seconds before stopping qbittorrent container
-  wait_for:
+  ansible.builtin.wait_for:
     timeout: 10
 
 - name: Settings | Stop container
-  docker_container:
+  community.docker.docker_container:
     name: qbittorrent
     state: stopped
 
-- name: qBittorrent Main Settings Tasks
-  include_tasks: "settings/main.yml"
-
+- name: QBittorrent Main Settings Tasks
+  ansible.builtin.include_tasks: "settings/main.yml"
 - name: Re-Start qBittorrent container
-  docker_container:
+  community.docker.docker_container:
     name: qbittorrent
     state: started

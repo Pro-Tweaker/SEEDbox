@@ -1,6 +1,6 @@
 ---
 - name: Settings | Headers | Import Custom Header
-  copy:
+  ansible.builtin.copy:
     src: header.txt
     dest: "{{ tinymotd.folder }}/headers/header.txt"
     owner: "{{ user }}"
@@ -9,14 +9,14 @@
     force: yes
 
 - name: Settings | Config | Replace lxc by docker
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ tinymotd.folder }}/config"
     regexp: '^lxc\s*'
     line: 'docker'
     state: present
 
 - name: Settings | Widgets | Partitions
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ tinymotd.folder }}/widgets/partitions"
     regexp: '^filter\s*=.*'
     line: "filter='docker'"

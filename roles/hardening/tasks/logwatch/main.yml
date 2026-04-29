@@ -1,6 +1,6 @@
 ---
 - name: Install logwatch packages
-  package:
+  ansible.builtin.package:
     name:
       - sendmail
       - logwatch
@@ -8,33 +8,32 @@
     install_recommends: yes
 
 - name: Check that logwatch.conf exists
-  stat:
+  ansible.builtin.stat:
     path: /etc/logwatch/conf/logwatch.conf
   register: logwatch_state
 
 - name: Create Logwatch configuration
-  shell: cp /usr/share/logwatch/default.conf/logwatch.conf /etc/logwatch/conf/logwatch.conf
-  when: logwatch_state.stat.exists == False
+  ansible.builtin.copy:
 
 - name: Ensure Format is html
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/logwatch/conf/logwatch.conf
     regexp: '^Format ='
     line: Format = html
 
 - name: Ensure MailTo is set
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/logwatch/conf/logwatch.conf
     regexp: '^MailTo ='
     line: MailTo = {{ notifications_email }}
 
 - name: Ensure Detail is Med
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/logwatch/conf/logwatch.conf
     regexp: '^Detail ='
     line: Detail = Med
 
 - name: Ensure temporary folder for logwatch exist
-  file:
+  ansible.builtin.file:
     path: /var/cache/logwatch
     state: directory

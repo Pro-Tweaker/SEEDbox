@@ -1,13 +1,13 @@
 ---
 - name: Install Fail2Ban package
-  package:
+  ansible.builtin.package:
     name:
       - fail2ban
     state: present
     install_recommends: yes
 
 - name: Copy Fail2Ban configuration
-  template:
+  ansible.builtin.template:
     src: jail.conf.j2
     dest: "/etc/fail2ban/jail.conf"
     owner: "{{ user }}"

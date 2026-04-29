@@ -1,6 +1,6 @@
 ---
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
@@ -11,7 +11,7 @@
     - "{{ portainer.folder }}"
 
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: portainer
     image: "portainer/portainer-ce:{{ portainer.tag }}"
     pull: yes

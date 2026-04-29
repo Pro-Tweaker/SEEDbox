@@ -1,6 +1,6 @@
 ---
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
@@ -12,7 +12,7 @@
     - "{{ data_folder }}/archives"
 
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: archivebox
     image: "archivebox/archivebox:{{ archivebox.tag }}"
     pull: yes

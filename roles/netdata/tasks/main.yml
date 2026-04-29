@@ -1,6 +1,6 @@
 ---
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
@@ -14,7 +14,7 @@
     - "{{ netdata.folder }}/cache"
 
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: netdata
     hostname: "{{ netdata.subdomain }}.{{ domain }}"
     image: "netdata/netdata:{{ netdata.tag }}"

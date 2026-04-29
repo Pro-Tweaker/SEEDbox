@@ -1,11 +1,11 @@
 ---
 - name: Stop and remove any existing container
-  docker_container:
+  community.docker.docker_container:
     name: rutorrent
     state: absent
 
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
@@ -21,17 +21,17 @@
     - "{{ data_folder }}/data/rutorrent/watched"
 
 - name: Remove 'config.php' if it exists
-  file:
+  ansible.builtin.file:
     path: "{{ rutorrent.folder }}/rutorrent/settings/config.php"
     state: absent
 
 - name: Check if rtorrent.rc exists
-  stat:
+  ansible.builtin.stat:
     path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"
   register: rtorrent_rc
 
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: rutorrent
     image: "horjulf/rutorrent-autodl:{{ rutorrent.tag }}"
     pull: yes
@@ -70,5 +70,5 @@
       PUID: "{{ uid | int }}"
       PGID: "{{ gid | int }}"
 
-- name: ruTorrent Settings Tasks
-  include_tasks: "settings/main.yml"
+- name: RuTorrent Settings Tasks
+  ansible.builtin.include_tasks: "settings/main.yml"

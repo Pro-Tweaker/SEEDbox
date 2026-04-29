@@ -1,6 +1,6 @@
 ---
 - name: Create main directory hierarchy
-  file:
+  ansible.builtin.file:
       path: "{{ item }}"
       state: directory
       owner: "{{ user }}"
