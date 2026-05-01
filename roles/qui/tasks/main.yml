@@ -1,0 +1,42 @@
+---
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: "0775"
+    recurse: true
+  loop:
+    - "{{ qui.folder }}"
+
+- name: Create and start container
+  community.docker.docker_container:
+    name: qui
+    image: "ghcr.io/autobrr/qui:{{ qui.tag }}"
+    pull: true
+    recreate: true
+    restart_policy: unless-stopped
+    volumes:
+      - "{{ qui.folder }}:/config"
+    networks:
+      - name: web
+        aliases:
+          - qui
+    state: started
+    labels:
+      # Traefik
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.qui.rule: "Host(`{{ qui.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.qui.entrypoints: "websecure"
+      traefik.http.services.qui.loadbalancer.server.port: "7476"
+      # Homer
+      homer.enable: "true"
+      homer.name: "qui"
+      homer.service: "Download"
+      homer.priority: "600"
+      homer.subtitle: "A fast, modern web interface for qBittorrent"
+      homer.url: "https://{{ qui.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/svg/qui.svg"
+      homer.target: "_blank"

@@ -1,5 +1,6 @@
 ---
-- hosts: localhost
+- name: SEEDbox
+  hosts: localhost
   vars_files: ["defaults/settings.yml.default", "settings.yml"]
   roles:
     # Minimal Stack
@@ -16,11 +17,12 @@
     - { role: crowdsec, tags: ["security", "crowdsec"] }
 
     # Download
-    - { role: flood, tags: ["download", "torrent", "flood"] }
     - { role: qbittorrent, tags: ["download", "torrent", "qbittorrent"] }
     - { role: rutorrent, tags: ["rutorrent"] }
     - { role: nzbget, tags: ["usenet", "nzbget"] }
     - { role: sabnzbd, tags: ["sabnzbd"] }
+    - { role: flood, tags: ["flood"] }
+    - { role: qui, tags: ["qui"] }
 
     # Media
     - { role: jellyfin, tags: ["jellyfin"] }

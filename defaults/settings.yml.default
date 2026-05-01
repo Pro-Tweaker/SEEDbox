@@ -195,3 +195,7 @@ yamtrack:
   igdb_secret:
   simkl_id:
   simkl_secret:
+qui:
+  tag: latest
+  folder: /opt/qui
+  subdomain: qui
