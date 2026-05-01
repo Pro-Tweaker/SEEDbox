@@ -128,11 +128,12 @@ ansible-playbook seedbox.yml --tags=qbittorrent,jellyfin
 ### Applications (roles) and tags available:
 
 #### Tag: "Download"
-- [Flood](https://flood.js.org/)
 - [qBittorrent](https://www.qbittorrent.org/)
 - [ruTorrent](https://github.com/Novik/ruTorrent) ([rTorrent](https://rakshasa.github.io/rtorrent/))
 - [NZBGet](https://nzbget.com/)
 - [SABnzbd](https://sabnzbd.org/)
+- [Flood](https://flood.js.org/)
+- [qui](https://getqui.com/)
 
 #### Tag: "PVR"
 - [Prowlarr](https://prowlarr.com/)
@@ -143,6 +144,7 @@ ansible-playbook seedbox.yml --tags=qbittorrent,jellyfin
 - [Bazarr](https://www.bazarr.media/)
 
 #### Tag: "Media"
+- [Seerr](https://seerr.dev/)
 - [Jellyfin](https://jellyfin.org/)
 - [Navidrome](https://www.navidrome.org/)
 - [Kavita](https://www.kavitareader.com/)
