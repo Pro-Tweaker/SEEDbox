@@ -7,6 +7,7 @@
     - { role: docker, tags: ["core", "docker"] }
     - { role: cloudflare, tags: ["core", "cloudflare"] }
     - { role: traefik, tags: ["core", "traefik"] }
+    - { role: crowdsec, tags: ["core", "crowdsec"] }
     - { role: portainer, tags: ["core", "portainer"] }
     - { role: authelia, tags: ["core", "authelia"] }
     - { role: filetree, tags: ["core", "filetree"] }
@@ -14,41 +15,41 @@
     - { role: homer, tags: ["core", "homer"] }
     - { role: watchtower, tags: ["core", "watchtower"] }
     - { role: postfix, tags: ["core", "watchtower", "postfix"] }
-    - { role: crowdsec, tags: ["security", "crowdsec"] }
 
     # Download
     - { role: qbittorrent, tags: ["download", "torrent", "qbittorrent"] }
-    - { role: rutorrent, tags: ["rutorrent"] }
-    - { role: nzbget, tags: ["usenet", "nzbget"] }
-    - { role: sabnzbd, tags: ["sabnzbd"] }
-    - { role: flood, tags: ["flood"] }
-    - { role: qui, tags: ["qui"] }
+    - { role: rutorrent, tags: ["download", "torrent", "rutorrent"] }
+    - { role: nzbget, tags: ["download", "usenet", "nzbget"] }
+    - { role: sabnzbd, tags: ["download", "usenet", "sabnzbd"] }
+    - { role: flood, tags: ["download", "torrent", "flood"] }
+    - { role: qui, tags: ["download", "torrent", "qui"] }
 
     # Media
-    - { role: jellyfin, tags: ["jellyfin"] }
-    - { role: navidrome, tags: ["navidrome"] }
-    - { role: kavita, tags: ["kavita"] }
-    - { role: yamtrack, tags: ["yamtrack"] }
+    - { role: seerr, tags: ["media", "seerr"] }
+    - { role: jellyfin, tags: ["media", "jellyfin"] }
+    - { role: navidrome, tags: ["media", "navidrome"] }
+    - { role: kavita, tags: ["media", "kavita"] }
+    - { role: yamtrack, tags: ["media", "yamtrack"] }
 
     # PVR
-    - { role: prowlarr, tags: ["pvr", "usenet", "prowlarr"] }
-    - { role: sonarr, tags: ["pvr", "usenet", "sonarr"] }
-    - { role: radarr, tags: ["pvr", "usenet", "radarr"] }
-    - { role: lidarr, tags: ["pvr", "usenet", "lidarr"] }
-    - { role: readarr, tags: ["pvr", "usenet", "readarr"] }
+    - { role: prowlarr, tags: ["pvr", "usenet", "torrent", "prowlarr"] }
+    - { role: sonarr, tags: ["pvr", "usenet", "torrent", "sonarr"] }
+    - { role: radarr, tags: ["pvr", "usenet", "torrent", "radarr"] }
+    - { role: lidarr, tags: ["pvr", "usenet", "torrent", "lidarr"] }
+    - { role: readarr, tags: ["pvr", "usenet", "torrent", "readarr"] }
     - { role: bazarr, tags: ["pvr", "bazarr"] }
 
     # Tools
     - { role: filebrowser, tags: ["tools", "filebrowser"] }
     - { role: syncthing, tags: ["tools", "syncthing"] }
     - { role: archivebox, tags: ["tools", "archivebox"] }
-    - { role: whoami, tags: ["whoami"] }
+    - { role: whoami, tags: ["tools", "whoami"] }
 
     # Monitoring
     - { role: netdata, tags: ["monitoring", "netdata"] }
-    - { role: speedtesttracker, tags: ["speedtesttracker"] }
+    - { role: speedtesttracker, tags: ["monitoring", "speedtesttracker"] }
     - { role: librespeed, tags: ["monitoring", "librespeed"] }
     - { role: scrutiny, tags: ["monitoring", "scrutiny"] }
 
     # Extras
-    - { role: tinymotd, tags: ["tinymotd"] }
+    - { role: tinymotd, tags: ["extras", "tinymotd"] }
