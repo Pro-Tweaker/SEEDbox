@@ -199,3 +199,7 @@ qui:
   tag: latest
   folder: /opt/qui
   subdomain: qui
+seerr:
+  tag: latest
+  folder: /opt/seerr
+  subdomain: seerr

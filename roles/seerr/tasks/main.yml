@@ -1,0 +1,53 @@
+---
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: "0775"
+    recurse: true
+  loop:
+    - "{{ seerr.folder }}"
+    - "{{ seerr.folder }}/config"
+
+- name: Create and start container
+  community.docker.docker_container:
+    name: seerr
+    image: "ghcr.io/seerr-team/seerr:{{ seerr.tag }}"
+    pull: true
+    recreate: true
+    volumes:
+      - "{{ seerr.folder }}/config:/app/config"
+    networks:
+      - name: web
+        aliases:
+          - seerr
+    restart_policy: unless-stopped
+    state: started
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/status || exit 1"]
+      start_period: 20s
+      timeout: 3s
+      interval: 15s
+      retries: 3
+    labels:
+      # Traefik
+      traefik.enable: "true"
+      traefik.docker.network: "web"
+      traefik.http.routers.seerr.rule: "Host(`{{ seerr.subdomain }}.{{ domain }}`)"
+      traefik.http.routers.seerr.entrypoints: "websecure"
+      traefik.http.services.seerr.loadbalancer.server.port: "5055"
+      # Homer
+      homer.enable: "true"
+      homer.name: "Seerr"
+      homer.service: "Media"
+      homer.priority: "100"
+      homer.subtitle: "Managing requests for your media library"
+      homer.url: "https://{{ seerr.subdomain }}.{{ domain }}"
+      homer.logo: "assets/homer-icons/svg/jellyseerr.svg"
+      homer.target: "_blank"
+    env:
+      TZ: "{{ tz }}"
+      LOG_LEVEL: "debug"
+      PORT: "5055"
