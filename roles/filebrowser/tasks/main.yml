@@ -1,50 +1,50 @@
 ---
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ filebrowser.folder }}"
 
 - name: "Check if filebrowser config file exists"
-  stat:
+  ansible.builtin.stat:
     path: "{{ filebrowser.folder }}/settings.json"
   register: filebrowser_config
 
 - name: "Check if filebrowser database file exists"
-  stat:
+  ansible.builtin.stat:
     path: "{{ filebrowser.folder }}/filebrowser.db"
   register: filebrowser_database
 
 - name: "Create filebrowser config file"
-  template:
+  ansible.builtin.template:
     src: settings.json.j2
     dest: "{{ filebrowser.folder }}/settings.json"
-    force: yes
+    force: true
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
+    mode: "0775"
   when: not filebrowser_config.stat.exists
 
 - name: "Create filebrowser database file"
-  template:
+  ansible.builtin.template:
     src: filebrowser.db
     dest: "{{ filebrowser.folder }}/filebrowser.db"
-    force: yes
+    force: true
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
+    mode: "0775"
   when: not filebrowser_database.stat.exists
 
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: filebrowser
     image: "filebrowser/filebrowser:{{ filebrowser.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     volumes:
       - "{{ data_folder }}:/srv"

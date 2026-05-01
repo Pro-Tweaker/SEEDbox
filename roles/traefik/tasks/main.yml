@@ -18,8 +18,8 @@
     dest: "{{ item.dest }}"
     mode: "0644"
   loop:
-    - { url: "https://developers.cloudflare.com/ssl/static/authenticated_origin_pull_ca.pem",
-        dest: "{{ traefik.folder }}/certificates/cf_authenticated_origin_pull_ca.pem" }
+    - url: "https://developers.cloudflare.com/ssl/static/authenticated_origin_pull_ca.pem"
+      dest: "{{ traefik.folder }}/certificates/cf_authenticated_origin_pull_ca.pem"
 
 - name: Creating origin_certificate.pem
   ansible.builtin.copy:

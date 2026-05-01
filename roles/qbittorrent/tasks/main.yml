@@ -1,20 +1,20 @@
 ---
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ qbittorrent.folder }}"
 
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: qbittorrent
     image: "ghcr.io/linuxserver/qbittorrent:{{ qbittorrent.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     volumes:
       - "{{ qbittorrent.folder }}:/config"
@@ -32,7 +32,7 @@
       traefik.http.routers.qbittorrent.rule: "Host(`{{ qbittorrent.subdomain }}.{{ domain }}`)"
       traefik.http.routers.qbittorrent.entrypoints: "websecure"
       traefik.http.services.qbittorrent.loadbalancer.server.port: "8080"
-      #traefik.http.middlewares.referer.headers.customresponseheaders.Referer: "{{ qbittorrent.subdomain }}.{{ domain }}"
+      # traefik.http.middlewares.referer.headers.customresponseheaders.Referer: "{{ qbittorrent.subdomain }}.{{ domain }}"
       traefik.http.routers.qbittorrent.middlewares: "authelia@docker"
       # Homer
       homer.enable: "true"
@@ -54,23 +54,22 @@
       WEBUI_PORT: "8080"
 
 - name: Settings | Wait for 'qBittorrent.conf' to be created
-  wait_for:
+  ansible.builtin.wait_for:
     path: "{{ qbittorrent.folder }}/qBittorrent/qBittorrent.conf"
     state: present
 
 - name: Settings | Wait for 10 seconds before stopping qbittorrent container
-  wait_for:
+  ansible.builtin.wait_for:
     timeout: 10
 
 - name: Settings | Stop container
-  docker_container:
+  community.docker.docker_container:
     name: qbittorrent
     state: stopped
 
-- name: qBittorrent Main Settings Tasks
-  include_tasks: "settings/main.yml"
-
+- name: QBittorrent Main Settings Tasks
+  ansible.builtin.include_tasks: "settings/main.yml"
 - name: Re-Start qBittorrent container
-  docker_container:
+  community.docker.docker_container:
     name: qbittorrent
     state: started

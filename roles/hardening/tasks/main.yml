@@ -1,14 +1,14 @@
 ---
-- name: Update all packages
-  apt:
+- name: Update all packages # noqa: package-latest
+  ansible.builtin.apt:
     name: "*"
     state: latest
-    force_apt_get: yes
-    update_cache: yes
+    force_apt_get: true
+    update_cache: true
 
 - name: Install Fail2Ban
-  include_tasks: "fail2ban/main.yml"
+  ansible.builtin.include_tasks: "fail2ban/main.yml"
   when: not use_crowdsec | bool
 
 - name: Install Unattended Upgrades
-  include_tasks: "unattendedupgrades/main.yml"
+  ansible.builtin.include_tasks: "unattendedupgrades/main.yml"

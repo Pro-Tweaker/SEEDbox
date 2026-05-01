@@ -1,5 +1,9 @@
 ---
+profile: production
+
 exclude_paths:
   - .ansible/
   - .git/
   - .github/
+
+skip_list: []

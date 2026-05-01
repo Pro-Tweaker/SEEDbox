@@ -1,25 +1,25 @@
 ---
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ scrutiny.folder }}"
 
 - name: Get disks
-  shell: for line in $(lsblk --noheadings --list --scsi --output name); do echo "/dev/${line}:/dev/${line}"; done
+  ansible.builtin.shell: for line in $(lsblk --noheadings --list --scsi --output name); do echo "/dev/${line}:/dev/${line}"; done
   register: lsblk_disks
   changed_when: false
 
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: scrutiny
     image: "ghcr.io/analogj/scrutiny:{{ scrutiny.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     volumes:
       - "{{ scrutiny.folder }}:/opt/scrutiny/config"

@@ -1,23 +1,17 @@
 ---
 - name: Install Fail2Ban package
-  package:
+  ansible.builtin.package:
     name:
       - fail2ban
     state: present
-    install_recommends: yes
+    install_recommends: true
 
 - name: Copy Fail2Ban configuration
-  template:
+  ansible.builtin.template:
     src: jail.conf.j2
     dest: "/etc/fail2ban/jail.conf"
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    force: yes
-  register: fail2ban_config
-
-- name: Restart Fail2Ban service
-  service:
-    name: fail2ban
-    state: restarted
-  when: fail2ban_config.changed
+    mode: "0775"
+    force: true
+  notify: Restart Fail2Ban service

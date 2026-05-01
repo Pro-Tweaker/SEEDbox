@@ -1,20 +1,20 @@
 ---
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ readarr.folder }}"
 
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: readarr
     image: "ghcr.io/linuxserver/readarr:{{ readarr.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     volumes:
       - "{{ readarr.folder }}:/config"
@@ -48,13 +48,13 @@
       PGID: "{{ gid | int }}"
 
 - name: Wait for 'config.xml' to be created
-  wait_for:
+  ansible.builtin.wait_for:
     path: "{{ readarr.folder }}/config.xml"
     state: present
 
 - name: Wait for 10 seconds
-  wait_for:
+  ansible.builtin.wait_for:
     timeout: 10
 
 - name: Settings Tasks
-  include_tasks: "settings/main.yml"
+  ansible.builtin.include_tasks: "settings/main.yml"

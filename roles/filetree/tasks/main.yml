@@ -1,12 +1,12 @@
 ---
 - name: Create main directory hierarchy
-  file:
-      path: "{{ item }}"
-      state: directory
-      owner: "{{ user }}"
-      group: "{{ group }}"
-      mode: 0775
-      recurse: yes
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ data_folder }}/torrents"
     - "{{ data_folder }}/torrents/books"

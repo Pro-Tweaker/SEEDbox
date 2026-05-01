@@ -1,40 +1,40 @@
 ---
 - name: Install dependencies
-  apt:
+  ansible.builtin.apt:
     pkg: "{{ item }}"
     state: present
   loop:
     - lxc
 
 - name: Create directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0775
-    recurse: yes
+    mode: "0775"
+    recurse: true
   loop:
     - "{{ tinymotd.folder }}"
 
-- name: GIT Clone/Pull Repository
-  git:
+- name: GIT Clone/Pull Repository # noqa: latest[git]
+  ansible.builtin.git:
     repo: https://github.com/bderenzo/tinymotd.git
     dest: "{{ tinymotd.folder }}"
-    update: yes
-    force: yes
+    update: true
+    force: true
 
 - name: Check if script has already been installed
-  stat:
+  ansible.builtin.stat:
     path: /etc/cron.hourly/tinymotd
   register: check_file
 
 - name: Run install script
-  shell:
+  ansible.builtin.command:
     cmd: "{{ tinymotd.folder }}/install -u {{ user }}"
     chdir: "{{ tinymotd.folder }}"
-    creates: '/etc/cron.hourly/tinymotd'
+    creates: "/etc/cron.hourly/tinymotd"
   when: not check_file.stat.exists
 
 - name: Settings Tasks
-  include_tasks: "settings/main.yml"
+  ansible.builtin.include_tasks: "settings/main.yml"

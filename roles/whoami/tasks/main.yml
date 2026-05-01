@@ -1,8 +1,9 @@
+---
 - name: Create and start container
-  docker_container:
+  community.docker.docker_container:
     name: whoami
     image: "traefik/whoami:{{ whoami.tag }}"
-    pull: yes
+    pull: true
     recreate: true
     networks:
       - name: web
