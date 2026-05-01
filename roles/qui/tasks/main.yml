@@ -35,7 +35,7 @@
       homer.enable: "true"
       homer.name: "qui"
       homer.service: "Download"
-      homer.priority: "500"
+      homer.priority: "600"
       homer.subtitle: "A fast, modern web interface for qBittorrent"
       homer.url: "https://{{ qui.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/svg/qui.svg"
