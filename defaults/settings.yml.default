@@ -20,7 +20,7 @@ traefik:
   tag: 3.6.15
   tag_bouncer: v1.6.0
   folder: /opt/traefik
-  api_url: traefik.{{ domain }}
+  api_url: "traefik.{{ domain }}"
   origin_certificate:
   origin_certificate_private_key:
 portainer:
@@ -83,7 +83,7 @@ watchtower:
   tag: latest
   monitor_only: false
   notification_email_to: "{{ notifications_email }}"
-  notification_email_from: watchtower@{{ domain }}
+  notification_email_from: "watchtower@{{ domain }}"
   notification_email_server: postfix
   notification_email_server_port: 587
   notification_email_server_user:
