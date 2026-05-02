@@ -56,7 +56,7 @@
       homer.logo: "assets/homer-icons/svg/crowdsec.svg"
       homer.target: "_blank"
     env:
-      GID: "{{ gid }}"
+      GID: "{{ gid | string }}"
       COLLECTIONS: "crowdsecurity/linux
                     crowdsecurity/traefik
                     crowdsecurity/http-cve

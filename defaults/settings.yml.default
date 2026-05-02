@@ -119,7 +119,7 @@ authelia:
   subdomain: login
   username: demo
   password: demo
-  displayname: "Demo"
+  displayname: Demo
   email: example@mail.com
   jwt_secret: a_very_important_secret
   session_name: demo
@@ -127,7 +127,7 @@ authelia:
   notification_email_to: "{{ notifications_email }}"
   notification_email_from: "authelia@{{ domain }}"
   notification_email_server: postfix
-  notification_email_server_port: "587"
+  notification_email_server_port: 587
   notification_email_server_user:
   notification_email_server_password:
   redis:
@@ -142,7 +142,7 @@ librespeed:
   folder: /opt/librespeed
   subdomain: librespeed
 qbittorrent:
-  tag: "5.1.4"
+  tag: 5.1.4
   folder: /opt/qbittorrent
   subdomain: qbittorrent
   web_user: admin_qbit
