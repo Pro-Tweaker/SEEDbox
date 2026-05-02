@@ -44,8 +44,8 @@
       homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
-      PUID: "{{ uid | int }}"
-      PGID: "{{ gid | int }}"
+      PUID: "{{ uid | string }}"
+      PGID: "{{ gid | string }}"
 
 - name: Wait for 'config.xml' to be created
   ansible.builtin.wait_for:

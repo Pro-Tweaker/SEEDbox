@@ -42,7 +42,7 @@
     container_default_behavior: compatibility
     volumes:
       - "{{ authelia.redis.folder }}:/data"
-    user: "{{ uid }}:{{ gid }}"
+    user: "{{ uid | string }}:{{ gid | string }}"
     network_mode: default
     networks:
       - name: authelia

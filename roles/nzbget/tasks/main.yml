@@ -49,8 +49,8 @@
       homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
-      PUID: "{{ uid | int }}"
-      PGID: "{{ gid | int }}"
+      PUID: "{{ uid | string }}"
+      PGID: "{{ gid | string }}"
 
 - name: Settings | Wait for 'nzbget.conf' to be created
   ansible.builtin.wait_for:

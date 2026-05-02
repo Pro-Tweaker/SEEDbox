@@ -20,7 +20,7 @@
     volumes:
       - "{{ flood.folder }}:/config"
       - "{{ data_folder }}/torrents:/downloads"
-    user: "{{ uid }}:{{ gid }}"
+    user: "{{ uid | string }}:{{ gid | string }}"
     networks:
       - name: web
         aliases:

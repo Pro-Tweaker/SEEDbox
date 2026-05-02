@@ -35,7 +35,7 @@
     env:
       INIT_ASSETS: "0"
       TZ: "{{ tz }}"
-    user: "{{ uid | int }}:{{ gid | int }}"
+    user: "{{ uid | string }}:{{ gid | string }}"
 
 - name: Homer Settings Tasks
   ansible.builtin.include_tasks: "settings/main.yml"

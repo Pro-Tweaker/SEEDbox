@@ -43,6 +43,6 @@
       homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
-      PGID: "{{ gid | int }}"
-      PUID: "{{ uid | int }}"
+      PGID: "{{ gid | string }}"
+      PUID: "{{ uid | string }}"
       OOKLA_EULA_GDPR: "true"

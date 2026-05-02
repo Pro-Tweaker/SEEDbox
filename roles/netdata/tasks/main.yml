@@ -59,7 +59,7 @@
       homer.target: "_blank"
     env:
       TZ: "{{ tz }}"
-      PUID: "{{ uid | int }}"
-      PGID: "{{ gid | int }}"
+      PUID: "{{ uid | string }}"
+      PGID: "{{ gid | string }}"
       DO_NOT_TRACK: "1"
       CONTAINERS: "1"
