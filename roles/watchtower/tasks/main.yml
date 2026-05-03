@@ -20,7 +20,7 @@
     state: started
     env:
       TZ: "{{ tz }}"
-      WATCHTOWER_MONITOR_ONLY: "{{ watchtower.monitor_only }}"
+      WATCHTOWER_MONITOR_ONLY: "{{ watchtower.monitor_only | string }}"
       WATCHTOWER_CLEANUP: "true"
       WATCHTOWER_NO_STARTUP_MESSAGE: "false"
       # Update containers every day at 5:00 a.m.
@@ -29,7 +29,7 @@
       WATCHTOWER_NOTIFICATION_EMAIL_TO: "{{ watchtower.notification_email_to }}"
       WATCHTOWER_NOTIFICATION_EMAIL_FROM: "{{ watchtower.notification_email_from }}"
       WATCHTOWER_NOTIFICATION_EMAIL_SERVER: "{{ watchtower.notification_email_server }}"
-      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT: "{{ watchtower.notification_email_server_port }}"
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT: "{{ watchtower.notification_email_server_port | string }}"
       WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER: "{{ watchtower.notification_email_server_user }}"
       WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD: "{{ watchtower.notification_email_server_password }}"
-      WATCHTOWER_NOTIFICATION_EMAIL_DELAY: "{{ watchtower.notification_email_delay }}"
+      WATCHTOWER_NOTIFICATION_EMAIL_DELAY: "{{ watchtower.notification_email_delay | string }}"
