@@ -28,7 +28,7 @@
     status_code:
       - 201
       - 400
-    body: "{{ lookup('template', 'post_rootfolder_body.json.j2') }}"
+    body: "{{ lookup('ansible.builtin.template', '../../templates/post_rootfolder_body.json.j2') }}"
     body_format: json
     headers:
       X-Api-Key: "{{ api_info.matches[0].ApiKey }}"
@@ -40,7 +40,7 @@
     status_code:
       - 201
       - 400
-    body: "{{ lookup('template', 'post_downloadclient_body.json.j2') }}"
+    body: "{{ lookup('ansible.builtin.template', '../../templates/post_downloadclient_body.json.j2') }}"
     body_format: json
     headers:
       X-Api-Key: "{{ api_info.matches[0].ApiKey }}"
