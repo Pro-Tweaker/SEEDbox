@@ -45,4 +45,4 @@
       homer.logo: "assets/homer-icons/svg/flood.svg"
       homer.target: "_blank"
     env:
-      HOME: /config
+      HOME: "/config"

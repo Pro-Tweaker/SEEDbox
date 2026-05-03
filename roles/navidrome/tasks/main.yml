@@ -50,7 +50,7 @@
       homer.logo: "assets/homer-icons/png/navidrome.png"
       homer.target: "_blank"
     env:
-      ND_SCANSCHEDULE: 1h
-      ND_LOGLEVEL: info
-      ND_SESSIONTIMEOUT: 24h
+      ND_SCANSCHEDULE: "1h"
+      ND_LOGLEVEL: "info"
+      ND_SESSIONTIMEOUT: "24h"
       ND_BASEURL: ""
