@@ -51,7 +51,7 @@
     restart_policy: unless-stopped
     state: started
     env:
-      TZ: "{{ tz | string}}"
+      TZ: "{{ tz | string }}"
 
 - name: Create and start authelia container
   community.docker.docker_container:
