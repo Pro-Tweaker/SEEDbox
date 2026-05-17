@@ -48,6 +48,6 @@
       homer.logo: "assets/homer-icons/svg/jellyseerr.svg"
       homer.target: "_blank"
     env:
-      TZ: "{{ tz }}"
+      TZ: "{{ tz | string }}"
       LOG_LEVEL: "debug"
       PORT: "5055"

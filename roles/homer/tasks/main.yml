@@ -34,7 +34,7 @@
       traefik.http.routers.homer.middlewares: "authelia-basic@docker"
     env:
       INIT_ASSETS: "0"
-      TZ: "{{ tz }}"
+      TZ: "{{ tz | string }}"
     user: "{{ uid | string }}:{{ gid | string }}"
 
 - name: Homer Settings Tasks

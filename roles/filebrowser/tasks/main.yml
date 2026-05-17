@@ -74,4 +74,4 @@
       homer.logo: "assets/homer-icons/svg/filebrowser.svg"
       homer.target: "_blank"
     env:
-      TZ: "{{ tz }}"
+      TZ: "{{ tz | string }}"

@@ -42,7 +42,7 @@
       homer.logo: "assets/homer-icons/png/speedtest-tracker.png"
       homer.target: "_blank"
     env:
-      TZ: "{{ tz }}"
+      TZ: "{{ tz | string }}"
       PGID: "{{ gid | string }}"
       PUID: "{{ uid | string }}"
       OOKLA_EULA_GDPR: "true"

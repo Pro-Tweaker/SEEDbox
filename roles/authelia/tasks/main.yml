@@ -51,7 +51,7 @@
     restart_policy: unless-stopped
     state: started
     env:
-      TZ: "{{ tz }}"
+      TZ: "{{ tz | string}}"
 
 - name: Create and start authelia container
   community.docker.docker_container:
@@ -99,4 +99,4 @@
       homer.logo: "assets/homer-icons/svg/authelia.svg"
       homer.target: "_blank"
     env:
-      TZ: "{{ tz }}"
+      TZ: "{{ tz | string }}"

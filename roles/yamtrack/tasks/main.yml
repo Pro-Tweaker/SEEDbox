@@ -43,7 +43,7 @@
       IGDB_SECRET: "{{ yamtrack.igdb_secret if yamtrack.igdb_secret else omit }}"
       SIMKL_ID: "{{ yamtrack.simkl_id if yamtrack.simkl_id else omit }}"
       SIMKL_SECRET: "{{ yamtrack.simkl_secret if yamtrack.simkl_secret else omit }}"
-      TZ: "{{ tz }}"
+      TZ: "{{ tz | string }}"
     networks:
       - name: web
     labels:

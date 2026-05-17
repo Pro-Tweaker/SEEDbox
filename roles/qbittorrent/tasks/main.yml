@@ -48,7 +48,7 @@
       - "{{ qbittorrent.bittorrent_port }}:{{ qbittorrent.bittorrent_port }}"
       - "{{ qbittorrent.bittorrent_port }}:{{ qbittorrent.bittorrent_port }}/udp"
     env:
-      TZ: "{{ tz }}"
+      TZ: "{{ tz | string }}"
       PUID: "{{ uid | string }}"
       PGID: "{{ gid | string }}"
       WEBUI_PORT: "8080"

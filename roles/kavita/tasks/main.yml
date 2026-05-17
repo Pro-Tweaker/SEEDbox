@@ -22,7 +22,7 @@
       - "{{ data_folder }}/media/comics:/kavita/comics"
       - "{{ data_folder }}/media/mangas:/kavita/mangas"
     env:
-      TZ: "{{ tz }}"
+      TZ: "{{ tz | string }}"
       PUID: "{{ uid | string }}"
       PGID: "{{ gid | string }}"
     networks:

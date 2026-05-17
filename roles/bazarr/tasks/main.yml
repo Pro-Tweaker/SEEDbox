@@ -43,6 +43,6 @@
       homer.logo: "assets/homer-icons/svg/bazarr.svg"
       homer.target: "_blank"
     env:
-      TZ: "{{ tz }}"
+      TZ: "{{ tz | string }}"
       PUID: "{{ uid | string }}"
       PGID: "{{ gid | string }}"

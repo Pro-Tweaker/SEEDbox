@@ -58,7 +58,7 @@
       homer.logo: "assets/homer-icons/svg/netdata.svg"
       homer.target: "_blank"
     env:
-      TZ: "{{ tz }}"
+      TZ: "{{ tz | string }}"
       PUID: "{{ uid | string }}"
       PGID: "{{ gid | string }}"
       DO_NOT_TRACK: "1"

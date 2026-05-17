@@ -19,7 +19,7 @@
     restart_policy: unless-stopped
     state: started
     env:
-      TZ: "{{ tz }}"
+      TZ: "{{ tz | string }}"
       WATCHTOWER_MONITOR_ONLY: "{{ watchtower.monitor_only | string }}"
       WATCHTOWER_CLEANUP: "true"
       WATCHTOWER_NO_STARTUP_MESSAGE: "false"
