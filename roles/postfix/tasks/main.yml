@@ -17,5 +17,5 @@
           - postfix
     env:
       TZ: "{{ tz | string }}"
-      POSTFIX_hostname: "{{ postfix.hostname }}"
-      ALLOWED_SENDER_DOMAINS: "{{ domain }}"
+      POSTFIX_hostname: "{{ postfix.hostname | string }}"
+      ALLOWED_SENDER_DOMAINS: "{{ domain | string }}"

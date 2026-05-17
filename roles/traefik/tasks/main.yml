@@ -92,8 +92,8 @@
       homer.logo: "assets/homer-icons/svg/traefik-proxy.svg"
       homer.target: "_blank"
     env:
-      CF_API_KEY: "{{ cloudflare.api_key }}"
-      CF_API_EMAIL: "{{ cloudflare.api_email }}"
+      CF_API_KEY: "{{ cloudflare.api_key | string }}"
+      CF_API_EMAIL: "{{ cloudflare.api_email | string }}"
 
 - name: Enroll Traefik Firewall Bouncer
   community.docker.docker_container_exec:

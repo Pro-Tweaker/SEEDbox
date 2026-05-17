@@ -8,9 +8,9 @@
     state: started
     restart_policy: always
     env:
-      API_KEY: "{{ cloudflare.api_key }}"
-      EMAIL: "{{ cloudflare.api_email }}"
-      ZONE: "{{ domain }}"
+      API_KEY: "{{ cloudflare.api_key | string }}"
+      EMAIL: "{{ cloudflare.api_email | string }}"
+      ZONE: "{{ domain | string }}"
       PROXIED: "true"
       RRTYPE: "A"
       DELETE_ON_STOP: "false"
