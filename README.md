@@ -164,6 +164,7 @@ ansible-playbook seedbox.yml --tags=qbittorrent,jellyfin
 
 #### Tag: "Extras"
 - [Tinymotd](https://github.com/bderenzo/tinymotd)
+- Utils
 
 > [!TIP]
 > You can check all the roles and tags available in the playbook file: [seedbox.yml](https://github.com/Pro-Tweaker/SEEDbox/blob/main/seedbox.yml)
