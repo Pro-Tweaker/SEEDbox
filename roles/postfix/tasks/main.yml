@@ -16,6 +16,6 @@
         aliases:
           - postfix
     env:
-      TZ: "{{ tz }}"
-      POSTFIX_hostname: "{{ postfix.hostname }}"
-      ALLOWED_SENDER_DOMAINS: "{{ domain }}"
+      TZ: "{{ tz | string }}"
+      POSTFIX_hostname: "{{ postfix.hostname | string }}"
+      ALLOWED_SENDER_DOMAINS: "{{ domain | string }}"

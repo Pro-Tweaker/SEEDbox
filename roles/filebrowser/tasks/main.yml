@@ -50,7 +50,7 @@
       - "{{ data_folder }}:/srv"
       - "{{ filebrowser.folder }}/filebrowser.db:/database/filebrowser.db"
       - "{{ filebrowser.folder }}/settings.json:/config/settings.json"
-    user: "{{ uid }}:{{ gid }}"
+    user: "{{ uid | string }}:{{ gid | string }}"
     networks:
       - name: web
         aliases:
@@ -74,4 +74,4 @@
       homer.logo: "assets/homer-icons/svg/filebrowser.svg"
       homer.target: "_blank"
     env:
-      TZ: "{{ tz }}"
+      TZ: "{{ tz | string }}"

@@ -42,9 +42,9 @@
       homer.logo: "assets/homer-icons/svg/sabnzbd.svg"
       homer.target: "_blank"
     env:
-      TZ: "{{ tz }}"
-      PUID: "{{ uid | int }}"
-      PGID: "{{ gid | int }}"
+      TZ: "{{ tz | string }}"
+      PUID: "{{ uid | string }}"
+      PGID: "{{ gid | string }}"
 
 - name: Settings | Wait for 'sabnzbd.ini' to be created
   ansible.builtin.wait_for:

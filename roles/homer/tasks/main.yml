@@ -61,6 +61,6 @@
     restart_policy: unless-stopped
     state: started
     env:
-      LOG_LEVEL: Debug
-      HOMER_CONFIG: /config.yml
-      HOMER_BASE_CONFIG: /base.yml
+      LOG_LEVEL: "Debug"
+      HOMER_CONFIG: "/config.yml"
+      HOMER_BASE_CONFIG: "/base.yml"

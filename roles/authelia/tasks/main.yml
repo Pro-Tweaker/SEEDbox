@@ -42,7 +42,7 @@
     container_default_behavior: compatibility
     volumes:
       - "{{ authelia.redis.folder }}:/data"
-    user: "{{ uid }}:{{ gid }}"
+    user: "{{ uid | string }}:{{ gid | string }}"
     network_mode: default
     networks:
       - name: authelia
@@ -51,7 +51,7 @@
     restart_policy: unless-stopped
     state: started
     env:
-      TZ: "{{ tz }}"
+      TZ: "{{ tz | string }}"
 
 - name: Create and start authelia container
   community.docker.docker_container:
@@ -99,4 +99,4 @@
       homer.logo: "assets/homer-icons/svg/authelia.svg"
       homer.target: "_blank"
     env:
-      TZ: "{{ tz }}"
+      TZ: "{{ tz | string }}"

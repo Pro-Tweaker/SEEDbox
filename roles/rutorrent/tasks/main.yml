@@ -66,9 +66,9 @@
       - "51413:51413"
       - "6881:6881/udp"
     env:
-      TZ: "{{ tz }}"
-      PUID: "{{ uid | int }}"
-      PGID: "{{ gid | int }}"
+      TZ: "{{ tz | string }}"
+      PUID: "{{ uid | string }}"
+      PGID: "{{ gid | string }}"
 
 - name: RuTorrent Settings Tasks
   ansible.builtin.include_tasks: "settings/main.yml"

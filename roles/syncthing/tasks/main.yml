@@ -48,5 +48,5 @@
       - "22000:22000/tcp"
       - "22000:22000/udp"
     env:
-      PUID: "{{ uid | int }}"
-      PGID: "{{ gid | int }}"
+      PUID: "{{ uid | string }}"
+      PGID: "{{ gid | string }}"

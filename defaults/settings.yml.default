@@ -7,7 +7,7 @@ ssh_port: 22
 domain: example.com
 dynamic_ip: false
 data_folder: /mnt/storage
-tz: "Europe/Berlin"
+tz: Europe/Berlin
 notifications_email: example@mail.com
 use_crowdsec: true
 cloudflare:
@@ -18,12 +18,12 @@ cloudflare:
   api_token:
   domain_zone_id:
 traefik:
-  tag: "3.6.15"
-  tag_bouncer: "v1.6.0"
+  tag: 3.6.15
+  tag_bouncer: v1.6.0
   folder: /opt/traefik
   api_url: "traefik.{{ domain }}"
-  origin_certificate: ""
-  origin_certificate_private_key: ""
+  origin_certificate:
+  origin_certificate_private_key:
 portainer:
   tag: latest
   folder: /opt/portainer
@@ -46,21 +46,21 @@ homer:
   tag: latest
   tag_companion: latest
   folder: /opt/homer
-  title: "SEEDbox Dashboard"
+  title: SEEDbox Dashboard
   subtitle: "{{ domain }}"
   services:
     - name: Download
-      icon: "fas fa-cloud-download-alt"
+      icon: fas fa-cloud-download-alt
     - name: PVR
-      icon: "fas fa-tv"
+      icon: fas fa-tv
     - name: Media
-      icon: "fas fa-compact-disc"
+      icon: fas fa-compact-disc
     - name: Tools
-      icon: "fas fa-tools"
+      icon: fas fa-tools
     - name: Monitoring
-      icon: "far fa-eye"
+      icon: far fa-eye
     - name: Management
-      icon: "fas fa-user-shield"
+      icon: fas fa-user-shield
 scrutiny:
   tag: latest-omnibus
   folder: /opt/scrutiny
@@ -82,14 +82,14 @@ postfix:
   hostname: postfix
 watchtower:
   tag: latest
-  monitor_only: "false"
+  monitor_only: false
   notification_email_to: "{{ notifications_email }}"
   notification_email_from: "watchtower@{{ domain }}"
   notification_email_server: postfix
-  notification_email_server_port: "587"
-  notification_email_server_user: ""
-  notification_email_server_password: ""
-  notification_email_delay: "2"
+  notification_email_server_port: 587
+  notification_email_server_user:
+  notification_email_server_password:
+  notification_email_delay: 2
 prowlarr:
   tag: latest
   folder: /opt/prowlarr
@@ -120,7 +120,7 @@ authelia:
   subdomain: login
   username: demo
   password: demo
-  displayname: "Demo"
+  displayname: Demo
   email: example@mail.com
   jwt_secret: a_very_important_secret
   session_name: demo
@@ -128,9 +128,9 @@ authelia:
   notification_email_to: "{{ notifications_email }}"
   notification_email_from: "authelia@{{ domain }}"
   notification_email_server: postfix
-  notification_email_server_port: "587"
-  notification_email_server_user: ""
-  notification_email_server_password: ""
+  notification_email_server_port: 587
+  notification_email_server_user:
+  notification_email_server_password:
   redis:
     hostname: authelia-redis
     folder: /opt/authelia-redis
@@ -143,7 +143,7 @@ librespeed:
   folder: /opt/librespeed
   subdomain: librespeed
 qbittorrent:
-  tag: "5.1.4"
+  tag: 5.1.4
   folder: /opt/qbittorrent
   subdomain: qbittorrent
   web_user: admin_qbit
