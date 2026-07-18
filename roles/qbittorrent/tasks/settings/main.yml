@@ -45,10 +45,9 @@
     state: present
 
 - name: Settings | Generate 'WebUI Password_PBKDF2'
-  ansible.builtin.script: "generate.py {{ qbittorrent.web_password_salt }} {{ qbittorrent.web_password }}"
-  args:
-    executable: /usr/bin/python3
+  ansible.builtin.command: python3 {{ role_path }}/files/generate.py {{ qbittorrent.web_password_salt }} {{ qbittorrent.web_password }}
   register: python_result
+  when: not ansible_check_mode
 
 - name: Settings | Set 'WebUI Password_PBKDF2'
   ansible.builtin.lineinfile:
@@ -56,3 +55,4 @@
     regexp: "^WebUI\\\\Password_PBKDF2\\s*=.*"
     line: 'WebUI\Password_PBKDF2="@ByteArray({{ qbittorrent.web_password_salt | b64encode }}:{{ python_result.stdout }})"'
     state: present
+  when: not ansible_check_mode
