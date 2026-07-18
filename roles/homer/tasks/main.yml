@@ -33,7 +33,7 @@
       traefik.http.services.homer.loadbalancer.server.port: "8080"
       traefik.http.routers.homer.middlewares: "authelia-basic@docker"
     env:
-      INIT_ASSETS: "0"
+      INIT_ASSETS: "1"
       TZ: "{{ tz }}"
     user: "{{ uid | int }}:{{ gid | int }}"
 
