@@ -13,8 +13,9 @@ use_crowdsec: true
 cloudflare:
   tag_ddns: latest
   tag_companion: latest
-  api_key:
   api_email:
+  api_key:
+  api_token:
   domain_zone_id:
 traefik:
   tag: 3.6.15
@@ -90,7 +91,7 @@ watchtower:
   notification_email_server_password:
   notification_email_delay: 2
 prowlarr:
-  tag: develop
+  tag: latest
   folder: /opt/prowlarr
   subdomain: prowlarr
 sonarr:
@@ -150,7 +151,7 @@ qbittorrent:
   web_password_salt: admin_qbit_password_salt
   bittorrent_port: 6881
 flood:
-  tag: master
+  tag: latest
   folder: /opt/flood
   subdomain: flood
 kavita:

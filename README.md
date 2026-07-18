@@ -59,7 +59,7 @@ We wanted a better, more modern solution than swizzin. Simpler and easier to mai
 
 Install the minimal required packages to use the SEEDbox playbook:
 ```sh
-apt update && apt install -y git python3 python3-pip python3-passlib python3-lxml python3-pbkdf2 ansible
+apt update && apt install -y git python3 python3-pip python3-lxml ansible
 ```
 
 Install the Docker collection from Ansible Galaxy:
@@ -161,6 +161,9 @@ ansible-playbook seedbox.yml --tags=qbittorrent,jellyfin
 - [Speedtest Tracker](https://github.com/henrywhitaker3/Speedtest-Tracker)
 - [LibreSpeed](https://librespeed.org/)
 - [Scrutiny](https://github.com/AnalogJ/scrutiny)
+
+#### Tag: "Extras"
+- [Tinymotd](https://github.com/bderenzo/tinymotd)
 
 > [!TIP]
 > You can check all the roles and tags available in the playbook file: [seedbox.yml](https://github.com/Pro-Tweaker/SEEDbox/blob/main/seedbox.yml)
