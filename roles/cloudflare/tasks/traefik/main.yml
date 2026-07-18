@@ -20,6 +20,7 @@
       homer.logo: "assets/homer-icons/svg/cloudflare.svg"
       homer.target: "_blank"
     env:
+      TIMEZONE: "{{ tz }}"
       TRAEFIK_VERSION: "2"
       CF_TOKEN: "{{ cloudflare.api_key }}"
       CF_EMAIL: "{{ cloudflare.api_email }}"

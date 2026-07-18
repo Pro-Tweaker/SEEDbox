@@ -13,8 +13,9 @@ use_crowdsec: true
 cloudflare:
   tag_ddns: latest
   tag_companion: latest
-  api_key:
   api_email:
+  api_key:
+  api_token:
   domain_zone_id:
 traefik:
   tag: "3.6.15"
