@@ -1,0 +1,21 @@
+---
+- name: Clean apt cache
+  ansible.builtin.command: apt clean
+  changed_when: true
+  when:
+    - ansible_os_family == "Debian"
+    - apt_clean
+
+- name: Clean obsolete apt package files
+  ansible.builtin.command: apt autoclean
+  changed_when: true
+  when:
+    - ansible_os_family == "Debian"
+    - apt_autoclean
+
+- name: Remove unused packages
+  ansible.builtin.command: apt autoremove -y
+  changed_when: true
+  when:
+    - ansible_os_family == "Debian"
+    - apt_autoremove

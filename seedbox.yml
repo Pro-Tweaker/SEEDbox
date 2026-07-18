@@ -53,3 +53,4 @@
 
     # Extras
     - { role: tinymotd, tags: ["extras", "tinymotd"] }
+    - { role: utils, tags: ["extras", "utils"] }

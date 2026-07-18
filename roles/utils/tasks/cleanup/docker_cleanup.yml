@@ -1,0 +1,12 @@
+---
+- name: Remove unused Docker data
+  ansible.builtin.command: docker system prune -af
+  changed_when: true
+  tags:
+    - docker_cleanup
+
+- name: Remove unused Docker volumes
+  ansible.builtin.command: docker volume prune -f
+  changed_when: true
+  tags:
+    - docker_cleanup
