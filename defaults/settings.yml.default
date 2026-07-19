@@ -10,6 +10,8 @@ data_folder: /mnt/storage
 tz: Europe/Berlin
 notifications_email: example@mail.com
 use_crowdsec: true
+
+# Core
 cloudflare:
   tag_ddns: latest
   tag_companion: latest
@@ -17,6 +19,14 @@ cloudflare:
   api_key:
   api_token:
   domain_zone_id:
+crowdsec:
+  tag: latest-debian
+  folder: /opt/crowdsec
+  subdomain: crowdsec
+  console_enrollment_key: console_enrollment_key
+  firewall_bouncer_key: firewall_bouncer_key
+  traefik_bouncer_key: traefik_bouncer_key
+  whitelist_ip_range: x.x.0.0/16
 traefik:
   tag: 3.7.8
   tag_bouncer: v1.6.0
@@ -28,20 +38,27 @@ portainer:
   tag: latest
   folder: /opt/portainer
   subdomain: portainer
-filebrowser:
+authelia:
   tag: latest
-  folder: /opt/filebrowser
-  subdomain: filebrowser
-rutorrent:
-  tag: latest
-  folder: /opt/rutorrent
-  subdomain: rutorrent
-nzbget:
-  tag: latest
-  folder: /opt/nzbget
-  subdomain: nzbget
-  restricted_username: demo
-  restricted_password: demo
+  folder: /opt/authelia
+  subdomain: login
+  username: demo
+  password: demo
+  displayname: Demo
+  email: example@mail.com
+  jwt_secret: a_very_important_secret
+  session_name: demo
+  unsecure_session_secret: demo
+  notification_email_to: "{{ notifications_email }}"
+  notification_email_from: "authelia@{{ domain }}"
+  notification_email_server: postfix
+  notification_email_server_port: 587
+  notification_email_server_user:
+  notification_email_server_password:
+  redis:
+    hostname: authelia-redis
+    folder: /opt/authelia-redis
+  storage_encryption_key: a_string_at_least_64_characters_long
 homer:
   tag: latest
   tag_companion: latest
@@ -61,25 +78,6 @@ homer:
       icon: far fa-eye
     - name: Management
       icon: fas fa-user-shield
-scrutiny:
-  tag: latest-omnibus
-  folder: /opt/scrutiny
-  subdomain: scrutiny
-jellyfin:
-  tag: latest
-  folder: /opt/jellyfin
-  subdomain: jellyfin
-netdata:
-  tag: latest
-  folder: /opt/netdata
-  subdomain: netdata
-navidrome:
-  tag: latest
-  folder: /opt/navidrome
-  subdomain: navidrome
-postfix:
-  tag: latest
-  hostname: postfix
 watchtower:
   tag: latest
   monitor_only: false
@@ -90,6 +88,43 @@ watchtower:
   notification_email_server_user:
   notification_email_server_password:
   notification_email_delay: 2
+postfix:
+  tag: latest
+  hostname: postfix
+
+# Download
+qbittorrent:
+  tag: 5.1.4
+  folder: /opt/qbittorrent
+  subdomain: qbittorrent
+  web_user: admin_qbit
+  web_password: admin_qbit_password
+  web_password_salt: admin_qbit_password_salt
+  bittorrent_port: 6881
+rutorrent:
+  tag: latest
+  folder: /opt/rutorrent
+  subdomain: rutorrent
+nzbget:
+  tag: latest
+  folder: /opt/nzbget
+  subdomain: nzbget
+  restricted_username: demo
+  restricted_password: demo
+sabnzbd:
+  tag: latest
+  folder: /opt/sabnzbd
+  subdomain: sabnzbd
+flood:
+  tag: latest
+  folder: /opt/flood
+  subdomain: flood
+qui:
+  tag: latest
+  folder: /opt/qui
+  subdomain: qui
+
+# PVR
 prowlarr:
   tag: latest
   folder: /opt/prowlarr
@@ -114,76 +149,24 @@ bazarr:
   tag: latest
   folder: /opt/bazarr
   subdomain: bazarr
-authelia:
+
+# Media
+seerr:
   tag: latest
-  folder: /opt/authelia
-  subdomain: login
-  username: demo
-  password: demo
-  displayname: Demo
-  email: example@mail.com
-  jwt_secret: a_very_important_secret
-  session_name: demo
-  unsecure_session_secret: demo
-  notification_email_to: "{{ notifications_email }}"
-  notification_email_from: "authelia@{{ domain }}"
-  notification_email_server: postfix
-  notification_email_server_port: 587
-  notification_email_server_user:
-  notification_email_server_password:
-  redis:
-    hostname: authelia-redis
-    folder: /opt/authelia-redis
-  storage_encryption_key: a_string_at_least_64_characters_long
-whoami:
+  folder: /opt/seerr
+  subdomain: seerr
+jellyfin:
   tag: latest
-  subdomain: whoami
-librespeed:
+  folder: /opt/jellyfin
+  subdomain: jellyfin
+navidrome:
   tag: latest
-  folder: /opt/librespeed
-  subdomain: librespeed
-qbittorrent:
-  tag: 5.1.4
-  folder: /opt/qbittorrent
-  subdomain: qbittorrent
-  web_user: admin_qbit
-  web_password: admin_qbit_password
-  web_password_salt: admin_qbit_password_salt
-  bittorrent_port: 6881
-flood:
-  tag: latest
-  folder: /opt/flood
-  subdomain: flood
+  folder: /opt/navidrome
+  subdomain: navidrome
 kavita:
   tag: latest
   folder: /opt/kavita
   subdomain: kavita
-archivebox:
-  tag: latest
-  folder: /opt/archivebox
-  subdomain: archivebox
-sabnzbd:
-  tag: latest
-  folder: /opt/sabnzbd
-  subdomain: sabnzbd
-syncthing:
-  tag: latest
-  folder: /opt/syncthing
-  subdomain: syncthing
-speedtesttracker:
-  tag: latest
-  folder: /opt/speedtesttracker
-  subdomain: speedtesttracker
-crowdsec:
-  tag: latest-debian
-  folder: /opt/crowdsec
-  subdomain: crowdsec
-  console_enrollment_key: console_enrollment_key
-  firewall_bouncer_key: firewall_bouncer_key
-  traefik_bouncer_key: traefik_bouncer_key
-  whitelist_ip_range: x.x.0.0/16
-tinymotd:
-  folder: /opt/tinymotd
 yamtrack:
   tag: latest
   folder: /opt/yamtrack
@@ -196,11 +179,42 @@ yamtrack:
   igdb_secret:
   simkl_id:
   simkl_secret:
-qui:
+
+# Tools
+filebrowser:
   tag: latest
-  folder: /opt/qui
-  subdomain: qui
-seerr:
+  folder: /opt/filebrowser
+  subdomain: filebrowser
+syncthing:
   tag: latest
-  folder: /opt/seerr
-  subdomain: seerr
+  folder: /opt/syncthing
+  subdomain: syncthing
+archivebox:
+  tag: latest
+  folder: /opt/archivebox
+  subdomain: archivebox
+whoami:
+  tag: latest
+  subdomain: whoami
+
+# Monitoring
+netdata:
+  tag: latest
+  folder: /opt/netdata
+  subdomain: netdata
+speedtesttracker:
+  tag: latest
+  folder: /opt/speedtesttracker
+  subdomain: speedtesttracker
+librespeed:
+  tag: latest
+  folder: /opt/librespeed
+  subdomain: librespeed
+scrutiny:
+  tag: latest-omnibus
+  folder: /opt/scrutiny
+  subdomain: scrutiny
+
+# Extras
+tinymotd:
+  folder: /opt/tinymotd
