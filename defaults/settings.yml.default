@@ -18,7 +18,7 @@ cloudflare:
   api_token:
   domain_zone_id:
 traefik:
-  tag: 3.6.15
+  tag: 3.7.8
   tag_bouncer: v1.6.0
   folder: /opt/traefik
   api_url: "traefik.{{ domain }}"
