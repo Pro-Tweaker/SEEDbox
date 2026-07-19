@@ -1,15 +1,18 @@
 ---
-- import_tasks: cleanup/system_cleanup.yml
+- name: Utils | Import system cleanup tasks
+  ansible.builtin.import_tasks: cleanup/system_cleanup.yml
   become: true
   tags:
     - system_cleanup
 
-- import_tasks: cleanup/logs_cleanup.yml
+- name: Utils | Import logs cleanup tasks
+  ansible.builtin.import_tasks: cleanup/logs_cleanup.yml
   become: true
   tags:
     - logs_cleanup
 
-- import_tasks: cleanup/docker_cleanup.yml
+- name: Utils | Import docker cleanup tasks
+  ansible.builtin.import_tasks: cleanup/docker_cleanup.yml
   become: true
   tags:
     - docker_cleanup

@@ -4,18 +4,18 @@
   changed_when: true
   when:
     - ansible_os_family == "Debian"
-    - apt_clean
+    - utils_apt_clean
 
 - name: Clean obsolete apt package files
   ansible.builtin.command: apt autoclean
   changed_when: true
   when:
     - ansible_os_family == "Debian"
-    - apt_autoclean
+    - utils_apt_autoclean
 
 - name: Remove unused packages
   ansible.builtin.command: apt autoremove -y
   changed_when: true
   when:
     - ansible_os_family == "Debian"
-    - apt_autoremove
+    - utils_apt_autoremove

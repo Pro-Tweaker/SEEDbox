@@ -48,6 +48,7 @@
   ansible.builtin.command: python3 {{ role_path }}/files/generate.py {{ qbittorrent.web_password_salt }} {{ qbittorrent.web_password }}
   register: python_result
   when: not ansible_check_mode
+  changed_when: false
 
 - name: Settings | Set 'WebUI Password_PBKDF2'
   ansible.builtin.lineinfile:
