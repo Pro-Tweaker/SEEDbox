@@ -94,7 +94,7 @@ postfix:
 
 # Download
 qbittorrent:
-  tag: 5.1.4
+  tag: 5.2.3
   folder: /opt/qbittorrent
   subdomain: qbittorrent
   web_user: admin_qbit
