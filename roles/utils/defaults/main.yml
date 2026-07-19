@@ -1,5 +1,5 @@
 ---
-journal_vacuum_time: "7d"
-apt_autoremove: true
-apt_clean: true
-apt_autoclean: true
+utils_journal_vacuum_time: "7d"
+utils_apt_autoremove: true
+utils_apt_clean: true
+utils_apt_autoclean: true

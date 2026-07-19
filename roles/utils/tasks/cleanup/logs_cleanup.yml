@@ -1,4 +1,4 @@
 ---
 - name: Vacuum systemd journal
-  ansible.builtin.command: "journalctl --vacuum-time={{ journal_vacuum_time }}"
+  ansible.builtin.command: "journalctl --vacuum-time={{ utils_journal_vacuum_time }}"
   changed_when: true
