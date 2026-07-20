@@ -105,6 +105,8 @@ rutorrent:
   tag: latest
   folder: /opt/rutorrent
   subdomain: rutorrent
+  bittorrent_port: 50000
+  dht_port: 58000
 nzbget:
   tag: latest
   folder: /opt/nzbget
