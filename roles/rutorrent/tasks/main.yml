@@ -14,44 +14,45 @@
     recurse: true
   loop:
     - "{{ rutorrent.folder }}"
-    - "{{ rutorrent.folder }}/plugins"
-    - "{{ rutorrent.folder }}/themes"
-    - "{{ data_folder }}/data/rutorrent"
-    - "{{ data_folder }}/data/rutorrent/completed"
-    - "{{ data_folder }}/data/rutorrent/watched"
+    - "{{ rutorrent.folder }}/rutorrent/conf"
+    - "{{ rutorrent.folder }}/rutorrent/plugins"
+    - "{{ rutorrent.folder }}/rutorrent/themes"
 
-- name: Remove 'config.php' if it exists
-  ansible.builtin.file:
-    path: "{{ rutorrent.folder }}/rutorrent/settings/config.php"
-    state: absent
-
-- name: Check if rtorrent.rc exists
-  ansible.builtin.stat:
-    path: "{{ rutorrent.folder }}/rtorrent/rtorrent.rc"
-  register: rtorrent_rc
+- name: Import custom 'plugins.ini'
+  ansible.builtin.copy:
+    src: plugins.ini
+    dest: "{{ rutorrent.folder }}/rutorrent/conf/plugins.ini"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: "0775"
+    force: true
 
 - name: Create and start container
   community.docker.docker_container:
     name: rutorrent
-    image: "horjulf/rutorrent-autodl:{{ rutorrent.tag }}"
+    image: "crazymax/rtorrent-rutorrent:{{ rutorrent.tag }}"
     pull: true
     recreate: true
     volumes:
-      - "{{ rutorrent.folder }}:/config"
-      - "{{ data_folder }}/data/rutorrent:/downloads"
+      - "{{ rutorrent.folder }}:/data"
+      - "{{ data_folder }}/torrents:/downloads"
+      - "{{ rutorrent.folder }}/rutorrent/conf/plugins.ini:/var/www/rutorrent/conf/plugins.ini:ro"
     networks:
       - name: web
         aliases:
           - rutorrent
     restart_policy: unless-stopped
     state: started
+    ulimits:
+      - "nproc:65535:65535"
+      - "nofile:32000:40000"
     labels:
       # Traefik
       traefik.enable: "true"
       traefik.docker.network: "web"
       traefik.http.routers.rutorrent.rule: "Host(`{{ rutorrent.subdomain }}.{{ domain }}`)"
       traefik.http.routers.rutorrent.entrypoints: "websecure"
-      traefik.http.services.rutorrent.loadbalancer.server.port: "80"
+      traefik.http.services.rutorrent.loadbalancer.server.port: "8080"
       traefik.http.routers.rutorrent.middlewares: "authelia@docker"
       # Homer
       homer.enable: "true"
@@ -63,12 +64,11 @@
       homer.logo: "assets/homer-icons/svg/rutorrent.svg"
       homer.target: "_blank"
     published_ports:
-      - "51413:51413"
-      - "6881:6881/udp"
+      - "{{ rutorrent.bittorrent_port }}:{{ rutorrent.bittorrent_port }}"
+      - "{{ rutorrent.dht_port }}:{{ rutorrent.dht_port }}/udp"
     env:
       TZ: "{{ tz | string }}"
       PUID: "{{ uid | string }}"
       PGID: "{{ gid | string }}"
-
-- name: RuTorrent Settings Tasks
-  ansible.builtin.include_tasks: "settings/main.yml"
+      RT_INC_PORT: "{{ rutorrent.bittorrent_port | string }}"
+      RT_DHT_PORT: "{{ rutorrent.dht_port | string }}"
