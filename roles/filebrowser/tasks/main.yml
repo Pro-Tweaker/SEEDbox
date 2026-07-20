@@ -69,7 +69,7 @@
       homer.name: "Filebrowser"
       homer.service: "Tools"
       homer.priority: "500"
-      homer.subtitle: "File managing interface"
+      homer.subtitle: "Web File Browser for managing files"
       homer.url: "https://{{ filebrowser.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/svg/filebrowser.svg"
       homer.target: "_blank"
