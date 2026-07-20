@@ -206,6 +206,9 @@ speedtesttracker:
   tag: latest
   folder: /opt/speedtesttracker
   subdomain: speedtesttracker
+  app_key:
+  admin_email:
+  admin_password:
 librespeed:
   tag: latest
   folder: /opt/librespeed

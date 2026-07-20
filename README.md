@@ -158,7 +158,7 @@ ansible-playbook seedbox.yml --tags=qbittorrent,jellyfin
 
 #### Tag: "Monitoring"
 - [Netdata](https://www.netdata.cloud/)
-- [Speedtest Tracker](https://github.com/henrywhitaker3/Speedtest-Tracker)
+- [Speedtest Tracker](https://speedtest-tracker.dev/)
 - [LibreSpeed](https://librespeed.org/)
 - [Scrutiny](https://github.com/AnalogJ/scrutiny)
 
