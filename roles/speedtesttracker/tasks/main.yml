@@ -10,10 +10,27 @@
   loop:
     - "{{ speedtesttracker.folder }}"
 
+- name: Generate persistent APP_KEY if not provided
+  ansible.builtin.set_fact:
+    speedtesttracker_app_key: >-
+      {{ speedtesttracker.app_key if speedtesttracker.app_key else
+         'base64:' ~ (lookup('ansible.builtin.password', speedtesttracker.folder + '/.secrets/app_key',
+                              length=32, chars=['ascii_letters', 'digits']) | b64encode) }}
+  no_log: true
+
+- name: Generate persistent admin credentials if not provided
+  ansible.builtin.set_fact:
+    speedtesttracker_admin_email: "{{ speedtesttracker.admin_email if speedtesttracker.admin_email else 'admin@' ~ domain }}"
+    speedtesttracker_admin_password: >-
+      {{ speedtesttracker.admin_password if speedtesttracker.admin_password else
+         lookup('ansible.builtin.password', speedtesttracker.folder + '/.secrets/admin_password',
+                length=24, chars=['ascii_letters', 'digits']) }}
+  no_log: true
+
 - name: Create and start container
   community.docker.docker_container:
     name: speedtesttracker
-    image: "henrywhitaker3/speedtest-tracker:{{ speedtesttracker.tag }}"
+    image: "ghcr.io/linuxserver/speedtest-tracker:{{ speedtesttracker.tag }}"
     pull: true
     recreate: true
     volumes:
@@ -45,4 +62,13 @@
       TZ: "{{ tz | string }}"
       PGID: "{{ gid | string }}"
       PUID: "{{ uid | string }}"
-      OOKLA_EULA_GDPR: "true"
+      APP_KEY: "{{ speedtesttracker_app_key }}"
+      APP_URL: "https://{{ speedtesttracker.subdomain }}.{{ domain }}"
+      DB_CONNECTION: "sqlite"
+      ADMIN_NAME: "Admin"
+      ADMIN_EMAIL: "{{ speedtesttracker_admin_email }}"
+      ADMIN_PASSWORD: "{{ speedtesttracker_admin_password }}"
+
+- name: Show Speedtest Tracker admin credentials
+  ansible.builtin.debug:
+    msg: "Speedtest Tracker admin login -> email: {{ speedtesttracker_admin_email }}, password: {{ speedtesttracker_admin_password }}"
