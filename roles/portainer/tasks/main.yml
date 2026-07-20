@@ -38,7 +38,7 @@
       homer.name: "Portainer"
       homer.service: "Management"
       homer.priority: "300"
-      homer.subtitle: "Advanced Docker GUI"
+      homer.subtitle: "Making Docker management easy"
       homer.url: "https://{{ portainer.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/svg/portainer.svg"
       homer.target: "_blank"
