@@ -1,6 +1,12 @@
 ---
-- name: Start docker
+- name: Start Docker
   ansible.builtin.service:
     name: docker
     state: started
     enabled: true
+
+- name: Notify that the docker group needs a fresh session
+  ansible.builtin.debug:
+    msg: "{{ user }} was added to the docker group. Existing shells keep their old
+      group list -> run 'newgrp docker' in each open terminal, or log out and back
+      in. New sessions pick it up automatically."
