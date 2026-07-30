@@ -4,50 +4,45 @@
     pkg: "{{ item }}"
     state: present
   loop:
-    - apt-transport-https
     - ca-certificates
     - curl
-    - gnupg-agent
-    - software-properties-common
+    - gnupg
 
-- name: Add Docker GPG APT key
-  ansible.builtin.apt_key:
-    url: https://download.docker.com/linux/debian/gpg
-    state: present
+- name: Remove the legacy Docker repository list
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d/docker.list
+    state: absent
 
 - name: Add Docker repository
-  ansible.builtin.lineinfile:
-    dest: "/etc/apt/sources.list.d/docker.list"
-    line: deb [arch=amd64] https://download.docker.com/linux/debian/ {{ ansible_distribution_release }} stable
+  ansible.builtin.deb822_repository:
+    name: docker
+    types: deb
+    uris: https://download.docker.com/linux/debian
+    suites: "{{ ansible_distribution_release }}"
+    components: stable
+    architectures: amd64
+    signed_by: https://download.docker.com/linux/debian/gpg
     state: present
-    create: true
-    mode: "0644"
-
-- name: Update APT cache
-  ansible.builtin.apt:
-    update_cache: true
+    enabled: true
 
 - name: Install Docker required packages
-  ansible.builtin.package:
+  ansible.builtin.apt:
     name:
       - docker-ce
       - docker-ce-cli
-      - docker-compose
       - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
     state: present
     install_recommends: true
+    update_cache: true
   notify:
-    - start docker
-
-- name: Add the Python client for Docker
-  ansible.builtin.pip:
-    name: docker
+    - Start Docker
 
 - name: Add the default user to the docker group
   ansible.builtin.user:
     name: "{{ user }}"
-    group: docker
-
-- name: Activate docker group changes
-  ansible.builtin.command: newgrp docker
-  changed_when: false
+    groups: docker
+    append: true
+  notify:
+    - Notify that the docker group needs a fresh session
