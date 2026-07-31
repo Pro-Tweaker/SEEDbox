@@ -68,6 +68,7 @@
       ADMIN_NAME: "Admin"
       ADMIN_EMAIL: "{{ speedtesttracker_admin_email }}"
       ADMIN_PASSWORD: "{{ speedtesttracker_admin_password }}"
+      SPEEDTEST_SCHEDULE: "0 */4 * * *" # Run speedtest every 4 hours
 
 - name: Show Speedtest Tracker admin credentials
   ansible.builtin.debug:
