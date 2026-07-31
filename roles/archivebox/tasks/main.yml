@@ -39,7 +39,7 @@
       homer.enable: "true"
       homer.name: "ArchiveBox"
       homer.service: "Tools"
-      homer.priority: "1"
+      homer.priority: "100"
       homer.subtitle: "Open-source self-hosted web archiving"
       homer.url: "https://{{ archivebox.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/svg/archivebox.svg"

@@ -68,7 +68,7 @@
       homer.enable: "true"
       homer.name: "Filebrowser"
       homer.service: "Tools"
-      homer.priority: "500"
+      homer.priority: "300"
       homer.subtitle: "Web File Browser"
       homer.url: "https://{{ filebrowser.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/svg/filebrowser.svg"

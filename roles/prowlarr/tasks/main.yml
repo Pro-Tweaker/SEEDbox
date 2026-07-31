@@ -36,7 +36,7 @@
       homer.enable: "true"
       homer.name: "Prowlarr"
       homer.service: "Tools"
-      homer.priority: "400"
+      homer.priority: "500"
       homer.subtitle: "Indexer manager/proxy"
       homer.url: "https://{{ prowlarr.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/svg/prowlarr.svg"
