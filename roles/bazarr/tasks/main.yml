@@ -37,7 +37,7 @@
       homer.enable: "true"
       homer.name: "Bazarr"
       homer.service: "Tools"
-      homer.priority: "300"
+      homer.priority: "400"
       homer.subtitle: "Manage and download subtitles"
       homer.url: "https://{{ bazarr.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/svg/bazarr.svg"
