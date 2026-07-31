@@ -28,8 +28,8 @@ crowdsec:
   traefik_bouncer_key: traefik_bouncer_key
   whitelist_ip_range: x.x.0.0/16
 traefik:
-  tag: 3.7.8
-  tag_bouncer: v1.6.0
+  tag: 3.7.9
+  tag_bouncer: v1.7.1
   folder: /opt/traefik
   api_url: "traefik.{{ domain }}"
   origin_certificate:
