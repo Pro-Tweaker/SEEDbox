@@ -17,6 +17,7 @@
     - "{{ rutorrent.folder }}/rutorrent/conf"
     - "{{ rutorrent.folder }}/rutorrent/plugins"
     - "{{ rutorrent.folder }}/rutorrent/themes"
+    - "{{ data_folder }}/torrents/incomplete/rutorrent"
 
 - name: Import custom 'plugins.ini'
   ansible.builtin.copy:

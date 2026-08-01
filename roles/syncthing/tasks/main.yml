@@ -9,7 +9,6 @@
     recurse: true
   loop:
     - "{{ syncthing.folder }}"
-    - "{{ data_folder }}/sync"
 
 - name: Create and start container
   community.docker.docker_container:
@@ -19,8 +18,8 @@
     pull: true
     recreate: true
     volumes:
-      - "{{ data_folder }}/sync:/var/syncthing/Sync"
       - "{{ syncthing.folder }}:/var/syncthing/config"
+      - "{{ data_folder }}:/data"
     networks:
       - name: web
         aliases:

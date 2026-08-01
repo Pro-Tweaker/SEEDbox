@@ -17,14 +17,8 @@
     pull: true
     recreate: true
     volumes:
-      - "{{ kavita.folder }}:/kavita/config"
-      - "{{ data_folder }}/media/books:/kavita/book"
-      - "{{ data_folder }}/media/comics:/kavita/comics"
-      - "{{ data_folder }}/media/mangas:/kavita/mangas"
-    env:
-      TZ: "{{ tz | string }}"
-      PUID: "{{ uid | string }}"
-      PGID: "{{ gid | string }}"
+      - "{{ kavita.folder }}:/config"
+      - "{{ data_folder }}/media:/data:ro"
     networks:
       - name: web
         aliases:

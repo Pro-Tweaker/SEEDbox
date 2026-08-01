@@ -15,7 +15,6 @@
   loop:
     - "{{ navidrome.folder }}"
     - "{{ navidrome.folder }}/data"
-    - "{{ data_folder }}/media/music"
 
 - name: Create and start container
   community.docker.docker_container:
