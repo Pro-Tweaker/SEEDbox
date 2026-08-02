@@ -236,6 +236,8 @@ scrutiny:
   tag: latest-omnibus
   folder: /opt/scrutiny
   subdomain: scrutiny
+  # How often the collector polls S.M.A.R.T data (cron syntax, host timezone).
+  cron: "0 */6 * * *"
 
 # Extras
 tinymotd:
