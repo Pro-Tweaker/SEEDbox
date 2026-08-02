@@ -2,13 +2,12 @@
 # '{{ data_folder }}' is the root of the data tree: it is bind-mounted as a
 # single volume on '/data' in every container, so completed downloads and the
 # media library stay on the same filesystem (what hardlinks and atomic moves
-# require) and the download clients report the paths the PVRs expect, which is
-# what makes remote path mappings unnecessary.
+# require) and the download clients report the paths the PVRs expect. The one
+# exception is rTorrent, whose image hardcodes '/downloads' and therefore
+# needs a remote path mapping — see 'roles/rutorrent'.
 #
-# Both tasks below set a symbolic mode rather than '0775': the capital 'X'
-# grants the execute bit to directories only, so these paths come out as 0775
-# while any file the mode ever lands on stays 0664 instead of being made
-# executable.
+# The symbolic mode below sets the execute bit on directories only (capital
+# 'X'), so these come out as 0775.
 - name: Create main directory hierarchy
   ansible.builtin.file:
     path: "{{ data_folder }}/{{ item }}"
