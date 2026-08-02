@@ -89,6 +89,10 @@
       SECRET: "{{ yamtrack_secret }}"
       REDIS_URL: "redis://yamtrack-redis:6379"
       URLS: "https://{{ yamtrack.subdomain | string }}.{{ domain | string }}"
+      # Yamtrack has its own login, so it is published without the authelia
+      # middleware: registration is closed instead, otherwise anyone reaching
+      # the public URL can create an account. The admin account is created from
+      # 'settings/main.yml', so this can stay closed.
       REGISTRATION: "{{ yamtrack.registration | string }}"
       TMDB_API: "{{ yamtrack.tmdb_api if yamtrack.tmdb_api else omit }}"
       TRAKT_API: "{{ yamtrack.trakt_api if yamtrack.trakt_api else omit }}"
