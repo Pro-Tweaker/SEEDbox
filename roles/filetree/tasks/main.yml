@@ -4,14 +4,18 @@
 # media library stay on the same filesystem (what hardlinks and atomic moves
 # require) and the download clients report the paths the PVRs expect, which is
 # what makes remote path mappings unnecessary.
+#
+# Both tasks below set a symbolic mode rather than '0775': the capital 'X'
+# grants the execute bit to directories only, so these paths come out as 0775
+# while any file the mode ever lands on stays 0664 instead of being made
+# executable.
 - name: Create main directory hierarchy
   ansible.builtin.file:
     path: "{{ data_folder }}/{{ item }}"
     state: directory
     owner: "{{ user | string }}"
     group: "{{ group | string }}"
-    mode: "0775"
-    recurse: true
+    mode: "u=rwX,g=rwX,o=rX"
   loop:
     - torrents
     - torrents/incomplete
@@ -29,8 +33,7 @@
     state: directory
     owner: "{{ user | string }}"
     group: "{{ group | string }}"
-    mode: "0775"
-    recurse: true
+    mode: "u=rwX,g=rwX,o=rX"
   loop: "{{ ['torrents/complete', 'usenet/complete', 'media'] | product(filetree_categories) | list }}"
   loop_control:
     label: "{{ item.0 }}/{{ item.1 }}"
