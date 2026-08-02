@@ -64,6 +64,7 @@
 
 - name: SABnzbd Main Settings Tasks
   ansible.builtin.include_tasks: "settings/main.yml"
+
 - name: Re-Start SABnzbd container
   community.docker.docker_container:
     name: sabnzbd

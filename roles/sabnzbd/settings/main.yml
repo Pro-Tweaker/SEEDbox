@@ -3,5 +3,52 @@
   ansible.builtin.lineinfile:
     path: "{{ sabnzbd.folder }}/sabnzbd.ini"
     regexp: "^host_whitelist\\s*=.*"
-    line: "host_whitelist = {{ sabnzbd.subdomain }}.{{ domain }}"
+    line: "host_whitelist = {{ sabnzbd.subdomain }}.{{ domain }}, {{ sabnzbd.subdomain }}"
     state: present
+
+# The category folders below are relative to 'complete_dir'.
+- name: Settings | Set 'complete_dir'
+  ansible.builtin.lineinfile:
+    path: "{{ sabnzbd.folder }}/sabnzbd.ini"
+    regexp: "^complete_dir\\s*=.*"
+    line: "complete_dir = /data/usenet/complete"
+    state: present
+
+- name: Settings | Set 'download_dir'
+  ansible.builtin.lineinfile:
+    path: "{{ sabnzbd.folder }}/sabnzbd.ini"
+    regexp: "^download_dir\\s*=.*"
+    line: "download_dir = /data/usenet/incomplete/sabnzbd"
+    state: present
+
+- name: Settings | Set categories
+  ansible.builtin.replace:
+    path: "{{ sabnzbd.folder }}/sabnzbd.ini"
+    regexp: '(?s)^\[categories\].*?(?=^\[(?!\[)|\Z)'
+    replace: |
+      [categories]
+      {% for category in sabnzbd_categories %}
+      [[{{ category.name }}]]
+      name = {{ category.name }}
+      order = {{ loop.index0 }}
+      pp = {{ category.pp | default('""') }}
+      script = Default
+      dir = {{ category.dir }}
+      newzbin = ""
+      priority = {{ category.priority | default(-100) }}
+      {% endfor %}
+  vars:
+    # 'pp' is the post-processing level: "" inherits the global one, 0 downloads only.
+    # 'priority' -100 means "use the default category priority", 0 is Normal.
+    sabnzbd_categories:
+      - {name: "*", dir: misc, pp: 0, priority: 0}
+      - {name: books, dir: books}
+      - {name: comics, dir: comics}
+      - {name: documentaries, dir: documentaries}
+      - {name: games, dir: games}
+      - {name: mangas, dir: mangas}
+      - {name: misc, dir: misc}
+      - {name: movies, dir: movies}
+      - {name: music, dir: music}
+      - {name: software, dir: software, pp: 0}
+      - {name: tv, dir: tv}
