@@ -42,6 +42,7 @@
       # const). It is therefore the one service that cannot take the single
       # '{{ data_folder }}:/data' mount. '/downloads' is bound to the torrents
       # subtree so paths still resolve to the same host filesystem; the PVRs
+      # need a remote path mapping to translate them.
       - "{{ data_folder }}/torrents:/downloads"
     networks:
       - name: web
