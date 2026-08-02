@@ -6,18 +6,35 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: "0775"
-    recurse: true
   loop:
     - "{{ scrutiny.folder }}"
+    - "{{ scrutiny.folder }}/influxdb2"
 
+# --nodeps keeps whole disks only (no partitions) and, unlike --scsi, also
+# reports NVMe and virtio drives. The type column filters out loop/zram/dm.
 - name: Get disks
-  ansible.builtin.shell: for line in $(lsblk --noheadings --list --scsi --output name); do echo "/dev/${line}:/dev/${line}"; done
+  ansible.builtin.command: lsblk --noheadings --list --nodeps --output name,type
   register: lsblk_disks
   changed_when: false
+  check_mode: false
+
+- name: Build the device passthrough list
+  ansible.builtin.set_fact:
+    scrutiny_devices: >-
+      {{ lsblk_disks.stdout_lines
+         | select('search', '\sdisk$')
+         | map('regex_replace', '^(\S+)\s.*$', '/dev/\1:/dev/\1')
+         | list }}
+
+- name: Warn when no disks were found
+  ansible.builtin.debug:
+    msg: "No disks detected - Scrutiny will start with nothing to monitor."
+  when: scrutiny_devices | length == 0
 
 - name: Create and start container
   community.docker.docker_container:
     name: scrutiny
+    hostname: "{{ scrutiny.subdomain }}.{{ domain }}"
     image: "ghcr.io/analogj/scrutiny:{{ scrutiny.tag }}"
     pull: true
     recreate: true
@@ -25,7 +42,7 @@
       - "{{ scrutiny.folder }}:/opt/scrutiny/config"
       - "{{ scrutiny.folder }}/influxdb2:/opt/scrutiny/influxdb"
       - "/run/udev:/run/udev:ro"
-    devices: "{{ lsblk_disks.stdout_lines }}"
+    devices: "{{ scrutiny_devices }}"
     networks:
       - name: web
         aliases:
@@ -52,3 +69,6 @@
       homer.url: "https://{{ scrutiny.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/svg/scrutiny.svg"
       homer.target: "_blank"
+    env:
+      TZ: "{{ tz | string }}"
+      COLLECTOR_CRON_SCHEDULE: "{{ scrutiny.cron | string }}"
