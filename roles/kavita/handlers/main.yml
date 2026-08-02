@@ -1,0 +1,6 @@
+---
+- name: Show Kavita admin credentials
+  ansible.builtin.debug:
+    msg: >-
+      Kavita admin login -> url: https://{{ kavita.subdomain }}.{{ domain }},
+      user: {{ kavita_admin_user }}, password: {{ kavita_admin_password }}

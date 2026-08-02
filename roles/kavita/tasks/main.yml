@@ -10,6 +10,18 @@
   loop:
     - "{{ kavita.folder }}"
 
+# Kavita keeps its libraries in the SQLite database, not in a config file, so
+# they are created over the API from 'settings/main.yml'. That needs an admin
+# account, which 'POST /api/Account/register' can only create while none exists.
+- name: Generate persistent admin credentials if not provided
+  ansible.builtin.set_fact:
+    kavita_admin_user: "{{ kavita.user | default('') or (domain.split('.') | first) ~ '.kavita' }}"
+    kavita_admin_password: >-
+      {{ kavita.password | default('') or
+         lookup('ansible.builtin.password', kavita.folder + '/.secrets/admin_password',
+                length=24, chars=['ascii_letters', 'digits']) }}
+  no_log: true
+
 - name: Create and start container
   community.docker.docker_container:
     name: kavita
@@ -18,6 +30,9 @@
     recreate: true
     volumes:
       - "{{ kavita.folder }}:/config"
+      # Kavita only reads the library (covers, bookmarks and progress all live
+      # in '/config'), so the media tree is mounted read-only, as for the other
+      # consumers.
       - "{{ data_folder }}/media:/data:ro"
     networks:
       - name: web
@@ -45,3 +60,6 @@
       TZ: "{{ tz | string }}"
       PUID: "{{ uid | string }}"
       PGID: "{{ gid | string }}"
+
+- name: Settings Tasks
+  ansible.builtin.include_tasks: "settings/main.yml"
