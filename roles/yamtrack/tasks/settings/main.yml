@@ -1,108 +1,42 @@
 ---
-- name: Create directories
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: directory
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    mode: "0775"
-    recurse: true
-  loop:
-    - "{{ yamtrack.folder }}"
-    - "{{ yamtrack.folder }}/data"
-    - "{{ yamtrack.folder }}/redis"
-
-- name: Generate persistent secret key if not provided
-  ansible.builtin.set_fact:
-    yamtrack_secret: >-
-      {{ yamtrack.secret if yamtrack.secret else
-         lookup('ansible.builtin.password', yamtrack.folder + '/.secrets/secret',
-                length=50, chars=['ascii_letters', 'digits']) }}
-  no_log: true
-
-- name: Generate persistent admin credentials if not provided
-  ansible.builtin.set_fact:
-    yamtrack_admin_user: "{{ yamtrack.user | default('') or (domain.split('.') | first) ~ '.yamtrack' }}"
-    yamtrack_admin_password: >-
-      {{ yamtrack.password | default('') or
-         lookup('ansible.builtin.password', yamtrack.folder + '/.secrets/admin_password',
-                length=24, chars=['ascii_letters', 'digits']) }}
-  no_log: true
-
-- name: Create the yamtrack network
-  community.docker.docker_network:
+- name: Wait for the Yamtrack container to be healthy
+  community.docker.docker_container_info:
     name: yamtrack
+  register: container_info
+  until: container_info.container.State.Health.Status == "healthy"
+  retries: 30
+  delay: 3
 
-- name: Create and start redis container
-  community.docker.docker_container:
-    name: yamtrack-redis
-    image: redis:8-alpine
-    pull: true
-    recreate: true
-    volumes:
-      - "{{ yamtrack.folder }}/redis:/data"
-    user: "{{ uid | string }}:{{ gid | string }}"
-    networks:
-      - name: yamtrack
-        aliases:
-          - yamtrack-redis
-    restart_policy: unless-stopped
-    state: started
+- name: Check whether an account already exists
+  community.docker.docker_container_exec:
+    container: yamtrack
+    user: abc
+    argv:
+      - python
+      - manage.py
+      - shell
+      - -c
+      - "from django.contrib.auth import get_user_model; print(get_user_model().objects.exists())"
+  register: accounts_result
+  changed_when: false
+
+- name: Create the admin account
+  community.docker.docker_container_exec:
+    container: yamtrack
+    user: abc
+    argv:
+      - python
+      - manage.py
+      - createsuperuser
+      - --noinput
+      - --username
+      - "{{ yamtrack_admin_user }}"
+      - --email
+      - "admin@{{ domain }}"
+    # Passed as an environment variable rather than on the command line, where
+    # it would show up in the process list of the container.
     env:
-      TZ: "{{ tz | string }}"
-
-- name: Create and start container
-  community.docker.docker_container:
-    name: yamtrack
-    image: "ghcr.io/fuzzygrim/yamtrack:{{ yamtrack.tag }}"
-    pull: true
-    recreate: true
-    volumes:
-      - "{{ yamtrack.folder }}/data:/yamtrack/db"
-    networks:
-      - name: web
-        aliases:
-          - yamtrack
-      - name: yamtrack
-    restart_policy: unless-stopped
-    state: started
-    labels:
-      # Traefik
-      traefik.enable: "true"
-      traefik.docker.network: "web"
-      traefik.http.routers.yamtrack.rule: "Host(`{{ yamtrack.subdomain }}.{{ domain }}`)"
-      traefik.http.routers.yamtrack.entrypoints: "websecure"
-      traefik.http.services.yamtrack.loadbalancer.server.port: "8000"
-      # Homer
-      homer.enable: "true"
-      homer.name: "Yamtrack"
-      homer.service: "Media"
-      homer.priority: "50"
-      homer.subtitle: "A self hosted media tracker"
-      homer.url: "https://{{ yamtrack.subdomain }}.{{ domain }}"
-      homer.logo: "assets/homer-icons/svg/yamtrack.svg"
-      homer.target: "_blank"
-    env:
-      TZ: "{{ tz | string }}"
-      PUID: "{{ uid | string }}"
-      PGID: "{{ gid | string }}"
-      SECRET: "{{ yamtrack_secret }}"
-      REDIS_URL: "redis://yamtrack-redis:6379"
-      URLS: "https://{{ yamtrack.subdomain | string }}.{{ domain | string }}"
-      # Yamtrack has its own login, so it is published without the authelia
-      # middleware: registration is closed instead, otherwise anyone reaching
-      # the public URL can create an account. The admin account is created from
-      # 'settings/main.yml', so this can stay closed.
-      REGISTRATION: "{{ yamtrack.registration | string }}"
-      TMDB_API: "{{ yamtrack.tmdb_api if yamtrack.tmdb_api else omit }}"
-      TRAKT_API: "{{ yamtrack.trakt_api if yamtrack.trakt_api else omit }}"
-      MAL_API: "{{ yamtrack.mal_api if yamtrack.mal_api else omit }}"
-      IGDB_ID: "{{ yamtrack.igdb_id if yamtrack.igdb_id else omit }}"
-      IGDB_SECRET: "{{ yamtrack.igdb_secret if yamtrack.igdb_secret else omit }}"
-      SIMKL_ID: "{{ yamtrack.simkl_id if yamtrack.simkl_id else omit }}"
-      SIMKL_SECRET: "{{ yamtrack.simkl_secret if yamtrack.simkl_secret else omit }}"
-      HARDCOVER_API: "{{ yamtrack.hardcover_api if yamtrack.hardcover_api else omit }}"
-      COMICVINE_API: "{{ yamtrack.comicvine_api if yamtrack.comicvine_api else omit }}"
-
-- name: Settings Tasks
-  ansible.builtin.include_tasks: "settings/main.yml"
+      DJANGO_SUPERUSER_PASSWORD: "{{ yamtrack_admin_password }}"
+  when: "'False' in accounts_result.stdout"
+  no_log: true
+  notify: Show Yamtrack admin credentials
