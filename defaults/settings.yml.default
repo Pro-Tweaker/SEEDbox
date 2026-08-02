@@ -173,7 +173,21 @@ yamtrack:
   tag: latest
   folder: /opt/yamtrack
   subdomain: yamtrack
+  # Django key signing the sessions and the CSRF tokens. Leave it empty to get
+  # a generated one, kept in '<folder>/.secrets/secret'.
   secret:
+  # Admin account created on the first run, from the Django CLI. Leave both
+  # empty to get '<domain without its TLD>.yamtrack' and a generated password,
+  # printed at the end of the play.
+  user:
+  password:
+  # Yamtrack is published without the authelia middleware, so account creation
+  # would be open to anyone reaching the URL. The account above is created
+  # without the signup form, so this only needs to be true to invite others.
+  registration: false
+  # API credentials of the metadata sources. Each one has a default key shared
+  # by every install: fill them in to use your own quotas, leave them empty to
+  # keep the defaults of the image.
   tmdb_api:
   trakt_api:
   mal_api:
@@ -181,6 +195,9 @@ yamtrack:
   igdb_secret:
   simkl_id:
   simkl_secret:
+  # Must include the 'Bearer ' prefix.
+  hardcover_api:
+  comicvine_api:
 
 # Tools
 filebrowser:

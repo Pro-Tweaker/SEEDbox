@@ -1,5 +1,5 @@
 ---
-- name: Create YamTrack Directories
+- name: Create directories
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
@@ -12,41 +12,60 @@
     - "{{ yamtrack.folder }}/data"
     - "{{ yamtrack.folder }}/redis"
 
-- name: Create YamTrack redis Docker Container
+- name: Generate persistent secret key if not provided
+  ansible.builtin.set_fact:
+    yamtrack_secret: >-
+      {{ yamtrack.secret if yamtrack.secret else
+         lookup('ansible.builtin.password', yamtrack.folder + '/.secrets/secret',
+                length=50, chars=['ascii_letters', 'digits']) }}
+  no_log: true
+
+- name: Generate persistent admin credentials if not provided
+  ansible.builtin.set_fact:
+    yamtrack_admin_user: "{{ yamtrack.user | default('') or (domain.split('.') | first) ~ '.yamtrack' }}"
+    yamtrack_admin_password: >-
+      {{ yamtrack.password | default('') or
+         lookup('ansible.builtin.password', yamtrack.folder + '/.secrets/admin_password',
+                length=24, chars=['ascii_letters', 'digits']) }}
+  no_log: true
+
+- name: Create the yamtrack network
+  community.docker.docker_network:
+    name: yamtrack
+
+- name: Create and start redis container
   community.docker.docker_container:
     name: yamtrack-redis
     image: redis:8-alpine
     pull: true
+    recreate: true
     volumes:
       - "{{ yamtrack.folder }}/redis:/data"
-    restart_policy: unless-stopped
+    user: "{{ uid | string }}:{{ gid | string }}"
     networks:
-      - name: web
+      - name: yamtrack
         aliases:
           - yamtrack-redis
+    restart_policy: unless-stopped
+    state: started
+    env:
+      TZ: "{{ tz | string }}"
 
-- name: Create YamTrack Docker Container
+- name: Create and start container
   community.docker.docker_container:
     name: yamtrack
     image: "ghcr.io/fuzzygrim/yamtrack:{{ yamtrack.tag }}"
     pull: true
-    restart_policy: unless-stopped
+    recreate: true
     volumes:
       - "{{ yamtrack.folder }}/data:/yamtrack/db"
-    env:
-      SECRET: "{{ yamtrack.secret | string }}"
-      REDIS_URL: "redis://yamtrack-redis:6379"
-      URLS: "https://{{ yamtrack.subdomain | string }}.{{ domain | string }}"
-      TMDB_API: "{{ yamtrack.tmdb_api if yamtrack.tmdb_api else omit }}"
-      TRAKT_API: "{{ yamtrack.trakt_api if yamtrack.trakt_api else omit }}"
-      MAL_API: "{{ yamtrack.mal_api if yamtrack.mal_api else omit }}"
-      IGDB_ID: "{{ yamtrack.igdb_id if yamtrack.igdb_id else omit }}"
-      IGDB_SECRET: "{{ yamtrack.igdb_secret if yamtrack.igdb_secret else omit }}"
-      SIMKL_ID: "{{ yamtrack.simkl_id if yamtrack.simkl_id else omit }}"
-      SIMKL_SECRET: "{{ yamtrack.simkl_secret if yamtrack.simkl_secret else omit }}"
-      TZ: "{{ tz | string }}"
     networks:
       - name: web
+        aliases:
+          - yamtrack
+      - name: yamtrack
+    restart_policy: unless-stopped
+    state: started
     labels:
       # Traefik
       traefik.enable: "true"
@@ -63,3 +82,23 @@
       homer.url: "https://{{ yamtrack.subdomain }}.{{ domain }}"
       homer.logo: "assets/homer-icons/svg/yamtrack.svg"
       homer.target: "_blank"
+    env:
+      TZ: "{{ tz | string }}"
+      PUID: "{{ uid | string }}"
+      PGID: "{{ gid | string }}"
+      SECRET: "{{ yamtrack_secret }}"
+      REDIS_URL: "redis://yamtrack-redis:6379"
+      URLS: "https://{{ yamtrack.subdomain | string }}.{{ domain | string }}"
+      REGISTRATION: "{{ yamtrack.registration | string }}"
+      TMDB_API: "{{ yamtrack.tmdb_api if yamtrack.tmdb_api else omit }}"
+      TRAKT_API: "{{ yamtrack.trakt_api if yamtrack.trakt_api else omit }}"
+      MAL_API: "{{ yamtrack.mal_api if yamtrack.mal_api else omit }}"
+      IGDB_ID: "{{ yamtrack.igdb_id if yamtrack.igdb_id else omit }}"
+      IGDB_SECRET: "{{ yamtrack.igdb_secret if yamtrack.igdb_secret else omit }}"
+      SIMKL_ID: "{{ yamtrack.simkl_id if yamtrack.simkl_id else omit }}"
+      SIMKL_SECRET: "{{ yamtrack.simkl_secret if yamtrack.simkl_secret else omit }}"
+      HARDCOVER_API: "{{ yamtrack.hardcover_api if yamtrack.hardcover_api else omit }}"
+      COMICVINE_API: "{{ yamtrack.comicvine_api if yamtrack.comicvine_api else omit }}"
+
+- name: Settings Tasks
+  ansible.builtin.include_tasks: "settings/main.yml"

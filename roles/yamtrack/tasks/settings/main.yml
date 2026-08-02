@@ -1,0 +1,42 @@
+---
+- name: Wait for the Yamtrack container to be healthy
+  community.docker.docker_container_info:
+    name: yamtrack
+  register: container_info
+  until: container_info.container.State.Health.Status == "healthy"
+  retries: 30
+  delay: 3
+
+- name: Check whether an account already exists
+  community.docker.docker_container_exec:
+    container: yamtrack
+    user: abc
+    argv:
+      - python
+      - manage.py
+      - shell
+      - -c
+      - "from django.contrib.auth import get_user_model; print(get_user_model().objects.exists())"
+  register: accounts_result
+  changed_when: false
+
+- name: Create the admin account
+  community.docker.docker_container_exec:
+    container: yamtrack
+    user: abc
+    argv:
+      - python
+      - manage.py
+      - createsuperuser
+      - --noinput
+      - --username
+      - "{{ yamtrack_admin_user }}"
+      - --email
+      - "admin@{{ domain }}"
+    # Passed as an environment variable rather than on the command line, where
+    # it would show up in the process list of the container.
+    env:
+      DJANGO_SUPERUSER_PASSWORD: "{{ yamtrack_admin_password }}"
+  when: "'False' in accounts_result.stdout"
+  no_log: true
+  notify: Show Yamtrack admin credentials

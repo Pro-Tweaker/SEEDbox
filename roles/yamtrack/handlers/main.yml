@@ -1,0 +1,6 @@
+---
+- name: Show Yamtrack admin credentials
+  ansible.builtin.debug:
+    msg: >-
+      Yamtrack admin login -> url: https://{{ yamtrack.subdomain }}.{{ domain }},
+      user: {{ yamtrack_admin_user }}, password: {{ yamtrack_admin_password }}
