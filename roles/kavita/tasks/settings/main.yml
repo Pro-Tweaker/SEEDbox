@@ -1,0 +1,80 @@
+
+---
+- name: Get infos on Kavita container
+  community.docker.docker_container_info:
+    name: kavita
+  register: container_info
+
+- name: Set the Kavita API base URL
+  ansible.builtin.set_fact:
+    kavita_api: "http://{{ container_info.container.NetworkSettings.Networks.web.IPAddress }}:5000"
+
+- name: "Wait for Kavita API to come up and returns a status 200"
+  ansible.builtin.uri:
+    url: "{{ kavita_api }}/api/Health"
+  register: api_result
+  until: api_result.status == 200
+  retries: 30
+  delay: 1
+
+# Registering here also closes the window where anyone reaching the public
+# hostname could claim the admin account: Kavita leaves this endpoint anonymous
+# until the first admin exists, and it has no Authelia middleware in front of it.
+- name: "Create the admin account"
+  ansible.builtin.uri:
+    url: "{{ kavita_api }}/api/Account/register"
+    method: POST
+    status_code:
+      - 200
+      - 400
+    body:
+      username: "{{ kavita_admin_user }}"
+      # Left empty, Kavita falls back to the username as the email.
+      email: ""
+      password: "{{ kavita_admin_password }}"
+    body_format: json
+  register: register_result
+  changed_when: register_result.status == 200
+  no_log: true
+  notify: Show Kavita admin credentials
+
+- name: "Log in to the API"
+  ansible.builtin.uri:
+    url: "{{ kavita_api }}/api/Account/login"
+    method: POST
+    body:
+      username: "{{ kavita_admin_user }}"
+      password: "{{ kavita_admin_password }}"
+    body_format: json
+  register: login_result
+  no_log: true
+
+- name: "Add Libraries"
+  ansible.builtin.uri:
+    url: "{{ kavita_api }}/api/Library/create"
+    method: POST
+    status_code:
+      - 200
+      - 400
+    body: "{{ lookup('ansible.builtin.template', role_path + '/templates/post_library_body.json.j2') }}"
+    body_format: json
+    headers:
+      Authorization: "Bearer {{ login_result.json.token }}"
+  register: library_result
+  changed_when: library_result.status == 200
+  loop: "{{ kavita_libraries }}"
+  loop_control:
+    label: "{{ item.name }}"
+  vars:
+    # 'type' is the Kavita LibraryType enum: 0 Manga, 1 Comic, 2 Book, 3 Image,
+    # 4 LightNovel, 5 ComicVine. It has no string form over the API.
+    kavita_libraries:
+      - name: Books
+        type: 2
+        folder: books
+      - name: Comics
+        type: 1
+        folder: comics
+      - name: Mangas
+        type: 0
+        folder: mangas
