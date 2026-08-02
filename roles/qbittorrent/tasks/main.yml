@@ -9,6 +9,7 @@
     recurse: true
   loop:
     - "{{ qbittorrent.folder }}"
+    - "{{ data_folder }}/torrents/incomplete/qbittorrent"
 
 - name: Create and start container
   community.docker.docker_container:
@@ -18,7 +19,7 @@
     recreate: true
     volumes:
       - "{{ qbittorrent.folder }}:/config"
-      - "{{ data_folder }}/torrents:/downloads"
+      - "{{ data_folder }}:/data"
     networks:
       - name: web
         aliases:

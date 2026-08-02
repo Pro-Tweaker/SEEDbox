@@ -9,6 +9,7 @@
     recurse: true
   loop:
     - "{{ sabnzbd.folder }}"
+    - "{{ data_folder }}/usenet/incomplete/sabnzbd"
 
 - name: Create and start container
   community.docker.docker_container:
@@ -18,6 +19,7 @@
     recreate: true
     volumes:
       - "{{ sabnzbd.folder }}:/config"
+      - "{{ data_folder }}:/data"
     networks:
       - name: web
         aliases:

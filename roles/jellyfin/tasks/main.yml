@@ -9,8 +9,6 @@
     recurse: true
   loop:
     - "{{ jellyfin.folder }}"
-    - "{{ data_folder }}/media/tv"
-    - "{{ data_folder }}/media/movies"
 
 - name: Create and start container
   community.docker.docker_container:
@@ -20,8 +18,7 @@
     recreate: true
     volumes:
       - "{{ jellyfin.folder }}:/config"
-      - "{{ data_folder }}/media/tv:/data/tvshows"
-      - "{{ data_folder }}/media/movies:/data/movies"
+      - "{{ data_folder }}/media:/data:ro"
     networks:
       - name: web
         aliases:

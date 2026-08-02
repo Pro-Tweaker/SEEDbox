@@ -17,6 +17,7 @@
     - "{{ rutorrent.folder }}/rutorrent/conf"
     - "{{ rutorrent.folder }}/rutorrent/plugins"
     - "{{ rutorrent.folder }}/rutorrent/themes"
+    - "{{ data_folder }}/torrents/incomplete/rutorrent"
 
 - name: Import custom 'plugins.ini'
   ansible.builtin.copy:
@@ -35,8 +36,14 @@
     recreate: true
     volumes:
       - "{{ rutorrent.folder }}:/data"
-      - "{{ data_folder }}/torrents:/downloads"
       - "{{ rutorrent.folder }}/rutorrent/conf/plugins.ini:/var/www/rutorrent/conf/plugins.ini:ro"
+      # This image hardcodes '/data' for its own state and '/downloads' for the
+      # download tree ('cfg.basedir' / 'cfg.download' in '.rtlocal.rc', both
+      # const). It is therefore the one service that cannot take the single
+      # '{{ data_folder }}:/data' mount. '/downloads' is bound to the torrents
+      # subtree so paths still resolve to the same host filesystem; the PVRs
+      # need a remote path mapping to translate them.
+      - "{{ data_folder }}/torrents:/downloads"
     networks:
       - name: web
         aliases:

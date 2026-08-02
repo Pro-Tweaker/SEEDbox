@@ -25,7 +25,7 @@
       --qbpass={{ qbittorrent.web_password }}
     volumes:
       - "{{ flood.folder }}:/config"
-      - "{{ data_folder }}/torrents:/downloads"
+      - "{{ data_folder }}:/data"
     user: "{{ uid | string }}:{{ gid | string }}"
     networks:
       - name: web

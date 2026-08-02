@@ -1,39 +1,51 @@
 ---
+# '{{ data_folder }}' is the root of the data tree: it is bind-mounted as a
+# single volume on '/data' in every container, so completed downloads and the
+# media library stay on the same filesystem (what hardlinks and atomic moves
+# require) and the download clients report the paths the PVRs expect. The one
+# exception is rTorrent, whose image hardcodes '/downloads' and therefore
+# needs a remote path mapping — see 'roles/rutorrent'.
+#
+# The symbolic mode below sets the execute bit on directories only (capital
+# 'X'), so these come out as 0775.
 - name: Create main directory hierarchy
   ansible.builtin.file:
-    path: "{{ item }}"
+    path: "{{ data_folder }}/{{ item }}"
     state: directory
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    mode: "0775"
-    recurse: true
+    owner: "{{ user | string }}"
+    group: "{{ group | string }}"
+    mode: "u=rwX,g=rwX,o=rX"
   loop:
-    - "{{ data_folder }}/torrents"
-    - "{{ data_folder }}/torrents/books"
-    - "{{ data_folder }}/torrents/games"
-    - "{{ data_folder }}/torrents/misc"
-    - "{{ data_folder }}/torrents/movies"
-    - "{{ data_folder }}/torrents/music"
-    - "{{ data_folder }}/torrents/software"
-    - "{{ data_folder }}/torrents/tv"
+    - torrents
+    - torrents/incomplete
+    - torrents/complete
+    - usenet
+    - usenet/incomplete
+    - usenet/complete
+    - media
 
-    - "{{ data_folder }}/usenet"
-    - "{{ data_folder }}/usenet/nzbget" # to store app related files
-    - "{{ data_folder }}/usenet/books"
-    - "{{ data_folder }}/usenet/games"
-    - "{{ data_folder }}/usenet/misc"
-    - "{{ data_folder }}/usenet/movies"
-    - "{{ data_folder }}/usenet/music"
-    - "{{ data_folder }}/usenet/software"
-    - "{{ data_folder }}/usenet/tv"
-
-    - "{{ data_folder }}/media"
-    - "{{ data_folder }}/media/books"
-    - "{{ data_folder }}/media/comics"
-    - "{{ data_folder }}/media/mangas"
-    - "{{ data_folder }}/media/games"
-    - "{{ data_folder }}/media/misc"
-    - "{{ data_folder }}/media/movies"
-    - "{{ data_folder }}/media/music"
-    - "{{ data_folder }}/media/software"
-    - "{{ data_folder }}/media/tv"
+# The download clients drop finished files in '<protocol>/complete/<category>',
+# the PVRs then hardlink them into 'media/<category>'.
+- name: Create category folders
+  ansible.builtin.file:
+    path: "{{ data_folder }}/{{ item.0 }}/{{ item.1 }}"
+    state: directory
+    owner: "{{ user | string }}"
+    group: "{{ group | string }}"
+    mode: "u=rwX,g=rwX,o=rX"
+  loop: "{{ ['torrents/complete', 'usenet/complete', 'media'] | product(filetree_categories) | list }}"
+  loop_control:
+    label: "{{ item.0 }}/{{ item.1 }}"
+  vars:
+    # Kept in sync with the categories of the download clients.
+    filetree_categories:
+      - books
+      - comics
+      - documentaries
+      - games
+      - mangas
+      - misc
+      - movies
+      - music
+      - software
+      - tv
