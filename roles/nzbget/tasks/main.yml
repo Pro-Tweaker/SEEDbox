@@ -24,7 +24,7 @@
     recreate: true
     volumes:
       - "{{ nzbget.folder }}:/config"
-      - "{{ data_folder }}/data:/data"
+      - "{{ data_folder }}:/data"
     networks:
       - name: web
         aliases:
