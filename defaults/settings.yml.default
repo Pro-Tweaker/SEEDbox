@@ -49,12 +49,6 @@ authelia:
   jwt_secret: a_very_important_secret
   session_name: demo
   unsecure_session_secret: demo
-  notification_email_to: "{{ notifications_email }}"
-  notification_email_from: "authelia@{{ domain }}"
-  notification_email_server: postfix
-  notification_email_server_port: 587
-  notification_email_server_user:
-  notification_email_server_password:
   redis:
     hostname: authelia-redis
     folder: /opt/authelia-redis
@@ -81,9 +75,6 @@ homer:
 watchtower:
   tag: latest
   monitor_only: false
-postfix:
-  tag: latest
-  hostname: postfix
 
 # Download
 qbittorrent:

@@ -14,7 +14,6 @@
     - { role: hardening, tags: ["core", "hardening"] }
     - { role: homer, tags: ["core", "homer"] }
     - { role: watchtower, tags: ["core", "watchtower"] }
-    - { role: postfix, tags: ["core", "watchtower", "postfix"] }
 
     # Download
     - { role: qbittorrent, tags: ["download", "torrent", "qbittorrent"] }
