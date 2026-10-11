@@ -10,10 +10,6 @@
     image: "nickfedor/watchtower:{{ watchtower.tag }}"
     pull: true
     recreate: true
-    networks:
-      - name: postfix
-        aliases:
-          - watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart_policy: unless-stopped
@@ -26,11 +22,3 @@
       # Every day at 05:47 (sec min hour dom mon dow). Keep it off :00: ghcr.io throttles at the top of the hour.
       # 05:47 = well after the 05:00 unattended reboot, done before the 06:00 apt-daily-upgrade/scrutiny/cron.daily cluster.
       WATCHTOWER_SCHEDULE: "0 47 5 * * *"
-      WATCHTOWER_NOTIFICATIONS: "email"
-      WATCHTOWER_NOTIFICATION_EMAIL_TO: "{{ watchtower.notification_email_to | string }}"
-      WATCHTOWER_NOTIFICATION_EMAIL_FROM: "{{ watchtower.notification_email_from | string }}"
-      WATCHTOWER_NOTIFICATION_EMAIL_SERVER: "{{ watchtower.notification_email_server | string }}"
-      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT: "{{ watchtower.notification_email_server_port | string }}"
-      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER: "{{ watchtower.notification_email_server_user | string }}"
-      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD: "{{ watchtower.notification_email_server_password | string }}"
-      WATCHTOWER_NOTIFICATION_EMAIL_DELAY: "{{ watchtower.notification_email_delay | string }}"
