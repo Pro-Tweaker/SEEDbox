@@ -86,7 +86,7 @@ qbittorrent:
   web_password_salt: admin_qbit_password_salt
   bittorrent_port: 6881
 rutorrent:
-  tag: latest
+  tag: 5.3.14-0.16.22
   folder: /opt/rutorrent
   subdomain: rutorrent
   bittorrent_port: 50000
