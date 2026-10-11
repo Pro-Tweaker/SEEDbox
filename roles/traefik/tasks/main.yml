@@ -6,7 +6,6 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: "0775"
-    recurse: true
   loop:
     - "{{ traefik.folder }}"
     - "{{ traefik.folder }}/certificates"
@@ -31,7 +30,7 @@
   ansible.builtin.copy:
     dest: "{{ traefik.folder }}/certificates/origin_certificate.key"
     content: "{{ traefik.origin_certificate_private_key }}"
-    mode: "0644"
+    mode: "0600"
 
 - name: Adding traefik.yml file
   ansible.builtin.template:

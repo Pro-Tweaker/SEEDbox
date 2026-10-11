@@ -6,7 +6,6 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: "0775"
-    recurse: true
   loop:
     - "{{ filebrowser.folder }}"
 
@@ -27,7 +26,7 @@
     force: true
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: "0775"
+    mode: "0600"
   when: not filebrowser_config.stat.exists
 
 - name: "Create filebrowser database file"
@@ -37,7 +36,7 @@
     force: true
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: "0775"
+    mode: "0600"
   when: not filebrowser_database.stat.exists
 
 - name: Create and start container

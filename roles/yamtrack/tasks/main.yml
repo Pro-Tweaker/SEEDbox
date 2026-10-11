@@ -6,11 +6,19 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: "0775"
-    recurse: true
   loop:
     - "{{ yamtrack.folder }}"
     - "{{ yamtrack.folder }}/data"
-    - "{{ yamtrack.folder }}/redis"
+
+# yamtrack-redis runs as uid:gid; files an older redis wrote as another uid must be handed back to it.
+- name: Create redis directory
+  ansible.builtin.file:
+    path: "{{ yamtrack.folder }}/redis"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: "0775"
+    recurse: true
 
 - name: Generate persistent secret key if not provided
   ansible.builtin.set_fact:

@@ -2,6 +2,29 @@
 - name: SEEDbox
   hosts: localhost
   vars_files: ["defaults/settings.yml.default", "settings.yml"]
+  pre_tasks:
+    - name: Check who owns settings.yml
+      ansible.builtin.stat:
+        path: "{{ playbook_dir }}/settings.yml"
+        get_checksum: false
+      register: seedbox_settings
+      tags: ["always"]
+
+    # Only the owner (or root) may chmod it, so a root-owned file is reported instead of failing every run.
+    - name: Ensure settings.yml is readable by its owner only
+      ansible.builtin.file:
+        path: "{{ playbook_dir }}/settings.yml"
+        mode: "0600"
+      when: seedbox_settings.stat.pw_name == user
+      tags: ["always"]
+
+    - name: Warn that settings.yml is not owned by the SEEDbox user
+      ansible.builtin.debug:
+        msg: >-
+          settings.yml is owned by {{ seedbox_settings.stat.pw_name }}, not {{ user }}, so its mode was left alone.
+          Fix: sudo chown {{ user }}: {{ playbook_dir }}/settings.yml
+      when: seedbox_settings.stat.pw_name != user
+      tags: ["always"]
   roles:
     # Minimal Stack
     - { role: docker, tags: ["core", "docker"] }
