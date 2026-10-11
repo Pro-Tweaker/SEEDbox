@@ -6,7 +6,6 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: "0775"
-    recurse: true
   loop:
     - "{{ sabnzbd.folder }}"
     - "{{ data_folder }}/usenet/incomplete/sabnzbd"

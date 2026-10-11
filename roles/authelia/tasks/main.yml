@@ -6,7 +6,6 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: "0775"
-    recurse: true
   loop:
     - "{{ authelia.folder }}"
     - "{{ authelia.redis.folder }}"
@@ -18,7 +17,7 @@
     force: true
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: "0775"
+    mode: "0600"
 
 - name: "Create authelia config file"
   ansible.builtin.template:
@@ -27,7 +26,7 @@
     force: true
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: "0775"
+    mode: "0600"
 
 - name: Create the authelia network
   community.docker.docker_network:

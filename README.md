@@ -77,11 +77,13 @@ Prepare a folder, clone this repo, and copy the default settings file:
 cd /home/username
 git clone https://github.com/Pro-Tweaker/SEEDbox.git
 cp SEEDbox/defaults/settings.yml.default SEEDbox/settings.yml
+chmod 600 SEEDbox/settings.yml
 ```
 
-Customize `settings.yml` with your information:
+Customize `settings.yml` with your information. It holds every secret of the stack, so keep it
+readable by you only, and create it as your own user, not with `sudo`:
 ```sh
-nano settings.yml
+nano SEEDbox/settings.yml
 ```
 
 ## Usage
