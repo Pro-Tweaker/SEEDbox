@@ -60,6 +60,7 @@
       homer.target: "_blank"
     env:
       TZ: "{{ tz | string }}"
+      DISPLAY_TIMEZONE: "{{ tz | string }}" # The schedule and the UI use this, not TZ
       PGID: "{{ gid | string }}"
       PUID: "{{ uid | string }}"
       APP_KEY: "{{ speedtesttracker_app_key }}"
