@@ -17,7 +17,7 @@
     image: "archivebox/archivebox:{{ archivebox.tag }}"
     pull: true
     recreate: true
-    command: server --quick-init 0.0.0.0:8000
+    command: server --quick-init 0.0.0.0:5797
     volumes:
       - "{{ archivebox.folder }}:/data"
       - "{{ data_folder }}/archives:/data/archive"
@@ -33,7 +33,7 @@
       traefik.docker.network: "web"
       traefik.http.routers.archivebox.rule: "Host(`{{ archivebox.subdomain }}.{{ domain }}`)"
       traefik.http.routers.archivebox.entrypoints: "websecure"
-      traefik.http.services.archivebox.loadbalancer.server.port: "8000"
+      traefik.http.services.archivebox.loadbalancer.server.port: "5797"
       traefik.http.routers.archivebox.middlewares: "authelia@docker"
       # Homer
       homer.enable: "true"
