@@ -24,7 +24,9 @@ totp:
 
 authentication_backend:
   password_reset:
-    disable: false
+    disable: true
+  password_change:
+    disable: true
   file:
     path: /config/users_database.yml
     password:
@@ -89,13 +91,6 @@ storage:
   encryption_key: {{ authelia.storage_encryption_key }}
 
 notifier:
-  disable_startup_check: true
-  smtp:
-    disable_require_tls: true
-    subject: "[{{ domain }}] {title}"
-    startup_check_address: {{ authelia.notification_email_to }}
-    username: {{ authelia.notification_email_server_user }}
-    password: {{ authelia.notification_email_server_password }}
-    host: {{ authelia.notification_email_server }}
-    port: {{ authelia.notification_email_server_port }}
-    sender: {{ authelia.notification_email_from }}
+  disable_startup_check: false
+  filesystem:
+    filename: /config/notification.txt

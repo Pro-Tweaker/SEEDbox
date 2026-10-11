@@ -67,9 +67,6 @@
       - name: web
         aliases:
           - authelia
-      - name: postfix
-        aliases:
-          - authelia
       - name: authelia
         aliases:
           - authelia
