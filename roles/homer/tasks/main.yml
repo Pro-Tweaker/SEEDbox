@@ -31,7 +31,15 @@
       traefik.http.routers.homer.rule: "Host(`{{ domain }}`)"
       traefik.http.routers.homer.entrypoints: "websecure"
       traefik.http.services.homer.loadbalancer.server.port: "8080"
-      traefik.http.routers.homer.middlewares: "authelia-basic@docker"
+      traefik.http.routers.homer.middlewares: "authelia@docker"
+      # Upstream dashboard icons only, served without Authelia. Keep the file-name class strict (no '%', '/' or '.'):
+      # config.yml, discovery/ and .git must stay behind the router above.
+      traefik.http.routers.homer-icons.rule: "Host(`{{ domain }}`) && PathRegexp(`^/assets/homer-icons/(svg/[a-z0-9-]+[.]svg|png/[a-z0-9-]+[.]png|webp/[a-z0-9-]+[.]webp)$`)"
+      traefik.http.routers.homer-icons.entrypoints: "websecure"
+      traefik.http.routers.homer-icons.service: "homer"
+      traefik.http.routers.homer-icons.priority: "1000"
+      traefik.http.routers.homer-icons.middlewares: "homer-icons-cache@docker"
+      traefik.http.middlewares.homer-icons-cache.headers.customresponseheaders.Cache-Control: "public, max-age=86400"
     env:
       INIT_ASSETS: "1"
       TZ: "{{ tz }}"
