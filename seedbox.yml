@@ -7,7 +7,7 @@
     - { role: docker, tags: ["core", "docker"] }
     - { role: cloudflare, tags: ["core", "cloudflare"] }
     - { role: traefik, tags: ["core", "traefik"] }
-    - { role: crowdsec, tags: ["core", "crowdsec"] }
+    - { role: crowdsec, tags: ["core", "crowdsec"], when: use_crowdsec | bool }
     - { role: portainer, tags: ["core", "portainer"] }
     - { role: authelia, tags: ["core", "authelia"] }
     - { role: filetree, tags: ["core", "filetree"] }

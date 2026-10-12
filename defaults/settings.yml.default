@@ -23,7 +23,8 @@ crowdsec:
   tag: latest-debian
   folder: /opt/crowdsec
   subdomain: crowdsec
-  console_enrollment_key: console_enrollment_key
+  # Optional (app.crowdsec.net). Leave empty to skip the console enrollment.
+  console_enrollment_key:
   firewall_bouncer_key: firewall_bouncer_key
   traefik_bouncer_key: traefik_bouncer_key
   whitelist_ip_range: x.x.0.0/16

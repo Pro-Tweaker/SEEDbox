@@ -1,10 +1,11 @@
 ---
-- name: Wait for CrowdSec container to be healthy
-  community.docker.docker_container_info:
-    name: crowdsec
-  register: crowdsec_info
-  until: crowdsec_info.container.State.Running
-  retries: 10
+# LAPI only answers once the entrypoint is done (CAPI registration, hub install), which cscli console needs
+- name: Wait for the CrowdSec LAPI
+  ansible.builtin.uri:
+    url: http://127.0.0.1:9876/health
+  register: crowdsec_health
+  until: crowdsec_health.status == 200
+  retries: 40
   delay: 3
 
 - name: Enroll CrowdSec console
@@ -14,6 +15,8 @@
   register: crowdsec_console_enroll
   failed_when: >
     crowdsec_console_enroll.rc != 0 and 'already enrolled' not in (crowdsec_console_enroll.stderr | default(''))
+  # The console account is optional: skip without a real key (empty, or the old placeholder)
+  when: (crowdsec.console_enrollment_key | default('', true) | string) not in ['', 'console_enrollment_key']
 
 - name: Enroll CrowdSec Firewall Bouncer
   community.docker.docker_container_exec:
@@ -22,6 +25,15 @@
   register: crowdsec_bouncer_enroll
   failed_when: >
     crowdsec_bouncer_enroll.rc != 0 and 'already exists' not in (crowdsec_bouncer_enroll.stderr | default(''))
+
+# Registered here, not in the traefik role: the crowdsec container does not exist yet when traefik runs on a fresh host
+- name: Enroll Traefik Firewall Bouncer
+  community.docker.docker_container_exec:
+    container: crowdsec
+    command: "cscli bouncers add traefik-bouncer --key {{ crowdsec.traefik_bouncer_key }}"
+  register: crowdsec_bouncer_add
+  failed_when: >
+    crowdsec_bouncer_add.rc != 0 and 'already exists' not in (crowdsec_bouncer_add.stderr | default(''))
 
 - name: Create whitelist in Crowdsec
   community.docker.docker_container_exec:

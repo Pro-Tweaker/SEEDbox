@@ -94,12 +94,3 @@
     env:
       CF_API_KEY: "{{ cloudflare.api_key | string }}"
       CF_API_EMAIL: "{{ cloudflare.api_email | string }}"
-
-- name: Enroll Traefik Firewall Bouncer
-  community.docker.docker_container_exec:
-    container: crowdsec
-    command: "cscli bouncers add traefik-bouncer --key {{ crowdsec.traefik_bouncer_key }}"
-  register: crowdsec_bouncer_add
-  failed_when: >
-    crowdsec_bouncer_add.rc != 0 and 'already exists' not in (crowdsec_bouncer_add.stderr | default(''))
-  when: use_crowdsec | bool

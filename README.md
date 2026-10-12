@@ -93,11 +93,12 @@ nano settings.yml
 > Minimal stack (mandatory `core` roles):
 > - [Docker](https://www.docker.com/)
 > - [Cloudflare](https://www.cloudflare.com/)
-> - [CrowdSec](https://www.crowdsec.net/)
+> - [CrowdSec](https://www.crowdsec.net/) (only when `use_crowdsec` is true)
 > - [Traefik](https://traefik.io/)
 > - [Portainer](https://www.portainer.io/)
 > - [Authelia](https://www.authelia.com/)
 > - [filetree](https://github.com/Pro-Tweaker/SEEDbox/blob/main/roles/filetree/tasks/main.yml)
+> - [Hardening](https://github.com/Pro-Tweaker/SEEDbox/blob/main/roles/hardening/tasks/main.yml)
 > - [Homer](https://github.com/bastienwirtz/homer)
 > - [Homer Service Discovery](https://github.com/Pro-Tweaker/homer-service-discovery)
 > - [Dashboard Icons](https://github.com/homarr-labs/dashboard-icons)
