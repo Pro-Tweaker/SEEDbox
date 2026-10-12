@@ -1,4 +1,3 @@
-
 ---
 - name: Get infos on Kavita container
   community.docker.docker_container_info:
@@ -14,8 +13,9 @@
     url: "{{ kavita_api }}/api/Health"
   register: api_result
   until: api_result.status == 200
-  retries: 30
-  delay: 1
+  # The first start (database migrations) has taken 31-52 s
+  retries: 60
+  delay: 2
 
 # Registering here also closes the window where anyone reaching the public
 # hostname could claim the admin account: Kavita leaves this endpoint anonymous
@@ -49,32 +49,42 @@
   register: login_result
   no_log: true
 
+- name: "List existing libraries"
+  ansible.builtin.uri:
+    url: "{{ kavita_api }}/api/Library/libraries"
+    headers:
+      Authorization: "Bearer {{ login_result.json.token }}"
+  register: existing_libraries
+
+# Only missing libraries are created, so any error from Kavita fails the run.
 - name: "Add Libraries"
   ansible.builtin.uri:
     url: "{{ kavita_api }}/api/Library/create"
     method: POST
-    status_code:
-      - 200
-      - 400
     body: "{{ lookup('ansible.builtin.template', role_path + '/templates/post_library_body.json.j2') }}"
     body_format: json
     headers:
       Authorization: "Bearer {{ login_result.json.token }}"
   register: library_result
   changed_when: library_result.status == 200
-  loop: "{{ kavita_libraries }}"
+  loop: "{{ kavita_libraries | rejectattr('name', 'in', existing_libraries.json | map(attribute='name') | list) | list }}"
   loop_control:
     label: "{{ item.name }}"
   vars:
     # 'type' is the Kavita LibraryType enum: 0 Manga, 1 Comic, 2 Book, 3 Image,
     # 4 LightNovel, 5 ComicVine. It has no string form over the API.
+    # 'metadata_provider' is required since Kavita 0.9.1: 2 Hardcover, 3 Mangabaka,
+    # 4 ComicBookRoundup, and only some are valid per type (GET /api/Library/metadata-providers?libraryType=N).
     kavita_libraries:
       - name: Books
         type: 2
         folder: books
+        metadata_provider: 2
       - name: Comics
         type: 1
         folder: comics
+        metadata_provider: 4
       - name: Mangas
         type: 0
         folder: mangas
+        metadata_provider: 3
