@@ -42,6 +42,8 @@ authelia:
   tag: latest
   folder: /opt/authelia
   subdomain: login
+  # info, or debug while setting up or troubleshooting (debug logs every request with user, IP and URL)
+  log_level: info
   username: demo
   password: demo
   displayname: Demo
