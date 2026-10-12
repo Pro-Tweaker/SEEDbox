@@ -1,11 +1,4 @@
 ---
-- name: Install syslog-ng
-  become: true
-  ansible.builtin.apt:
-    name: syslog-ng
-    state: present
-    update_cache: true
-
 - name: Download CrowdSec repository installer script
   become: true
   ansible.builtin.get_url:

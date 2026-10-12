@@ -1,8 +1,7 @@
 ---
-filenames:
-  - /var/log/auth.log
-  - /var/log/syslog
-  - /var/log/kern.log
+source: journalctl
+journalctl_filter:
+  - "_SYSTEMD_UNIT=ssh.service"
 labels:
   type: syslog
 ---
