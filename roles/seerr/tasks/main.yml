@@ -49,5 +49,5 @@
       homer.target: "_blank"
     env:
       TZ: "{{ tz | string }}"
-      LOG_LEVEL: "debug"
+      LOG_LEVEL: "info"
       PORT: "5055"
