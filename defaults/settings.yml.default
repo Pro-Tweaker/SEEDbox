@@ -28,7 +28,7 @@ crowdsec:
   traefik_bouncer_key: traefik_bouncer_key
   whitelist_ip_range: x.x.0.0/16
 traefik:
-  tag: 3.7.9
+  tag: 3.7.14
   tag_bouncer: v1.7.1
   folder: /opt/traefik
   api_url: "traefik.{{ domain }}"
