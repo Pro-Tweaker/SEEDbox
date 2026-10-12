@@ -13,6 +13,8 @@ entryPoints:
   web:
     address: :80
     http:
+      # Drop request headers whose name has a character other than a letter, digit or dash (GHSA-rf44-j88r-hh8c)
+      aliasHeadersStrategy: delete
       redirections:
         entryPoint:
           to: websecure
@@ -48,6 +50,7 @@ entryPoints:
   websecure:
     address: :443
     http:
+      aliasHeadersStrategy: delete
       tls: true
       {% if use_crowdsec %}
       middlewares:
