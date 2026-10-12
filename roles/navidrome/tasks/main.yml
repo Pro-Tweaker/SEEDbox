@@ -53,3 +53,5 @@
       ND_LOGLEVEL: "info"
       ND_SESSIONTIMEOUT: "24h"
       ND_BASEURL: ""
+      # Don't send usage reports to insights.navidrome.org (on by default)
+      ND_ENABLEINSIGHTSCOLLECTOR: "false"
