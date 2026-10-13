@@ -39,7 +39,8 @@ portainer:
   folder: /opt/portainer
   subdomain: portainer
 authelia:
-  tag: latest
+  # 4.x updates only: Authelia 5 is likely to remove the old settings this role still uses.
+  tag: "4"
   folder: /opt/authelia
   subdomain: login
   username: demo
@@ -50,6 +51,8 @@ authelia:
   session_name: demo
   unsecure_session_secret: demo
   redis:
+    # Redis 8.x updates only.
+    tag: 8-alpine
     hostname: authelia-redis
     folder: /opt/authelia-redis
   storage_encryption_key: a_string_at_least_64_characters_long
