@@ -36,7 +36,7 @@
 - name: Create and start authelia redis container
   community.docker.docker_container:
     name: authelia-redis
-    image: "redis:alpine"
+    image: "redis:{{ authelia.redis.tag }}"
     pull: true
     recreate: true
     container_default_behavior: compatibility
